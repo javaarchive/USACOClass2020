@@ -1,0 +1,65 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
+import org.jnativehook.keyboard.NativeKeyEvent;
+import org.jnativehook.keyboard.NativeKeyListener;
+public class Completer implements NativeKeyListener{
+	public static void main(String[] args) throws IOException{
+		// TODO Auto-generated method stub
+		try {
+			GlobalScreen.registerNativeHook();
+		}
+		catch (NativeHookException ex) {
+			System.err.println("There was a problem registering the native hook.");
+			System.err.println(ex.getMessage());
+
+			System.exit(1);
+		}
+		BufferedReader f = new BufferedReader(new FileReader("words.txt"));
+		List<String> words = new ArrayList<>();
+		String line = f.readLine();
+		while(line != null) {
+			line = f.readLine()
+		}
+		GlobalScreen.addNativeKeyListener(new Completer());
+		Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
+		logger.setLevel(Level.OFF);
+		// Don't forget to disable the parent handlers.
+		logger.setUseParentHandlers(false);
+	}
+	final String letters = "abcdefghijklmnopqrstuvwxyz";
+	String cur = "";
+	@Override
+	public void nativeKeyPressed(NativeKeyEvent arg0) {
+		//System.out.println(arg0.getKeyCode());
+		String type = NativeKeyEvent.getKeyText(arg0.getKeyCode());
+		System.out.println(type);
+		if(letters.contains(type.toLowerCase())) {
+			cur += type.toLowerCase();
+			//System.out.println(cur);
+		}
+		if(type.equals("Space")) {
+			cur="";
+		}
+	}
+
+	@Override
+	public void nativeKeyReleased(NativeKeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void nativeKeyTyped(NativeKeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

@@ -1,0 +1,5 @@
+INDEX VERSION 1.4+D:\USACOClass2020\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+1898801774.index
+4176717513.index
+1335098548.index
+288494927.index
