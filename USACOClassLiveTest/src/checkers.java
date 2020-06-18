@@ -5,33 +5,20 @@ public class checkers {
 	private static int[][] map;
 	private static final int[][] dir = new int[][] {{1,1}, {1,-1},{-1,-1}, {-1, 1}};
 	public static int N;;
-	public static List<Pos> traverse(List<Pos> using, List<List<Pos>> killingmethods, int ops) {
-		for(int i = 0; i < killingmethods.size(); i ++) {
-			for(int j = 0; j < killingmethods.get(i).size(); j ++) {
-				Pos inc = killingmethods.get(i).get(j);
-				Pos knight = knights.get(i);
-				Pos finalPos = new Pos(inc.x + knight.x, inc.y + knight.y);
-				if(map[finalPos.x][finalPos.y] == 1) {
-					List<List<Pos>> modifiedkm = new ArrayList<List<Pos>>(killingmethods);
-					List<Pos> km = new ArrayList<Pos>();
-					modifiedkm.set(j, km);
-					for(int k = 0; k < dir.length; k ++) {
-						if(0 < (knight.x + dir[i][0]*2) && (knight.x + dir[i][0]*2) < N && 0 < (knight.y + dir[i][1]*2) &&  (knight.y + dir[i][1]*2) < N ) {
-							if(map[knight.x  + dir[i][0]][knight.y  + dir[i][1]] == 1) {
-								km.add(new Pos(dir[i][0], dir[i][1]));
-							}
-						}
-					}
-					List<Pos> newusing = new ArrayList<>(using);
-					newusing.add(knight);
-					if(ops == 0) {
-						return newusing;
-					}
-					return traverse(newusing, modifiedkm, ops-1);
+	public static List<Pos> traverse(List<Pos> locs, Pos curPos, int checkers) {
+		for(int i = 0; i < dir.length; i ++) {
+			if(0 <= (curPos.x + dir[i][0]) && 0 <= (curPos.y + dir[i][1]) && (curPos.y + dir[i][1]) < N &&  (curPos.x + dir[i][0]) < N && map[curPos.x + dir[i][0]][curPos.y + dir[i][1]] == 1) {
+				Pos newpos = new Pos(curPos.x + dir[i][0] * 2, curPos.y + dir[i][1] * 2);
+				map[curPos.x + dir[i][0]][curPos.y + dir[i][1]] = 5;
+				locs.add(newpos);
+				if(checkers == 1) {
+					return locs;
 				}
+				locs = traverse(locs, newpos, checkers-1);
+				break;
 			}
 		}
-		return using;
+		return locs;
 	}
 	public static void main(String[] args) throws IOException{
 		// IO
@@ -60,25 +47,21 @@ public class checkers {
 				}
 			}
 		}
-		
-		List<List<Pos>> killingmethods = new ArrayList<>();
-		for(int i = 0; i < killingmethods.size(); i ++) {
-			List<Pos> km = new ArrayList<Pos>();
-			killingmethods.add(km);
-			Pos knightPos = knights.get(i);
-			for(int j = 0; j < dir.length; j ++) {
-				if(0 < (knightPos.x + dir[i][0]*2) && (knightPos.x + dir[i][0]*2) < N && 0 < (knightPos.y + dir[i][1]*2) &&  (knightPos.y + dir[i][1]*2) < N ) {
-					if(map[knightPos.x  + dir[i][0]][knightPos.y  + dir[i][1]] == 1) {
-						km.add(new Pos(dir[i][0], dir[i][1]));
-					}
-				}
-			}
-		}
+		int[][] backuparr;
+		backuparr = Arrays.copyOf(map, map.length);
 		System.out.println(Arrays.deepToString(map).replaceAll("]", "]\n"));
-		System.out.println(killingmethods.size());
-		List<Pos> using = new ArrayList<>();
-		pw.println(traverse(new ArrayList<>(using),new ArrayList<>(killingmethods), totalcheckers));
-		pw.println(using);
+		List<Pos> locs = new ArrayList<>();
+		for(int i = 0; i < knights.size(); i ++) {
+			locs.add(knights.get(i));
+			map = Arrays.copyOf(backuparr, backuparr.length);
+			traverse(locs, knights.get(i), totalcheckers);
+			System.out.println(locs);
+			if(locs.size() == (totalcheckers)) {
+				break;
+			}
+			locs.clear();
+		}
+		pw.println(locs);
 		pw.close();
 	}
 

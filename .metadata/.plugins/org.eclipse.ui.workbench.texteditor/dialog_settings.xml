@@ -2,17 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="//System.out"/>
-		<item key="casesensitive" value="false"/>
+		<item key="selection" value="String"/>
+		<item key="casesensitive" value="true"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="StringBuilder"/>
+			<item value="Cow"/>
 			<item value="BufferedReader f = new BufferedReader(new InputStreamReader(System.in));"/>
 			<item value="101011101111001"/>
 			<item value="int"/>
 		</list>
 		<list key="replacehistory">
+			<item value="String"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
