@@ -39,12 +39,52 @@ public class reduce {
 		});
 		//System.out.println(cows);
 		cows.remove(0);
+		 minx = Integer.MAX_VALUE;
+		 miny = Integer.MAX_VALUE;
+		 maxx = Integer.MIN_VALUE;
+		 maxy = Integer.MIN_VALUE;
+		for(int i = 0; i < cows.size(); i ++) {
+			Point p = cows.get(i);
+			int x,y;
+			x = p.x;
+			y = p.y;
+			minx = Integer.min(minx, x);
+			miny = Integer.min(miny, y);
+			maxx = Integer.max(maxx, x);
+			maxy = Integer.max(maxy, y);
+		}
+		cows.sort(new Comparator<Point>() {
+			@Override
+			public int compare(Point arg0, Point arg1) {
+				return Integer.compare(score(arg0), score(arg1));
+			}
+		});
 		cows.remove(0);
+		 minx = Integer.MAX_VALUE;
+		 miny = Integer.MAX_VALUE;
+		 maxx = Integer.MIN_VALUE;
+		 maxy = Integer.MIN_VALUE;
+		for(int i = 0; i < cows.size(); i ++) {
+			Point p = cows.get(i);
+			int x,y;
+			x = p.x;
+			y = p.y;
+			minx = Integer.min(minx, x);
+			miny = Integer.min(miny, y);
+			maxx = Integer.max(maxx, x);
+			maxy = Integer.max(maxy, y);
+		}
+		cows.sort(new Comparator<Point>() {
+			@Override
+			public int compare(Point arg0, Point arg1) {
+				return Integer.compare(score(arg0), score(arg1));
+			}
+		});
 		cows.remove(0);
-		minx = Integer.MAX_VALUE;
-		miny = Integer.MAX_VALUE;
-		maxx = Integer.MIN_VALUE;
-		maxy = Integer.MIN_VALUE;
+		 minx = Integer.MAX_VALUE;
+		 miny = Integer.MAX_VALUE;
+		 maxx = Integer.MIN_VALUE;
+		 maxy = Integer.MIN_VALUE;
 		for(int i = 0; i < cows.size(); i ++) {
 			Point p = cows.get(i);
 			int x,y;
