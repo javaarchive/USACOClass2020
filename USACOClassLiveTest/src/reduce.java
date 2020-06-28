@@ -7,6 +7,10 @@ public class reduce {
 	public static int getBit(int n, int k) {
 	    return (n >> k) & 1;
 	}
+	static int minx = Integer.MAX_VALUE,miny = Integer.MAX_VALUE,maxx = Integer.MIN_VALUE,maxy = Integer.MIN_VALUE;
+	public static int score(Point p) {
+		return Integer.min(Integer.min(Math.abs(p.x - minx), Math.abs(p.x - maxx)), Integer.min(Math.abs(p.y - miny), Math.abs(p.y - maxy)));
+	}
 	public static void main(String[] args) throws IOException{
 		// IO
 		//                                    new FileReader("reduce.in")
@@ -15,7 +19,6 @@ public class reduce {
 		PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
 		int N = Integer.parseInt(f.readLine());
 		StringTokenizer st;
-		int minx = Integer.MAX_VALUE,miny = Integer.MAX_VALUE,maxx = Integer.MIN_VALUE,maxy = Integer.MIN_VALUE;
 		List<Point> cows = new ArrayList<>(N);
 		for(int i = 0; i < N; i ++) {
 			st = new StringTokenizer(f.readLine());
@@ -28,96 +31,31 @@ public class reduce {
 			maxy = Integer.max(maxy, y);
 			cows.add(p);
 		}
-		List<Point> pmaxx, pmaxy, pminx, pminy;
-		pminx = new ArrayList<>();
-		pminy = new ArrayList<>();
-		pmaxx = new ArrayList<>();
-		pmaxy = new ArrayList<>();
-		for(Point p: cows) {
-			if(p.x == maxx) {
-				pmaxx.add(p);
+		cows.sort(new Comparator<Point>() {
+			@Override
+			public int compare(Point arg0, Point arg1) {
+				return Integer.compare(score(arg0), score(arg1));
 			}
-			if(p.x == minx) {
-				pminx.add(p);
-			}
-			if(p.y == miny) {
-				pmaxy.add(p);
-			}
-			if(p.y == maxy) {
-				pmaxy.add(p);
-			}
+		});
+		//System.out.println(cows);
+		cows.remove(0);
+		cows.remove(0);
+		cows.remove(0);
+		minx = Integer.MAX_VALUE;
+		miny = Integer.MAX_VALUE;
+		maxx = Integer.MIN_VALUE;
+		maxy = Integer.MIN_VALUE;
+		for(int i = 0; i < cows.size(); i ++) {
+			Point p = cows.get(i);
+			int x,y;
+			x = p.x;
+			y = p.y;
+			minx = Integer.min(minx, x);
+			miny = Integer.min(miny, y);
+			maxx = Integer.max(maxx, x);
+			maxy = Integer.max(maxy, y);
 		}
-		boolean useminx, usemaxx, useminy, usemaxy;
-		List<Point> test = new ArrayList<>();
-		//System.out.println(pminx);
-		//System.out.println(pmaxx);
-		//System.out.println(pminy);
-		//System.out.println(pmaxy);
-		int best = Integer.MAX_VALUE;
-		for(int i = 0; i < 16; i ++) {
-			test.clear();
-			//System.out.println(getBit(i, 0));
-			useminx = getBit(i, 0) == 1;
-			usemaxx = getBit(i, 1) == 1;
-			useminy = getBit(i, 2) == 1;
-			usemaxy = getBit(i, 3) == 1;
-			//System.out.println((useminx?1:0)+" "+(usemaxx?1:0)+" "+(useminy?1:0)+" "+(usemaxy?1:0));
-			if(useminx) {
-				test.addAll(pminx);
-				if(test.size() > 3 || pminx.isEmpty()) {
-					continue;
-				}
-			}
-			if(useminy) {
-				test.addAll(pminy);
-				if(test.size() > 3 || pminy.isEmpty()) {
-					continue;
-				}
-			}
-			if(usemaxx) {
-				test.addAll(pmaxx);
-				if(test.size() > 3 || pmaxx.isEmpty()) {
-					continue;
-				}
-			}
-			if(usemaxy) {
-				test.addAll(pmaxy);
-				if(test.size() > 3 || pmaxy.isEmpty()) {
-					continue;
-				}
-			}
-			if(test.size() > 3) {
-				continue;
-			}
-			for(Point p: test) {
-				p.exists = false;
-			}
-			//System.out.println(test);
-			minx = Integer.MAX_VALUE;
-			miny = Integer.MAX_VALUE;
-			maxx = Integer.MIN_VALUE;
-			maxy = Integer.MIN_VALUE;
-			for(Point p: cows) {
-				int x,y;
-				if(!p.exists) {
-					//System.out.println("Cow marked as sold");
-					continue;
-				}
-				x = p.x;
-				y = p.y;
-				minx = Integer.min(minx, x);
-				miny = Integer.min(miny, y);
-				maxx = Integer.max(maxx, x);
-				maxy = Integer.max(maxy, y);
-			}
-			//System.out.println("Stats: "+minx+" "+miny+" "+maxx+" "+maxy);
-			//System.out.println("Perim: "+(maxx-minx)*(maxy-miny));
-			best = Integer.min(best, (maxx-minx)*(maxy-miny));
-			for(Point p: test) {
-				p.exists = true;
-			}
-		}
-		pw.println(best);
+		pw.println(Math.abs((minx - maxx)*(maxy-miny)));
 		pw.close();
 	}
 }
