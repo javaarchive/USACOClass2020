@@ -18,6 +18,7 @@ public class reduce {
 		//                               new BufferedWriter(new FileWriter("reduce.out"))
 		PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
 		int N = Integer.parseInt(f.readLine());
+		int best = Integer.MAX_VALUE;
 		StringTokenizer st;
 		List<Point> cows = new ArrayList<>(N);
 		for(int i = 0; i < N; i ++) {
@@ -80,13 +81,22 @@ public class reduce {
 				return Integer.compare(score(arg0), score(arg1));
 			}
 		});
-		cows.remove(0);
+		int same = score(cows.get(0));
+		for(int j = 0; j < N; j ++) {
+			Point p2 = cows.get(j);
+			if(score(p2) != same) {
+				break;
+			}
 		 minx = Integer.MAX_VALUE;
 		 miny = Integer.MAX_VALUE;
 		 maxx = Integer.MIN_VALUE;
 		 maxy = Integer.MIN_VALUE;
+		 p2.exists = false;
 		for(int i = 0; i < cows.size(); i ++) {
 			Point p = cows.get(i);
+			if(!p.exists) {
+				continue;
+			}
 			int x,y;
 			x = p.x;
 			y = p.y;
@@ -95,7 +105,11 @@ public class reduce {
 			maxx = Integer.max(maxx, x);
 			maxy = Integer.max(maxy, y);
 		}
-		pw.println(Math.abs((minx - maxx)*(maxy-miny)));
+		p2.exists = true;
+		best = Integer.min(best, Math.abs((maxy - miny) * (minx-maxx)));
+		}
+		
+		pw.println(best);
 		pw.close();
 	}
 }
