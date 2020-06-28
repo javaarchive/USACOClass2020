@@ -9,7 +9,7 @@ public class reduce {
 	}
 	static int minx = Integer.MAX_VALUE,miny = Integer.MAX_VALUE,maxx = Integer.MIN_VALUE,maxy = Integer.MIN_VALUE;
 	public static int score(Point p) {
-		return Integer.min(Integer.min(Math.abs(p.x - minx), Math.abs(p.x - maxx)), Integer.min(Math.abs(p.y - miny), Math.abs(p.y - maxy)));
+		return Integer.min(Math.abs(p.x - minx), Math.abs(p.x - maxx)) + Integer.min(Math.abs(p.y - miny), Math.abs(p.y - maxy));
 	}
 	public static void main(String[] args) throws IOException{
 		// IO
