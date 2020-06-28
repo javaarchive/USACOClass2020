@@ -2,12 +2,14 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="String"/>
+		<item key="selection" value="K"/>
 		<item key="casesensitive" value="true"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="K"/>
+			<item value="int ans"/>
 			<item value="StringBuilder"/>
 			<item value="Cow"/>
 			<item value="BufferedReader f = new BufferedReader(new InputStreamReader(System.in));"/>

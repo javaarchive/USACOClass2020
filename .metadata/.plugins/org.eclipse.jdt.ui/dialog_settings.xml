@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<item key="org.eclipse.jdt.ui.last.selected.jre.kind2" value="2"/>
+	<item key="org.eclipse.jdt.ui.last.selected.execution.enviroment" value="JavaSE-1.8"/>
 	<section name="org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart">
 		<item key="layout" value="2"/>
 		<item key="group_libraries" value="true"/>
@@ -41,6 +43,14 @@
 		<item key="InstanceOf" value="true"/>
 		<item key="Blocks" value="true"/>
 		<item key="Objects.equals &amp; Objects.hash" value="false"/>
+		<list key="ToStringTemplateNames">
+			<item value="&lt;Default template&gt;"/>
+			<item value="Comma"/>
+		</list>
+		<list key="ToStringTemplates">
+			<item value="${object.className} [${member.name()}=${member.value}, ${otherMembers}]"/>
+			<item value="(${member.name()}=${member.value})"/>
+		</list>
 	</section>
 	<section name="DialogBounds_GenerateToStringDialog">
 		<item key="DIALOG_X_ORIGIN" value="710"/>
