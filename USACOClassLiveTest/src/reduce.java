@@ -9,7 +9,7 @@ public class reduce {
 	}
 	static int minx = Integer.MAX_VALUE,miny = Integer.MAX_VALUE,maxx = Integer.MIN_VALUE,maxy = Integer.MIN_VALUE;
 	public static int score(Point p) {
-		return Integer.min(Math.abs(p.x - minx), Math.abs(p.x - maxx)) + Integer.min(Math.abs(p.y - miny), Math.abs(p.y - maxy));
+		return Integer.min(Integer.min(Math.abs(p.x - minx), Math.abs(p.x - maxx)) , Integer.min(Math.abs(p.y - miny), Math.abs(p.y - maxy)));
 	}
 	public static void main(String[] args) throws IOException{
 		// IO
@@ -38,60 +38,42 @@ public class reduce {
 				return Integer.compare(score(arg0), score(arg1));
 			}
 		});
-		//System.out.println(cows);
-		cows.remove(0);
-		 minx = Integer.MAX_VALUE;
-		 miny = Integer.MAX_VALUE;
-		 maxx = Integer.MIN_VALUE;
-		 maxy = Integer.MIN_VALUE;
-		for(int i = 0; i < cows.size(); i ++) {
-			Point p = cows.get(i);
-			int x,y;
-			x = p.x;
-			y = p.y;
-			minx = Integer.min(minx, x);
-			miny = Integer.min(miny, y);
-			maxx = Integer.max(maxx, x);
-			maxy = Integer.max(maxy, y);
-		}
-		cows.sort(new Comparator<Point>() {
-			@Override
-			public int compare(Point arg0, Point arg1) {
-				return Integer.compare(score(arg0), score(arg1));
-			}
-		});
-		cows.remove(0);
-		 minx = Integer.MAX_VALUE;
-		 miny = Integer.MAX_VALUE;
-		 maxx = Integer.MIN_VALUE;
-		 maxy = Integer.MIN_VALUE;
-		for(int i = 0; i < cows.size(); i ++) {
-			Point p = cows.get(i);
-			int x,y;
-			x = p.x;
-			y = p.y;
-			minx = Integer.min(minx, x);
-			miny = Integer.min(miny, y);
-			maxx = Integer.max(maxx, x);
-			maxy = Integer.max(maxy, y);
-		}
-		cows.sort(new Comparator<Point>() {
-			@Override
-			public int compare(Point arg0, Point arg1) {
-				return Integer.compare(score(arg0), score(arg1));
-			}
-		});
 		int same = score(cows.get(0));
-		for(int j = 0; j < N; j ++) {
-			Point p2 = cows.get(j);
-			if(score(p2) != same) {
+		int bound1 = 1, bound2=2, bound3=3;
+		for(int i = 0; i < N; i ++) {
+			if(score(cows.get(i)) != same) {
+				bound1 = i;
 				break;
 			}
+		}
+		same = score(cows.get(bound1));
+		
+		for(int i = bound1; i < N; i ++) {
+			if(score(cows.get(i)) != same) {
+				bound2 = i;
+				break;
+			}
+		}
+		same = score(cows.get(bound2));
+		for(int i = bound2; i < N; i ++) {
+			if(score(cows.get(i)) != same) {
+				//System.out.println("Set");
+				bound3 = i;
+				break;
+			}
+		}
+		
+		//System.out.println(bound1+" "+bound2+" "+bound3);
+		for(int a = 0; a < bound1; a ++) {
+			for(int b = bound1; b < bound2; b ++) {
+				for(int c = bound2; c < bound3; c ++) {
 		 minx = Integer.MAX_VALUE;
 		 miny = Integer.MAX_VALUE;
 		 maxx = Integer.MIN_VALUE;
 		 maxy = Integer.MIN_VALUE;
-		 p2.exists = false;
+		 cows.get(a).exists = false;
+		 cows.get(b).exists = false;
+		 cows.get(c).exists = false;
 		for(int i = 0; i < cows.size(); i ++) {
 			Point p = cows.get(i);
 			if(!p.exists) {
@@ -105,9 +87,11 @@ public class reduce {
 			maxx = Integer.max(maxx, x);
 			maxy = Integer.max(maxy, y);
 		}
-		p2.exists = true;
+		cows.get(a).exists = true;
+		 cows.get(b).exists = true;
+		 cows.get(c).exists = true;
 		best = Integer.min(best, Math.abs((maxy - miny) * (minx-maxx)));
-		}
+		}}}
 		
 		pw.println(best);
 		pw.close();
