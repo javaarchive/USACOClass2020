@@ -7,10 +7,14 @@ public class reduce {
 	public static int getBit(int n, int k) {
 	    return (n >> k) & 1;
 	}
-	static int minx = Integer.MAX_VALUE,miny = Integer.MAX_VALUE,maxx = Integer.MIN_VALUE,maxy = Integer.MIN_VALUE;
-	public static int score(Point p) {
-		return Integer.min(Integer.min(Math.abs(p.x - minx), Math.abs(p.x - maxx)) , Integer.min(Math.abs(p.y - miny), Math.abs(p.y - maxy)));
-	}
+	static int aminx = Integer.MAX_VALUE,aminy = Integer.MAX_VALUE,amaxx = Integer.MIN_VALUE,amaxy = Integer.MIN_VALUE;
+	static int bminx = Integer.MAX_VALUE,bminy = Integer.MAX_VALUE,bmaxx = Integer.MIN_VALUE,bmaxy = Integer.MIN_VALUE;
+	static int cminx = Integer.MAX_VALUE,cminy = Integer.MAX_VALUE,cmaxx = Integer.MIN_VALUE,cmaxy = Integer.MIN_VALUE;
+	static int dminx = Integer.MAX_VALUE,dminy = Integer.MAX_VALUE,dmaxx = Integer.MIN_VALUE,dmaxy = Integer.MIN_VALUE;
+	static Point aix = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE), aax = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE), aiy = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE), aay = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
+	static Point bix = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE), bax = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE), biy = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE), bay = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
+	static Point cix = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE), cax = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE), ciy = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE), cay = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
+	static Point dix = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE), dax = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE), diy = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE), day = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
 	public static void main(String[] args) throws IOException{
 		// IO
 		//                                    new FileReader("reduce.in")
@@ -26,72 +30,56 @@ public class reduce {
 			int x = Integer.parseInt(st.nextToken());
 			int y = Integer.parseInt(st.nextToken());
 			Point p = new Point(x,y, i);
-			minx = Integer.min(minx, x);
-			miny = Integer.min(miny, y);
-			maxx = Integer.max(maxx, x);
-			maxy = Integer.max(maxy, y);
-			cows.add(p);
-		}
-		cows.sort(new Comparator<Point>() {
-			@Override
-			public int compare(Point arg0, Point arg1) {
-				return Integer.compare(score(arg0), score(arg1));
-			}
-		});
-		int same = score(cows.get(0));
-		int bound1 = 1, bound2=2, bound3=3;
-		for(int i = 0; i < N; i ++) {
-			if(score(cows.get(i)) != same) {
-				bound1 = i;
-				break;
-			}
-		}
-		same = score(cows.get(bound1));
-		
-		for(int i = bound1; i < N; i ++) {
-			if(score(cows.get(i)) != same) {
-				bound2 = i;
-				break;
-			}
-		}
-		same = score(cows.get(bound2));
-		for(int i = bound2; i < N; i ++) {
-			if(score(cows.get(i)) != same) {
-				//System.out.println("Set");
-				bound3 = i;
-				break;
-			}
-		}
-		
-		//System.out.println(bound1+" "+bound2+" "+bound3);
-		for(int a = 0; a < bound1; a ++) {
-			for(int b = bound1; b < bound2; b ++) {
-				for(int c = bound2; c < bound3; c ++) {
-		 minx = Integer.MAX_VALUE;
-		 miny = Integer.MAX_VALUE;
-		 maxx = Integer.MIN_VALUE;
-		 maxy = Integer.MIN_VALUE;
-		 cows.get(a).exists = false;
-		 cows.get(b).exists = false;
-		 cows.get(c).exists = false;
-		for(int i = 0; i < cows.size(); i ++) {
-			Point p = cows.get(i);
 			if(!p.exists) {
 				continue;
 			}
-			int x,y;
-			x = p.x;
-			y = p.y;
-			minx = Integer.min(minx, x);
-			miny = Integer.min(miny, y);
-			maxx = Integer.max(maxx, x);
-			maxy = Integer.max(maxy, y);
+			if(x < aminx) {
+				aminx = x;
+				aix = p;
+			}
+			if(y < aminy) {
+				aminy = y;
+				aiy = p;
+			}
+			if(y > aminy) {
+				amaxy = y;
+				aay = p;
+			}
+			if(x > aminy) {
+				amaxx = x;
+				aax = p;
+			}
+			cows.add(p);
 		}
-		cows.get(a).exists = true;
-		 cows.get(b).exists = true;
-		 cows.get(c).exists = true;
-		best = Integer.min(best, Math.abs((maxy - miny) * (minx-maxx)));
-		}}}
+		Point[] selections1 = {aix, aiy, aax, aay};
+		for(int i = 0; i < selections1.length; i ++) {
+			selections1[i].exists = false;
+			for(Point p: cows) {
+				if(!p.exists) {
+					continue;
+				}
+				int x = p.x;
+				int y = p.y;
+				if(x < bminx) {
+					bminx = x;
+					bix = p;
+				}
+				if(y < bminy) {
+					bminy = y;
+					biy = p;
+				}
+				if(y > bminy) {
+					bmaxy = y;
+					bay = p;
+				}
+				if(x > bminy) {
+					bmaxx = x;
+					bax = p;
+				}
+				cows.add(p);
+			}
+			selections1[i].exists = true;
+		}
 		
 		pw.println(best);
 		pw.close();
@@ -118,5 +106,10 @@ class Point{
 		this.x = x;
 		this.y = y;
 		this.index = index;
+	}
+	public Point(int x, int y) {
+		this.x = x;
+		this.y = y;
+		this.index = -1;
 	}
 }
