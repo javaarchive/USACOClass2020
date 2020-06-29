@@ -31,6 +31,24 @@ public class cowrace {
 			curTime += y;
 			timeline2[i] = new Seg(curTime,x);
 		}
+		Arrays.sort(timeline1, new Comparator<Seg>() {
+
+			@Override
+			public int compare(Seg o1, Seg o2) {
+				// TODO Auto-generated method stub
+				return Integer.compare(o1.time, o2.time);
+			}
+			
+		});
+		Arrays.sort(timeline2, new Comparator<Seg>() {
+
+			@Override
+			public int compare(Seg o1, Seg o2) {
+				// TODO Auto-generated method stub
+				return Integer.compare(o1.time, o2.time);
+			}
+			
+		});
 		int a = 0, b = 0;
 		int best;
 		double B = 0, E = 0; // Bessie and Elsie's pos
@@ -45,23 +63,26 @@ public class cowrace {
 			int tB, tE; // Time advanced since last time
 			tB = Bessie.time - lastTime;
 			tE = Elsie.time - lastTime;
+			//System.out.println("Pos: "+a+" "+b);
+			//System.out.println(tB+" and "+tE+" last: "+lastTime+" current: "+Integer.min(Elsie.time, Bessie.time));
 			if(Bessie.time < Elsie.time) {
-				newB = B + Bessie.speed;
-				newE = E + Elsie.speed * (tE/tB);
+				newB = B + Bessie.speed * tB;
+				newE = E + Elsie.speed * tB;
 				a ++;
 			}else {
-				newB = B + Bessie.speed * (tB/tE);
-				newE = E + Elsie.speed;
+				newB = B + Bessie.speed * tE;
+				newE = E + Elsie.speed * tE;
 				b ++;
 			}
 			B = newB;
 			E = newE;
 			if(best !=  ((B < E) ? -1:1)) {
-				System.out.println("Diff: "+best+" "+ ((B < E) ? -1:1));
+				//System.out.println("Diff: "+best+" "+ ((B < E) ? -1:1));
 				best = (B < E) ? -1:1;
 				ans ++;
 			}
-			System.out.println(B+" "+E);
+			lastTime = Integer.min(Elsie.time, Bessie.time);
+			//System.out.println(B+" "+E);
 		}
 		pw.println(ans);
 		pw.close();

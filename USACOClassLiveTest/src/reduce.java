@@ -14,10 +14,10 @@ public class reduce {
 	static Point[][] ref = new Point[4][4];
 	public static void main(String[] args) throws IOException{
 		// IO
-		//                                    new FileReader("reduce.in")
-		BufferedReader f = new BufferedReader(new InputStreamReader(System.in));
-		//                               new BufferedWriter(new FileWriter("reduce.out"))
-		PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
+		BufferedReader f = new BufferedReader(new FileReader("reduce.in"));
+		//BufferedReader f = new BufferedReader(new InputStreamReader(System.in));
+		//PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out)));
+		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("reduce.out")));
 		int N = Integer.parseInt(f.readLine());
 		int best = Integer.MAX_VALUE;
 		StringTokenizer st;
@@ -245,6 +245,7 @@ public class reduce {
 		
 		pw.println(best);
 		pw.close();
+		f.close();
 	}
 }
 class Point{
