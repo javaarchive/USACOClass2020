@@ -128,29 +128,29 @@ public class reduce {
 						d++;
 						break;
 					}
-					for(int m = 0; m < 4; m ++) {
-						switch(m) {
-						case 0:
-							a++;
-							break;
-						case 1:
-							b++;
-							break;
-						case 2:
-							c++;
-							break;
-						case 3:
-							d++;
-							break;
-						}
+					
 					for(int l = 0; l < 4; l ++) {
-					if(l!=0) {ref[a][0].exists = false;}
-					if(l!=1) {ref[b][1].exists = false;}
-					if(l!=2) {ref[c][2].exists = false;}
-					if(l!=3) {ref[d][3].exists = false;}
+					if(l!=0) {
+					for(int u = 0; u < a; u ++) {
+						ref[u][0].exists = false;
+					}
+					}
+					if(l!=1) {
+						for(int u = 0; u < b; u ++) {
+							ref[u][1].exists = false;
+						}
+					}
+					if(l!=2) {
+						for(int u = 0; u < c; u ++) {
+							ref[u][2].exists = false;
+						}
+					}
+					if(l!=3) {for(int u = 0; u < d; u ++) {
+						ref[u][3].exists = false;
+					}}
 					//for(int l = 0; l < 4; l ++) {
 						//selections4[l].exists = false;
-						//System.out.println(selections1[i]+" "+selections2[j]+" "+selections3[k]+" "+selections4[l]);
+						//System.out.println(a+" "+b+" "+c+" "+d+" "+l);
 						int minx = Integer.MAX_VALUE, miny = Integer.MAX_VALUE, maxx = Integer.MIN_VALUE, maxy = Integer.MIN_VALUE; 
 						for(Point p: cows) {
 							if(!p.exists) {
@@ -176,26 +176,27 @@ public class reduce {
 						//System.out.println(cows);
 						//selections4[l].exists = true;
 					//}
-						if(l!=0) {ref[a][0].exists = true;}
-						if(l!=1) {ref[b][1].exists = true;}
-						if(l!=2) {ref[c][2].exists = true;}
-						if(l!=3) {ref[d][3].exists = true;}
+						
+							if(l!=0) {
+							for(int u = 0; u < a; u ++) {
+								ref[u][0].exists = true;
+							}
+							}
+							if(l!=1) {
+								for(int u = 0; u < b; u ++) {
+									ref[u][1].exists = true;
+								}
+							}
+							if(l!=2) {
+								for(int u = 0; u < c; u ++) {
+									ref[u][2].exists = true;
+								}
+							}
+							if(l!=3) {for(int u = 0; u < d; u ++) {
+								ref[u][3].exists = true;
+							}}
 					}
-					switch(m) {
-					case 0:
-						a--;
-						break;
-					case 1:
-						b--;
-						break;
-					case 2:
-						c--;
-						break;
-					case 3:
-						d--;
-						break;
-					}
-					}
+					
 						switch(k) {
 						case 0:
 							a--;
