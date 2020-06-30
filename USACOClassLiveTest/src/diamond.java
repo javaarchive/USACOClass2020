@@ -43,22 +43,24 @@ public class diamond {
 			}
 			
 		});
-		int maxEnd = -1;
+		//int maxEnd = -1;
 		for(int i =0 ;i < N; i ++) {
 			Result r = results.get(i);
 			int sel = r.end - r.start;
 			max = Integer.max(max, sel);
-			maxEnd = Integer.max(maxEnd, r.end);
+			//maxEnd = Integer.max(maxEnd, r.end);
 			ltor[i] = max;
-			maxEnds[i] = maxEnd;
+			maxEnds[i] = r.end;
 		}
 		 max = -1;
+		 System.out.println("ME: "+Arrays.toString(maxEnds));
 		for(int i =N-1;i >= 0; i --) {
 			Result r = results.get(i);
 			int sel = r.end - r.start;
 			max = Integer.max(max, sel);
 			rtol[i] = max;
-			if(maxEnds[i] >= r.start) {
+			if(i!=0) {System.out.println("RS "+maxEnds[i-1]+"<"+r.start);}
+			if(i!=0 && maxEnds[i-1] >= r.start) {
 				works[i] = false;
 			}else {
 				works[i] = true;
