@@ -26,17 +26,31 @@ public class diamond {
 			}
 			results.add(new Result(i, toprange));
 		}
-		//System.out.println(results);
+		System.out.println(diamonds);
 		//System.out.println(results.size());
 		int best = 0;
 		int[] ltor = new int[N];
+		int[] maxEnds = new int[N];
+		boolean[] works = new boolean[N];
 		int max = -1;
 		int[] rtol = new int[N];
+		results.sort(new Comparator<Result>() {
+
+			@Override
+			public int compare(Result arg0, Result arg1) {
+				// TODO Auto-generated method stub
+				return Integer.compare(arg0.start, arg1.start);
+			}
+			
+		});
+		int maxEnd = -1;
 		for(int i =0 ;i < N; i ++) {
 			Result r = results.get(i);
 			int sel = r.end - r.start;
 			max = Integer.max(max, sel);
+			maxEnd = Integer.max(maxEnd, r.end);
 			ltor[i] = max;
+			maxEnds[i] = maxEnd;
 		}
 		 max = -1;
 		for(int i =N-1;i >= 0; i --) {
@@ -44,14 +58,20 @@ public class diamond {
 			int sel = r.end - r.start;
 			max = Integer.max(max, sel);
 			rtol[i] = max;
+			if(maxEnds[i] >= r.start) {
+				works[i] = false;
+			}else {
+				works[i] = true;
+			}
 		}
 		for(int i =1 ;i < N-1; i ++) {
-			int sum = ltor[i-1] + rtol[i];
-			//System.out.println(max1 +"   "+ max2);
-			if(sum > best) {
+			int sum = ltor[i] + rtol[i-1];
+			System.out.println(sum);
+			if(sum > best && works[i]) {
 				best = sum;
 			}
 		}
+		System.out.println(Arrays.toString(works));
 		pw.println(best);
 		pw.close();
 		f.close();
