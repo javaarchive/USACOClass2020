@@ -45,8 +45,8 @@ public class diamond {
 			max = Integer.max(max, sel);
 			rtol[i] = max;
 		}
-		for(int i =0 ;i < N-1; i ++) {
-			int sum = ltor[i] + rtol[i+1];
+		for(int i =1 ;i < N-1; i ++) {
+			int sum = ltor[i-1] + rtol[i];
 			//System.out.println(max1 +"   "+ max2);
 			if(sum > best) {
 				best = sum;
