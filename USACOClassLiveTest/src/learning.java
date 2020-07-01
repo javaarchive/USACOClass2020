@@ -35,12 +35,12 @@ public class learning {
 			Cow start = cows.get(i);
 			Cow end = cows.get(i + 1);
 			if(start.weight <= A && A <= end.weight) {
-				System.out.println("Encapsulates A");
+				//System.out.println("Encapsulates A");
 				inrange = true;
 				double mid = (start.weight + end.weight)/2;
 				if(A < mid) {
 					if(start.spotted) {
-						spotcount += mid - start.weight;// System.out.println("Line 43");
+						spotcount += mid - start.weight - 1;// System.out.println("Line 43");
 					}
 					if(end.spotted) {
 						spotcount += end.weight - mid;  //System.out.println("Line 46");
@@ -56,7 +56,7 @@ public class learning {
 					spotcount += end.weight - mid;   //System.out.println("Line 54");
 				}
 				//spotcount += (end.weight - A) ;
-				System.out.println("Current Count: "+spotcount);
+				//System.out.println("Current Count: "+spotcount);
 				continue;
 			}
 			if(!inrange && start.weight >= A) {
@@ -64,11 +64,11 @@ public class learning {
 				spotcount ++;
 			}
 			if(start.weight <= B && B <= end.weight) {
-				System.out.println("Encapsulates B");
+				//System.out.println("Encapsulates B");
 				double mid = (start.weight + end.weight) / 2;
 				if( mid <= B) {
 					if(start.spotted) {
-						spotcount += Math.floor(mid) - start.weight;  //System.out.println("Line 63");
+						spotcount += Math.floor(mid) - start.weight - 1;  //System.out.println("Line 63");
 					}
 					if(end.spotted) {
 						spotcount += B - Math.ceil(mid);  //System.out.println("Line 66");
@@ -81,12 +81,12 @@ public class learning {
 				}else if(mid >A)
 				//spotcount += (B - start.weight);
 				inrange = false;
-				System.out.println("Current Count: "+spotcount);
+				//System.out.println("Current Count: "+spotcount);
 			}else if(inrange) {
 				double mid = (start.weight + end.weight)/2;
 				System.out.println("In range!!! "+mid);
 				if(start.spotted) {
-					spotcount += (Math.floor(mid)) - start.weight;  //System.out.println("Line 80");
+					spotcount += (Math.floor(mid)) - start.weight - 1;  //System.out.println("Line 80");
 				}
 				if(end.spotted) {
 					spotcount += end.weight - (Math.ceil(mid)); // System.out.println("Line 83");
