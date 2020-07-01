@@ -40,7 +40,7 @@ public class learning {
 				double mid = (start.weight + end.weight)/2;
 				if(A < mid) {
 					if(start.spotted) {
-						spotcount += mid - start.weight - 1;// System.out.println("Line 43");
+						spotcount += mid - start.weight;// System.out.println("Line 43");
 					}
 					if(end.spotted) {
 						spotcount += end.weight - mid;  //System.out.println("Line 46");
@@ -68,7 +68,7 @@ public class learning {
 				double mid = (start.weight + end.weight) / 2;
 				if( mid <= B) {
 					if(start.spotted) {
-						spotcount += Math.floor(mid) - start.weight - 1;  //System.out.println("Line 63");
+						spotcount += Math.floor(mid) - start.weight;  //System.out.println("Line 63");
 					}
 					if(end.spotted) {
 						spotcount += B - Math.ceil(mid);  //System.out.println("Line 66");
@@ -86,7 +86,7 @@ public class learning {
 				double mid = (start.weight + end.weight)/2;
 				System.out.println("In range!!! "+mid);
 				if(start.spotted) {
-					spotcount += (Math.floor(mid)) - start.weight - 1;  //System.out.println("Line 80");
+					spotcount += (Math.floor(mid)) - start.weight;  //System.out.println("Line 80");
 				}
 				if(end.spotted) {
 					spotcount += end.weight - (Math.ceil(mid)); // System.out.println("Line 83");
