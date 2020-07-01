@@ -21,13 +21,13 @@ public class learning {
 			int weight = Integer.parseInt(st.nextToken());
 			cows.add(new Cow(weight, spots));
 		}
-		/*cows.sort(new Comparator<Cow>() {
+		cows.sort(new Comparator<Cow>() {
 			@Override
 			public int compare(Cow arg0, Cow arg1) {
 				// TODO Auto-generated method stub
 				return Integer.compare(arg0.weight, arg1.weight);
 			}
-		});*/
+		});
 		boolean inrange = false;
 		int spotcount = 0;
 		for(int i = 0; i < cows.size()-1; i ++) {
