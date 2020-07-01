@@ -21,7 +21,7 @@ public class learning {
 			int weight = Integer.parseInt(st.nextToken());
 			cows.add(new Cow(weight, spots));
 		}
-
+		cows.sort(new Comparator<Cow>() {
 			@Override
 			public int compare(Cow arg0, Cow arg1) {
 				// TODO Auto-generated method stub
@@ -53,6 +53,7 @@ public class learning {
 				}
 				spotcount += (cows.get(i+1).weight - cows.get(i).weight);
 			}
+			System.out.println("Current Count: "+spotcount);
 		}
 		System.out.println(cows);
 		System.out.println(spotcount);
