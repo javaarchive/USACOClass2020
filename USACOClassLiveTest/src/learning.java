@@ -31,33 +31,77 @@ public class learning {
 		boolean inrange = false;
 		int spotcount = 0;
 		for(int i = 0; i < cows.size()-1; i ++) {
-			System.out.println(cows.get(i).weight+" "+cows.get(i+1).weight);
-			if(cows.get(i).weight <= A && A <= cows.get(i+1).weight) {
+			//System.out.println(start.weight+" "+end.weight);
+			Cow start = cows.get(i);
+			Cow end = cows.get(i + 1);
+			if(start.weight <= A && A <= end.weight) {
+				System.out.println("Encapsulates A");
 				inrange = true;
-				double mid = (cows.get(i).weight + cows.get(i+1).weight)/2;
-				if(mid == Math.floor(mid) && A < mid) {
-					spotcount += (cows.get(i).spotted && cows.get(i+1).spotted) ? -1:0;
+				double mid = (start.weight + end.weight)/2;
+				if(A < mid) {
+					if(start.spotted) {
+						spotcount += mid - start.weight;// System.out.println("Line 43");
+					}
+					if(end.spotted) {
+						spotcount += end.weight - mid;  //System.out.println("Line 46");
+					}
+					if(A <= mid && mid == Math.floor(mid)) {
+						if(start.spotted || end.spotted) {
+							spotcount ++; // System.out.println("Line 50");
+						}
+					}else {
+						spotcount ++;
+					}
+				}else if(A >= mid) {
+					spotcount += end.weight - mid;   //System.out.println("Line 54");
 				}
-				spotcount += (cows.get(i+1).weight - A) ;
-			}else if(cows.get(i).weight <= B && B <= cows.get(i+1).weight) {
-				double mid = (cows.get(i).weight + cows.get(i+1).weight)/2;
-				if(mid == Math.floor(mid) && mid < B) {
-					spotcount += (cows.get(i).spotted && cows.get(i+1).spotted) ? -1:0;
-				}
-				spotcount += (B - cows.get(i).weight);
-				inrange = false;
-			}else if(inrange) {
-				double mid = (cows.get(i).weight + cows.get(i+1).weight)/2;
-				if(mid == Math.floor(mid)) {
-					spotcount += (cows.get(i).spotted && cows.get(i+1).spotted) ? -1:0;
-				}
-				spotcount += (cows.get(i+1).weight - cows.get(i).weight);
+				//spotcount += (end.weight - A) ;
+				System.out.println("Current Count: "+spotcount);
+				continue;
 			}
-			System.out.println("Current Count: "+spotcount);
+			if(!inrange && start.weight >= A) {
+				inrange = true;
+				spotcount ++;
+			}
+			if(start.weight <= B && B <= end.weight) {
+				System.out.println("Encapsulates B");
+				double mid = (start.weight + end.weight) / 2;
+				if( mid <= B) {
+					if(start.spotted) {
+						spotcount += Math.floor(mid) - start.weight;  //System.out.println("Line 63");
+					}
+					if(end.spotted) {
+						spotcount += B - Math.ceil(mid);  //System.out.println("Line 66");
+					}
+					if(B >= mid && mid == Math.floor(mid)) {
+						if(start.spotted || end.spotted) {
+							spotcount ++;
+						}
+					}
+				}else if(mid >A)
+				//spotcount += (B - start.weight);
+				inrange = false;
+				System.out.println("Current Count: "+spotcount);
+			}else if(inrange) {
+				double mid = (start.weight + end.weight)/2;
+				System.out.println("In range!!! "+mid);
+				if(start.spotted) {
+					spotcount += (Math.floor(mid)) - start.weight;  //System.out.println("Line 80");
+				}
+				if(end.spotted) {
+					spotcount += end.weight - (Math.ceil(mid)); // System.out.println("Line 83");
+				}
+				if(mid == Math.floor(mid)) {
+					spotcount ++;  //System.out.println("Line 86");
+				}
+				//spotcount += (end.weight - start.weight);\
+				System.out.println("Current Count: "+spotcount);
+			}
 		}
-		System.out.println(cows);
-		System.out.println(spotcount);
-		
+		//spotcount ++; // Add beggning
+		//System.out.println(cows);
+		pw.println(spotcount);
+		pw.close();
 	}
 }
 class Cow{
