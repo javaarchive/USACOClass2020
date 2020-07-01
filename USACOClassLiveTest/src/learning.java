@@ -84,12 +84,14 @@ public class learning {
 				//System.out.println("Current Count: "+spotcount);
 			}else if(inrange) {
 				double mid = (start.weight + end.weight)/2;
-				System.out.println("In range!!! "+mid);
+				System.out.println("In range!!! "+mid+" "+start.weight+" "+end.weight);
 				if(start.spotted) {
-					spotcount += (Math.floor(mid)) - start.weight;  //System.out.println("Line 80");
+					spotcount += (Math.floor(mid) - 1) - start.weight;  //System.out.println("Line 80");
+					//System.out.println("+ "+((Math.floor(mid) - 1) - start.weight));
 				}
 				if(end.spotted) {
 					spotcount += end.weight - (Math.ceil(mid)); // System.out.println("Line 83");
+					System.out.println("+ "+(end.weight - Math.ceil(mid)));
 				}
 				if(mid == Math.floor(mid)) {
 					spotcount ++;  //System.out.println("Line 86");
