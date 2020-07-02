@@ -52,8 +52,7 @@ public class learning {
 				mid = (int) Math.floor(tempMid);
 				Segement newSeg = new Segement(prevMid, mid, prevCow.spotted);
 				if(mid == tempMid && prevCow.spotted == false && curCow.spotted == true){
-				//	mid --;
-					
+					newSeg.MID = true;
 				}
 				newCows.add(newSeg);
 				prevMid = mid;
@@ -76,9 +75,12 @@ public class learning {
 			if(start <= B && B <= end){
 				calcEnd = B;
 				if(calcStart > calcEnd){
-					//calcStart = B;
+					calcStart = B;
 				}
 				if(seg.spotted){
+					if(seg.MID){
+						spotcount ++;
+					}
 					spotcount += (calcEnd-calcStart) + 1;
 				}
 				inrange = false;
@@ -86,6 +88,9 @@ public class learning {
 			System.out.println(start+" "+end);
 			System.out.println("Calculation: "+calcStart+" "+calcEnd+" spotted: "+seg.spotted);
 			if(seg.spotted && inrange){
+				if(seg.MID){
+					spotcount ++;
+				}
 				spotcount += (calcEnd-calcStart) + 1;
 			}
 			System.out.println("Current spots count is "+spotcount);
