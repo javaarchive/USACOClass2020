@@ -42,23 +42,31 @@ public class learning {
 				prevCow = curCow;
 				continue; // SKIP!! We need a pair to process
 			}
-			System.out.println("Processing "+i+" cow with weight "+curCow.weight);
+			//System.out.println("Processing "+i+" cow with weight "+curCow.weight);
 			if(i == 1){
 				newCows.add(new Segement(prevCow.weight, curCow.weight, curCow.spotted));
 				prevMid = curCow.weight;
 			}else if(i == N+1){
 				Segement newSeg = new Segement(prevMid, curCow.weight, prevCow.spotted);
-				newCows.add(newSeg);
-			}else{
-				double tempMid = (curCow.weight + prevCow.weight)/2;
-				mid = (int) Math.floor(tempMid);
-				Segement newSeg = new Segement(prevMid, mid, prevCow.spotted);
-				System.out.println("Conditions "+(mid == tempMid)+" "+(prevCow.spotted == false)+" "+(curCow.spotted == true));
-				
-				if(prevIsInteger && prevCow.spotted == false && curCow.spotted == true){
+				if(prevIsInteger && prevCow.spotted == true){
 					newSeg.MID = true;
 				}
-				prevIsInteger = mid == tempMid;
+				newCows.add(newSeg);
+			}else{
+				double tempMid = (curCow.weight + prevCow.weight)/2.0;
+				mid = (int) Math.floor(tempMid);
+				Segement newSeg = new Segement(prevMid, mid, prevCow.spotted);
+				//System.out.println("Conditions "+(prevIsInteger)+" "+(prevCow.spotted == false)+" "+(curCow.spotted == true));
+				
+				if(prevIsInteger && prevCow.spotted == true){
+					newSeg.MID = true;
+				}
+				if(mid == tempMid && prevCow.spotted==false)
+					prevIsInteger = true;
+				else
+				prevIsInteger = false;
+
+				//System.out.println("mid "+(mid)+" "+"tempMid "+ tempMid);
 				newCows.add(newSeg);
 				prevMid = mid;
 			}
@@ -66,7 +74,7 @@ public class learning {
 		}
 		boolean inrange = false;
 		int spotcount = 0;
-		System.out.println(newCows);
+		//System.out.println(newCows);
 		for(Segement seg: newCows){
 			int start = seg.start, end = seg.end;
 			int calcStart = start + 1,calcEnd = end;
@@ -90,18 +98,18 @@ public class learning {
 				}
 				inrange = false;
 			}
-			System.out.println(start+" "+end);
-			System.out.println("Calculation: "+calcStart+" "+calcEnd+" spotted: "+seg.spotted+" MID: "+seg.MID);
+			//System.out.println(start+" "+end);
+			//System.out.println("Calculation: "+calcStart+" "+calcEnd+" spotted: "+seg.spotted+" MID: "+seg.MID);
 			if(seg.spotted && inrange){
 				if(seg.MID){
 					spotcount ++;
 				}
 				spotcount += (calcEnd-calcStart) + 1;
 			}
-			System.out.println("Current spots count is "+spotcount);
+			//System.out.println("Current spots count is "+spotcount);
 		}
 		//spotcount ++; // Add end
-		//System.out.println(cows);
+		////System.out.println(cows);
 		pw.println(spotcount);
 		pw.close();
 	}
