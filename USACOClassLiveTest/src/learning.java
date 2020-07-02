@@ -46,11 +46,14 @@ public class learning {
 				newCows.add(new Segement(prevCow.weight, curCow.weight, curCow.spotted));
 				prevMid = curCow.weight;
 			}else if(i == N+1){
-				newCows.add(new Segement(prevMid, curCow.weight, prevCow.spotted));
+				Segement newSeg = new Segement(prevMid, curCow.weight, prevCow.spotted);
+				newCows.add(newSeg);
 			}else{
 				double tempMid = (curCow.weight + prevCow.weight)/2;
 				mid = (int) Math.floor(tempMid);
 				Segement newSeg = new Segement(prevMid, mid, prevCow.spotted);
+				System.out.println("Conditions "+(mid == tempMid)+" "+(prevCow.spotted == false)+" "+(curCow.spotted == true));
+				
 				if(mid == tempMid && prevCow.spotted == false && curCow.spotted == true){
 					newSeg.MID = true;
 				}
@@ -86,7 +89,7 @@ public class learning {
 				inrange = false;
 			}
 			System.out.println(start+" "+end);
-			System.out.println("Calculation: "+calcStart+" "+calcEnd+" spotted: "+seg.spotted);
+			System.out.println("Calculation: "+calcStart+" "+calcEnd+" spotted: "+seg.spotted+" MID: "+seg.MID);
 			if(seg.spotted && inrange){
 				if(seg.MID){
 					spotcount ++;
@@ -129,6 +132,6 @@ class Segement{
 		this.MID = mid;
 	}
 	public String toString() {
-		return "Segement("+start+", "+end+" : SPOTTED = "+this.spotted+")";
+		return "Segement("+start+", "+end+" : SPOTTED = "+this.spotted+", MID = "+this.MID+")";
 	}
 }
