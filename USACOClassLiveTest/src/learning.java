@@ -34,6 +34,7 @@ public class learning {
 		Cow prevCow = new Cow(-1,false), curCow = new Cow(-1, false);
 		//                              Compiler Satsifcation
 		int prevMid = Integer.MIN_VALUE,mid = 0;
+		boolean prevIsInteger = false;
 		for(int i = 0; i < N+2; i ++){
 			//boolean isEdge = (i == 0) || (i == N+1);
 			curCow = cows.get(i);
@@ -54,9 +55,10 @@ public class learning {
 				Segement newSeg = new Segement(prevMid, mid, prevCow.spotted);
 				System.out.println("Conditions "+(mid == tempMid)+" "+(prevCow.spotted == false)+" "+(curCow.spotted == true));
 				
-				if(mid == tempMid && prevCow.spotted == false && curCow.spotted == true){
+				if(prevIsInteger && prevCow.spotted == false && curCow.spotted == true){
 					newSeg.MID = true;
 				}
+				prevIsInteger = mid == tempMid;
 				newCows.add(newSeg);
 				prevMid = mid;
 			}
@@ -78,7 +80,7 @@ public class learning {
 			if(start <= B && B <= end){
 				calcEnd = B;
 				if(calcStart > calcEnd){
-					calcStart = B;
+				//	calcStart = B;
 				}
 				if(seg.spotted){
 					if(seg.MID){
