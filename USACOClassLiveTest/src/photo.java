@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.*;
-
 public class photo {
 	public static void main(String[] args) throws IOException{
 		// IO
@@ -20,7 +19,6 @@ public class photo {
 			compliants.add(new Compliant(x, y));
 		}
 		compliants.sort(new Comparator<Compliant>(){
-
 			@Override
 			public int compare(Compliant o1, Compliant o2) {
 				// TODO Auto-generated method stub
@@ -32,9 +30,11 @@ public class photo {
 			}
 		});
 		int photos = 0;
-		int currentPos = 0;
+		int prevPos = -1;
+		int currentPos = N;
 		for(Compliant c: compliants){
-			if(c.y > currentPos){
+			if(c.y > currentPos && c.x < currentPos && prevPos < c.x){
+				prevPos = currentPos;
 				currentPos = c.y;
 				photos++;
 			}
@@ -42,7 +42,6 @@ public class photo {
 		pw.println(photos);
 		pw.close();
 	}
-
 }
 class Compliant{
 	int x,y;
