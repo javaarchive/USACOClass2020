@@ -26,49 +26,39 @@ public class cownomics {
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		String[] spotty = new String[N];
-		// String[] spotless = new String[N];
+		String[] spotless = new String[N];
 		boolean seen[][][] = new boolean[4][4][4];
 		for (int i = 0; i < N; i++) {
 			String line = f.readLine();
 			spotty[i] = line;
-			for (int j = 0; j < M; j++) {
-				for(int k = j+1; k < M; k ++){
-					for(int l = k+1; l < M; l ++){
-						seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))] = true;
-						
-					}
-				}
-			}
 		}
 		for (int i = 0; i < N; i++) {
 			String line = f.readLine();
-			//spotless[i] = line;
-			for (int j = 0; j < M; j++) {
-				for(int k = j+1; k < M; k ++){
-					for(int l = k+1; l < M; l ++){
-						seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))] = false;
-					}
-				}
-			}
+			spotless[i] = line;
 		}
-	int count = 0;
-		
+		int count = 0;
 		for (int j = 0; j < M; j++) {
 			for(int k = j+1; k < M; k ++){
 				for(int l = k+1; l < M; l ++){
-					boolean countit = true;
-					for(int i = 0; i < spotty.length; i ++){
+					seen = new boolean[4][4][4];
+					for(int i = 0;i < N; i ++){
 						String line = spotty[i];
-						if(seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))]){
-							//countit = true;
-						}else{
-							countit = false;
+						seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))] = true;
+					}
+					for(int i = 0;i < N; i ++){
+						String line = spotty[i];
+						seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))] = false;
+					}
+					boolean works = true;
+					for(int i = 0;i < N; i ++){
+						String line = spotty[i];
+						if(!seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))]){
+							works = false;
 						}
-						
-				}
-				if(countit){
-					count ++;
-				}
+					}
+					if(works){
+						count ++;
+					}
 				}
 			}
 		}
