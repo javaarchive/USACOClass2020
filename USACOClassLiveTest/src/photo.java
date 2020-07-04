@@ -21,7 +21,6 @@ public class photo {
 		compliants.sort(new Comparator<Compliant>(){
 			@Override
 			public int compare(Compliant o1, Compliant o2) {
-				// TODO Auto-generated method stub
 				int ycompare = Integer.compare(o1.y, o2.y);;
 				if(ycompare == 0){
 					return Integer.compare(o1.x, o2.x);
@@ -31,13 +30,16 @@ public class photo {
 		});
 		int photos = 0;
 		int prevPos = -1;
-		int currentPos = N;
+		int currentPos = compliants.get(0).y - 1;
+		System.out.println(compliants);
 		for(Compliant c: compliants){
-			if(c.y > currentPos && c.x < currentPos && prevPos < c.x){
+			if(c.y > currentPos && c.x <= currentPos && prevPos <= c.x){
 				prevPos = currentPos;
-				currentPos = c.y;
+				currentPos = c.y - 1;
+				//System.out.println(currentPos+" "+c.y);
 				photos++;
 			}
+			System.out.println(prevPos+" "+currentPos);
 		}
 		pw.println(photos);
 		pw.close();
@@ -48,5 +50,8 @@ class Compliant{
 	public Compliant(int a, int b){
 		this.x = Integer.min(a, b);
 		this.y = Integer.max(a, b);
+	}
+	public String toString(){
+		return "{"+this.x+","+this.y+"}";
 	}
 }
