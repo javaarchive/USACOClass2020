@@ -29,19 +29,20 @@ public class photo {
 			}
 		});
 		int photos = 1;
-		int prevPos = -1;
+		int prevPos = 0;
 		int currentPos = compliants.get(0).y - 1;
 		//System.out.println(compliants);
+		System.out.println("Set currentPos initially  to "+prevPos+" "+currentPos);
 		for(Compliant c: compliants){
 			System.out.println("COMPLIANT: "+c);
 			if(c.y > currentPos && c.x <= currentPos && prevPos <= c.x){
 				prevPos = currentPos;
-				currentPos = c.y - 1;
-				//System.out.println("NEW: " + currentPos+" "+c.x+" "+c.y);
+				currentPos = c.y;
+				System.out.println("NEW: " + currentPos+" "+c.x+" "+c.y);
 				photos ++;
 			}else if(c.y > currentPos && c.x > currentPos){
 				prevPos = currentPos;
-				currentPos = c.y - 1;
+				currentPos = c.y;
 				photos ++;
 			}
 			System.out.println("RANGE :"+prevPos+" "+currentPos);
