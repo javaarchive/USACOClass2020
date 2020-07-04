@@ -32,11 +32,11 @@ public class photo {
 		int prevPos = 0;
 		int currentPos = compliants.get(0).y - 1;
 		//System.out.println(compliants);
-		System.out.println("Set currentPos initially  to "+prevPos+" "+currentPos);
-		for(int i = 0; i < M-1; i ++){
+		//System.out.println("Set currentPos initially  to "+prevPos+" "+currentPos);
+		for(int i = 0; i < M; i ++){
 			Compliant c1 = compliants.get(i);
-			Compliant c2 = compliants.get(i+1);
-			System.out.println("COMPLIANT pair: "+c1+" "+c2);
+			//Compliant c2 = compliants.get(i+1);
+			//System.out.println("COMPLIANT pair: "+c1+" ");//c2);
 			if(c1.x < prevPos){
 				continue;
 			}else if(c1.x >= prevPos){
