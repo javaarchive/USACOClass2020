@@ -36,12 +36,12 @@ public class photo {
 		for(Compliant c: compliants){
 			System.out.println("COMPLIANT: "+c);
 			if(c.y > currentPos && c.x <= currentPos && prevPos <= c.x){
-				prevPos = currentPos;
+				prevPos = currentPos+1;
 				currentPos = c.y;
 				System.out.println("NEW: " + currentPos+" "+c.x+" "+c.y);
 				photos ++;
 			}else if(c.y > currentPos && c.x > currentPos){
-				prevPos = currentPos;
+				prevPos = currentPos+1;
 				currentPos = c.y;
 				photos ++;
 			}
