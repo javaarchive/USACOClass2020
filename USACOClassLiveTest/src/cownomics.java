@@ -69,7 +69,7 @@ public class cownomics {
 				}
 			}
 		}
-	}
+	
 	/*for(int[][] dim2: seen){
 		for(int[] dim3: dim2){
 			for(int state: dim3){
