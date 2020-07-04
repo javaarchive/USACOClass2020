@@ -56,15 +56,18 @@ public class cownomics {
 		for (int j = 0; j < M; j++) {
 			for(int k = j+1; k < M; k ++){
 				for(int l = k+1; l < M; l ++){
-					boolean countit = false;
+					boolean countit = true;
 					for(int i = 0; i < spotty.length; i ++){
 						String line = spotty[i];
 						if(seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))]){
-							countit = true;
+							//countit = true;
+						}else{
+							countit = false;
 						}
-						if(countit){
-							count ++;
-						}
+						
+				}
+				if(countit){
+					count ++;
 				}
 				}
 			}
