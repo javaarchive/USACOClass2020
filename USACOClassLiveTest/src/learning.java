@@ -61,7 +61,7 @@ public class learning {
 				if(prevIsInteger && prevCow.spotted == true){
 					newSeg.MID = true;
 				}
-				if(mid == tempMid && prevCow.spotted==false)
+				if(mid == tempMid && prevCow.spotted == false)
 					prevIsInteger = true;
 				else
 				prevIsInteger = false;
@@ -75,13 +75,12 @@ public class learning {
 		boolean inrange = false;
 		int spotcount = 0;
 		//System.out.println(newCows);
-		boolean killloop = false;
 		for(Segement seg: newCows){
-			if(killloop){
-				break;
-			}
 			int start = seg.start, end = seg.end;
 			int calcStart = start + 1,calcEnd = end;
+			if(B < start){
+				break;
+			}
 			if(A < start && !inrange){
 				inrange = true;
 			}
@@ -101,12 +100,11 @@ public class learning {
 					spotcount += (calcEnd-calcStart) + 1;
 				}
 				inrange = false;
-				killloop = true;
 			}
 			//System.out.println(start+" "+end);
 			//System.out.println("Calculation: "+calcStart+" "+calcEnd+" spotted: "+seg.spotted+" MID: "+seg.MID);
 			if(seg.spotted && inrange){
-				if(seg.MID){
+				if(seg.MID && start <= A){
 					spotcount ++;
 				}
 				spotcount += (calcEnd-calcStart) + 1;
