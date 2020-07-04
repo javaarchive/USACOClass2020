@@ -33,16 +33,18 @@ public class photo {
 		int currentPos = compliants.get(0).y - 1;
 		//System.out.println(compliants);
 		System.out.println("Set currentPos initially  to "+prevPos+" "+currentPos);
-		for(Compliant c: compliants){
-			System.out.println("COMPLIANT: "+c);
-			if(c.y > currentPos && c.x <= currentPos && prevPos <= c.x){
+		for(int i = 0; i < M-1; i ++){
+			Compliant c1 = compliants.get(i);
+			Compliant c2 = compliants.get(i+1);
+			System.out.println("COMPLIANT: "+c1);
+			if(c1.y > currentPos && c1.x <= currentPos && prevPos <= c1.x){
 				prevPos = currentPos+1;
-				currentPos = c.y;
-				System.out.println("NEW: " + currentPos+" "+c.x+" "+c.y);
+				currentPos = c2.y;
+				System.out.println("NEW: " + currentPos+" "+c1.x+" "+c1.y);
 				photos ++;
-			}else if(c.y > currentPos && c.x > currentPos){
+			}else if(c1.y > currentPos && c1.x > currentPos){
 				prevPos = currentPos+1;
-				currentPos = c.y;
+				currentPos = c2.y;
 				photos ++;
 			}
 			System.out.println("RANGE :"+prevPos+" "+currentPos);
