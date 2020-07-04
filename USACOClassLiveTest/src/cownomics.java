@@ -25,15 +25,16 @@ public class cownomics {
 		StringTokenizer st = new StringTokenizer(f.readLine());
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
-		// String[] spotty = new String[N];
+		String[] spotty = new String[N];
 		// String[] spotless = new String[N];
-		int seen[][][] = new int[64];
+		boolean seen[][][] = new boolean[4][4][4];
 		for (int i = 0; i < N; i++) {
 			String line = f.readLine();
+			spotty[i] = line;
 			for (int j = 0; j < M; j++) {
 				for(int k = j+1; k < M; k ++){
 					for(int l = k+1; l < M; l ++){
-						seen[NUMERIZE(line.charAt(j))*16 + NUMERIZE(line.charAt(k))*4 + NUMERIZE(line.charAt(l))][i][j][k]];
+						seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))] = true;
 						
 					}
 				}
@@ -41,25 +42,37 @@ public class cownomics {
 		}
 		for (int i = 0; i < N; i++) {
 			String line = f.readLine();
+			//spotless[i] = line;
 			for (int j = 0; j < M; j++) {
 				for(int k = j+1; k < M; k ++){
 					for(int l = k+1; l < M; l ++){
-						seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))] = 0;
+						seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))] = false;
 					}
 				}
 			}
 		}
-	
 	int count = 0;
-	for(int[][] dim2: seen){
-		for(int[] dim3: dim2){
-			for(int state: dim3){
-				if(state != 0){
-					count += state;
+	for(int i = 0; i < spotty.length; i ++){
+		String line = spotty[i];
+		for (int j = 0; j < M; j++) {
+			for(int k = j+1; k < M; k ++){
+				for(int l = k+1; l < M; l ++){
+					if(seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))]){
+						count ++;
+					}
 				}
 			}
 		}
 	}
+	/*for(int[][] dim2: seen){
+		for(int[] dim3: dim2){
+			for(int state: dim3){
+				if(state){
+					count += state;
+				}
+			}
+		}
+	}*/
 	//System.out.println(Arrays.deepToString(seen).replace("]", "]\n"));
 	pw.println(count);
 	pw.close();
