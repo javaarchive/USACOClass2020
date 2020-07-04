@@ -52,14 +52,20 @@ public class cownomics {
 			}
 		}
 	int count = 0;
-	for(int i = 0; i < spotty.length; i ++){
-		String line = spotty[i];
+		
 		for (int j = 0; j < M; j++) {
 			for(int k = j+1; k < M; k ++){
 				for(int l = k+1; l < M; l ++){
-					if(seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))]){
-						count ++;
-					}
+					boolean countit = false;
+					for(int i = 0; i < spotty.length; i ++){
+						String line = spotty[i];
+						if(seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))]){
+							countit = true;
+						}
+						if(countit){
+							count ++;
+						}
+				}
 				}
 			}
 		}
@@ -73,7 +79,7 @@ public class cownomics {
 			}
 		}
 	}*/
-	//System.out.println(Arrays.deepToString(seen).replace("]", "]\n"));
+	System.out.println(Arrays.deepToString(seen).replace("]", "]\n"));
 	pw.println(count);
 	pw.close();
 	}
