@@ -46,7 +46,7 @@ public class cownomics {
 						seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))] = true;
 					}
 					for(int i = 0;i < N; i ++){
-						String line = spotty[i];
+						String line = spotless[i];
 						seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))] = false;
 					}
 					boolean works = true;
@@ -72,7 +72,7 @@ public class cownomics {
 			}
 		}
 	}*/
-	System.out.println(Arrays.deepToString(seen).replace("]", "]\n"));
+	//System.out.println(Arrays.deepToString(seen).replace("]", "]\n"));
 	pw.println(count);
 	pw.close();
 	}
