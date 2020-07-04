@@ -104,7 +104,7 @@ public class learning {
 			//System.out.println(start+" "+end);
 			//System.out.println("Calculation: "+calcStart+" "+calcEnd+" spotted: "+seg.spotted+" MID: "+seg.MID);
 			if(seg.spotted && inrange){
-				if(seg.MID && start <= A){
+				if(seg.MID && A < start){
 					spotcount ++;
 				}
 				spotcount += (calcEnd-calcStart) + 1;
