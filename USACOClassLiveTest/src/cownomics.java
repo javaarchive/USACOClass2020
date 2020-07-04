@@ -2,7 +2,19 @@ import java.io.*;
 import java.util.*;
 
 public class cownomics {
-
+	public static int NUMERIZE(char c){
+		switch(c){
+			case 'G':
+				return 0;
+			case 'A':
+				return 1;
+			case 'C':
+				return 2;
+			case 'T':
+				return 3;
+		}
+		return -1;
+	}
 	public static void main(String[] args) throws IOException {
 		// IO
 		// new FileReader("cownomics.in")
@@ -15,55 +27,39 @@ public class cownomics {
 		M = Integer.parseInt(st.nextToken());
 		// String[] spotty = new String[N];
 		// String[] spotless = new String[N];
-		boolean[][] spottySeen = new boolean[M][4];
-		boolean[][] spotlessSeen = new boolean[M][4];
+		boolean seen[][][] = new boolean[4][4][4];
 		for (int i = 0; i < N; i++) {
 			String line = f.readLine();
 			for (int j = 0; j < M; j++) {
-				char c = line.charAt(j);
-				switch (c) {
-				case 'G':
-					spottySeen[j][0] = true;
-					break;
-				case 'A':
-					spottySeen[j][1] = true;
-					break;
-
-				case 'C':
-					spottySeen[j][2] = true;
-					break;
-
-				case 'T':
-					spottySeen[j][3] = true;
-					break;
-
+				for(int k = l+1; k < M; k ++){
+					for(int l = k+1; l < M; l ++){
+						seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))] = true;
+					}
 				}
 			}
 		}
 		for (int i = 0; i < N; i++) {
 			String line = f.readLine();
 			for (int j = 0; j < M; j++) {
-				char c = line.charAt(j);
-				switch (c) {
-				case 'G':
-					spotlessSeen[j][0] = true;
-					break;
-				case 'A':
-					spotlessSeen[j][1] = true;
-					break;
-
-				case 'C':
-					spotlessSeen[j][2] = true;
-					break;
-
-				case 'T':
-					spotlessSeen[j][3] = true;
-					break;
-
+				for(int k = l+1; k < M; k ++){
+					for(int l = k+1; l < M; l ++){
+						seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))] = !seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))];
+					}
 				}
 			}
 		}
-		
+	
+	int count = 0;
+	for(boolean[][] dim2: seen){
+		for(boolean[] dim3: dim2){
+			for(boolean state: dim3){
+				if(state){
+					count ++;
+				}
+			}
+		}
 	}
-
+	pw.println(count);
+	pw.close();
+	}
 }
