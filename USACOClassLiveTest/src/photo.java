@@ -36,18 +36,14 @@ public class photo {
 		for(int i = 0; i < M-1; i ++){
 			Compliant c1 = compliants.get(i);
 			Compliant c2 = compliants.get(i+1);
-			System.out.println("COMPLIANT: "+c1);
-			if(c1.y > currentPos && c1.x <= currentPos && prevPos <= c1.x){
-				prevPos = currentPos+1;
-				currentPos = c2.y;
-				System.out.println("NEW: " + currentPos+" "+c1.x+" "+c1.y);
-				photos ++;
-			}else if(c1.y > currentPos && c1.x > currentPos){
-				prevPos = currentPos+1;
-				currentPos = c2.y;
+			System.out.println("COMPLIANT pair: "+c1+" "+c2);
+			if(c1.x < prevPos){
+				continue;
+			}else if(c1.x >= prevPos){
+				prevPos = c1.y;
 				photos ++;
 			}
-			System.out.println("RANGE :"+prevPos+" "+currentPos);
+			//System.out.println("RANGE :"+prevPos+" "+currentPos);
 		}
 		pw.println(photos);
 		pw.close();
