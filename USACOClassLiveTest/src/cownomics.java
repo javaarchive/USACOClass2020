@@ -27,13 +27,14 @@ public class cownomics {
 		M = Integer.parseInt(st.nextToken());
 		// String[] spotty = new String[N];
 		// String[] spotless = new String[N];
-		boolean seen[][][] = new boolean[4][4][4];
+		int seen[][][] = new int[64];
 		for (int i = 0; i < N; i++) {
 			String line = f.readLine();
 			for (int j = 0; j < M; j++) {
-				for(int k = l+1; k < M; k ++){
+				for(int k = j+1; k < M; k ++){
 					for(int l = k+1; l < M; l ++){
-						seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))] = true;
+						seen[NUMERIZE(line.charAt(j))*16 + NUMERIZE(line.charAt(k))*4 + NUMERIZE(line.charAt(l))][i][j][k]];
+						
 					}
 				}
 			}
@@ -41,24 +42,25 @@ public class cownomics {
 		for (int i = 0; i < N; i++) {
 			String line = f.readLine();
 			for (int j = 0; j < M; j++) {
-				for(int k = l+1; k < M; k ++){
+				for(int k = j+1; k < M; k ++){
 					for(int l = k+1; l < M; l ++){
-						seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))] = !seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))];
+						seen[NUMERIZE(line.charAt(j))][NUMERIZE(line.charAt(k))][NUMERIZE(line.charAt(l))] = 0;
 					}
 				}
 			}
 		}
 	
 	int count = 0;
-	for(boolean[][] dim2: seen){
-		for(boolean[] dim3: dim2){
-			for(boolean state: dim3){
-				if(state){
-					count ++;
+	for(int[][] dim2: seen){
+		for(int[] dim3: dim2){
+			for(int state: dim3){
+				if(state != 0){
+					count += state;
 				}
 			}
 		}
 	}
+	//System.out.println(Arrays.deepToString(seen).replace("]", "]\n"));
 	pw.println(count);
 	pw.close();
 	}
