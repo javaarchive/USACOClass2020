@@ -1,7 +1,8 @@
 import java.io.*;
 import java.util.*;
 public class fairphoto{
-	static int[][] ps;
+	static int[] ps;
+	/*
 	public static int size, HCowcount, GCowcount, balance;
 	public static void query(int start, int end){
 		if(start == 0){
@@ -19,7 +20,7 @@ public class fairphoto{
 	}
 	public static boolean valid(){
 		return (GCowcount == 0) || (HCowcount == 0) || (HCowcount == GCowcount);
-	}
+	}*/
 	static int seen[];
 	public static void main(String[] args) throws IOException{
 		// IO
@@ -45,7 +46,7 @@ public class fairphoto{
 		});
 		System.out.println(cows);
 		Livestock cow;
-		ps = new int[N][4];
+		ps = new int[N];
 		Arrays.fill(seen, -1);
 		int bal = 0;
 		int Hcount = 0;
@@ -58,15 +59,17 @@ public class fairphoto{
 			}else{
 				Hcount ++;
 			}
-			ps[i][0] = bal;
-			/*ps[i][1] = Hcount;
-			ps[i][2] = Gcount;
-			ps[i][3] = cow.index;*/
+			ps[i] = bal;
 			seen[(bal+N+1)] = i;
 		}
-		for(int i = N; i >= 0; i --){
-			
+		int ans = 0;
+		for(int i = N-1; i >= 0; i --){
+			int result = seen[ps[i]];
+			if(result != -1){
+				ans = Integer.max(ans, cows.get(i).index - cows.get(result).index);
+			}
 		}
+		pw.println(ans);
 		pw.close();
 		f.close();
 		
