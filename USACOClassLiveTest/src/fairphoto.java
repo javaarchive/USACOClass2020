@@ -59,10 +59,11 @@ public class fairphoto{
 			}else{
 				//Hcount ++;
 			}*/
-			ps[i] = bal;
 			bal += cow.type ? -1: 1;
+			ps[i] = bal;
 			seen[(bal+N)] = i;
 		}
+		System.out.println(Arrays.toString(ps));
 		int ans = 0;
 		for(int i = 0; i < N; i ++){
 			int result = seen[ps[i] + N];
@@ -70,8 +71,8 @@ public class fairphoto{
 			if(result != -1 && result > i){
 				ans = Integer.max(ans, cows.get(result).index - cows.get(i).index);
 			}
-			//System.out.println("P:"+i+" "+result);
-			//System.out.println("I:"+cows.get(result).index+" "+cows.get(i).index);
+			System.out.println("P:"+ps[i]+" ::"+i+" "+result);
+			System.out.println("I:"+cows.get(result).index+" "+cows.get(i).index);
 		}
 		pw.println(ans);
 		pw.close();
@@ -79,7 +80,8 @@ public class fairphoto{
 		
 	}
 }
-
+// G, H, G, G, H, G.  
+//
 class Livestock{
 	boolean type;
 	int index;
