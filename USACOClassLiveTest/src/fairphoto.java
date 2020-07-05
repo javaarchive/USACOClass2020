@@ -24,9 +24,22 @@ public class fairphoto{
 			
 		});
 		System.out.println(cows);
-		Livestock lastCow = cows.get(0);
-		for(int i = 1; i < cows.size(); i ++) {
-			
+		Livestock cow;
+		int[][] ps = new int[N][3];
+		int bal = 0;
+		int lastH = -1
+		int lastG = -1;
+		for(int i = 0; i < cows.size(); i ++) {
+			cow = cows.get(i);
+			bal += cow.type ? -1: 1;
+			if(cow.type == true){
+				lastG = i;
+			}else{
+				lastH = i;
+			}
+			ps[i][0] = bal;
+			ps[i][1] = lastH;
+			ps[i][2] = lastG;
 		}
 		pw.close();
 		f.close();
