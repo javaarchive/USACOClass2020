@@ -38,10 +38,10 @@ public class scramble {
         cows.sort(new Comparator<ScrambledCow>() {
             @Override
             public int compare(final ScrambledCow o1, final ScrambledCow o2) {
-                return sortString(o1.str, -1).compareTo(sortString(o2.str, 1));
+                return sortString(o1.str, 1).compareTo(sortString(o2.str, 1));
             }
-
         });
+        List<ScrambledCow> smallcows = new ArrayList<>(cows);
         System.out.println(cows);
         for(int i = 0; i < N; i ++){
             cows.get(i).minpos = i + 1;
@@ -49,9 +49,15 @@ public class scramble {
         cows.sort(new Comparator<ScrambledCow>() {
             @Override
             public int compare(final ScrambledCow o1, final ScrambledCow o2) {
-                return sortString(o1.str, 1).compareTo(sortString(o2.str, -1));
+                return sortString(o1.str, -1).compareTo(sortString(o2.str, -1));
             }
-
+        });
+        List<ScrambledCow> bigcows = new ArrayList<>(cows);
+        cows.sort(new Comparator<ScrambledCow>() {
+            @Override
+            public int compare(final ScrambledCow o1, final ScrambledCow o2) {
+                return sortString(o1.str, -1).compareTo(sortString(o2.str, -1));
+            }
         });
         System.out.println(cows);
         for(int i = 0; i < N; i ++){
