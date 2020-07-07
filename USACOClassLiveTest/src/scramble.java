@@ -25,51 +25,49 @@ public class scramble {
     public static void main(final String[] args) throws IOException {
         // IO
         // BufferedReader f = new BufferedReader(new FileReader("reduce.in"));
-        final BufferedReader f = new BufferedReader(new InputStreamReader(System.in));
-        final PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
+        BufferedReader f = new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
         // PrintWriter pw = new PrintWriter(new BufferedWriter(new
         // FileWriter("reduce.out")));
-        final int N = Integer.parseInt(f.readLine());
-        final List<ScrambledCow> cows = new ArrayList<>();
+        int N = Integer.parseInt(f.readLine());
+        List<ScrambledCow> cows = new ArrayList<>();
         for (int i = 0; i < N; i++) {
             final String line = f.readLine();
             cows.add(new ScrambledCow(line, i));
         }
-        cows.sort(new Comparator<ScrambledCow>() {
+        List<ScrambledCow> smallcows = new ArrayList<>(cows);
+        List<ScrambledCow> bigcows = new ArrayList<>(cows);
+        smallcows.sort(new Comparator<ScrambledCow>() {
             @Override
             public int compare(final ScrambledCow o1, final ScrambledCow o2) {
                 return sortString(o1.str, 1).compareTo(sortString(o2.str, 1));
             }
         });
-        List<ScrambledCow> smallcows = new ArrayList<>(cows);
-        System.out.println(cows);
-        for(int i = 0; i < N; i ++){
-            cows.get(i).minpos = i + 1;
-        }
-        cows.sort(new Comparator<ScrambledCow>() {
+        bigcows.sort(new Comparator<ScrambledCow>() {
             @Override
             public int compare(final ScrambledCow o1, final ScrambledCow o2) {
                 return sortString(o1.str, -1).compareTo(sortString(o2.str, -1));
             }
         });
-        List<ScrambledCow> bigcows = new ArrayList<>(cows);
-        cows.sort(new Comparator<ScrambledCow>() {
-            @Override
-            public int compare(final ScrambledCow o1, final ScrambledCow o2) {
-                return sortString(o1.str, -1).compareTo(sortString(o2.str, -1));
-            }
-        });
-        System.out.println(cows);
+        int a = 0, b = 0;
+        String sstring = sortString(smallcows.get(a).str, 1);
+        String bstring = sortString(bigcows.get(a).str, 1);
         for(int i = 0; i < N; i ++){
-            cows.get(i).maxpos = i + 1;
-        }
-        cows.sort(new Comparator<ScrambledCow>() {
-            @Override
-            public int compare(final ScrambledCow o1, final ScrambledCow o2) {
-                return Integer.compare(o1.origIndex, o2.origIndex);
+            ScrambledCow sc = cows.get(i);
+            System.out.println("NL");
+            while(a < N && sstring.compareTo(sc.str) < 0){
+                System.out.println(a);
+                a++;
+                if(a < N){sstring = sortString(smallcows.get(a).str, 1);}
             }
-
-        });
+            while(b < N && bstring.compareTo(sc.str) < 0){
+                System.out.println(b);
+                b++;
+                if(b < N){bstring = sortString(bigcows.get(b).str, -1);}
+            }
+            sc.minpos = a;
+            sc.maxpos = b;
+        }
         for(int i = 0; i < N; i ++){
             ScrambledCow c = cows.get(i);
             pw.println(c.minpos+" "+c.maxpos);
