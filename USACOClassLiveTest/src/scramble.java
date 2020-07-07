@@ -53,23 +53,25 @@ public class scramble {
         String sstring = sortString(smallcows.get(0).str, 1);
         String bstring = sortString(bigcows.get(0).str, -1);
         for(int i = 0; i < N; i ++){
-            ScrambledCow smallcow = cows.get(i);
-            ScrambledCow bigcow = cows.get(i);
-            String smallcowstr = sortString(cows.get(i).str,1);
-            String bigcowstr = sortString(cows.get(i).str, -1);
+            ScrambledCow smallcow = smallcows.get(i);
+            ScrambledCow bigcow = bigcows.get(i);
+            String smallcowstr = sortString(smallcows.get(i).str,1);
+            String bigcowstr = sortString(bigcows.get(i).str, -1);
             System.out.println("NL");
             while(a < N && sstring.compareTo(bigcowstr) < 0){
+                b ++;
                 System.out.println("a: "+a);
-                a++;
                 if(a < N){sstring = sortString(smallcows.get(a).str, 1);}
             }
             while(b < N && bstring.compareTo(smallcowstr) < 0){
+                b ++;
                 System.out.println("b: "+b);
-                b++;
                 if(b < N){bstring = sortString(bigcows.get(b).str, -1);}
             }
-            smallcow.minpos = a;
-            bigcow.maxpos = b;
+            if(b == N){b--;}
+            if(a == N){b--;}
+            smallcow.minpos = smallcows.get(a).origIndex + 1;
+            bigcow.maxpos = bigcows.get(b).origIndex + 1;
         }
         for(int i = 0; i < N; i ++){
             ScrambledCow c = cows.get(i);
