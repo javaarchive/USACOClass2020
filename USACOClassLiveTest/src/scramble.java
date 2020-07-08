@@ -36,24 +36,24 @@ public class scramble {
         }
         List<ScrambledCow> smallcows = new ArrayList<>(cows);
         List<ScrambledCow> bigcows = new ArrayList<>(cows);
-        smallcows.sort(new Comparator<ScrambledCow>() {
-            @Override
-            public int compare(final ScrambledCow o1, final ScrambledCow o2) {
-                return sortString(o1.str, 1).compareTo(sortString(o2.str, 1));
-            }
-        });
-        bigcows.sort(new Comparator<ScrambledCow>() {
-            @Override
-            public int compare(final ScrambledCow o1, final ScrambledCow o2) {
-                return sortString(o1.str, -1).compareTo(sortString(o2.str, -1));
-            }
-        });
         for(int i = 0; i < N; i ++){
             ScrambledCow origCow = smallcows.get(i);
             smallcows.set(i, new ScrambledCow(sortString(origCow.str, 1), origCow.origIndex));
             origCow = bigcows.get(i);
             bigcows.set(i, new ScrambledCow(sortString(origCow.str, -1), origCow.origIndex));
         }
+        smallcows.sort(new Comparator<ScrambledCow>() {
+            @Override
+            public int compare(final ScrambledCow o1, final ScrambledCow o2) {
+                return o1.str.compareTo(o2.str);
+            }
+        });
+        bigcows.sort(new Comparator<ScrambledCow>() {
+            @Override
+            public int compare(final ScrambledCow o1, final ScrambledCow o2) {
+                return o1.str.compareTo(o2.str);
+            }
+        });
         int a = 1, b = 1;
         String sstring = smallcows.get(0).str;
         String bstring = bigcows.get(0).str;
