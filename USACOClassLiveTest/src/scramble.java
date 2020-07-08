@@ -49,17 +49,19 @@ public class scramble {
             }
         });
         for(int i = 0; i < N; i ++){
-            smallcows.set(i, new ScrambledCow(sortString(smallcows.get(i).str, 1), i));
-            bigcows.set(i, new ScrambledCow(sortString(bigcows.get(i).str, -1), i));
+            ScrambledCow origCow = smallcows.get(i);
+            smallcows.set(i, new ScrambledCow(sortString(origCow.str, 1), origCow.origIndex));
+            origCow = bigcows.get(i);
+            bigcows.set(i, new ScrambledCow(sortString(origCow.str, -1), origCow.origIndex));
         }
         int a = 1, b = 1;
-        String sstring = sortString(smallcows.get(0).str, 1);
-        String bstring = sortString(bigcows.get(0).str, -1);
+        String sstring = smallcows.get(0).str;
+        String bstring = bigcows.get(0).str;
         for(int i = 0; i < N; i ++){
             ScrambledCow smallcow = smallcows.get(i);
             ScrambledCow bigcow = bigcows.get(i);
-            String smallcowstr = sortString(smallcows.get(i).str,1);
-            String bigcowstr = sortString(bigcows.get(i).str, -1);
+            String smallcowstr = smallcows.get(i).str;
+            String bigcowstr = bigcows.get(i).str;
             //System.out.println("NL");
             //System.out.println("A: "+a+" string compareto "+sstring.compareTo(bigcowstr));
             if(a == N && sstring.compareTo(bigcowstr) <= 0){
@@ -67,12 +69,12 @@ public class scramble {
             }
             for(;a < N && sstring.compareTo(bigcowstr) <= 0; ){
                 //System.out.println("a: "+a);
-                if(a < N){sstring = sortString(smallcows.get(a).str, 1);}
+                if(a < N){sstring = smallcows.get(a).str;}
                 a++;
             }
             for(;b < N && bstring.compareTo(smallcowstr) < 0; b++){
                 //System.out.println("b: "+b);
-                if(b < N){bstring = sortString(bigcows.get(b).str, -1);}
+                if(b < N){bstring = bigcows.get(b).str;}
             }
            // System.out.println(a+" "+b);
             cows.get(smallcow.origIndex).minpos = b;
