@@ -1,4 +1,4 @@
-precalc = [None] * 100
+precalc = [None] * 25
 def S(N):
     if N == -1:
         return ""
@@ -7,4 +7,4 @@ def S(N):
     res = S(N-1) + "m" + "o" * (N+2)+ S(N-1)
     precalc[N] = res
     return res
-print(s(1000)[int(input())+1])
+print(S(8))
