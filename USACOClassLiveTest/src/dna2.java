@@ -1,41 +1,79 @@
 import java.io.*;
 import java.util.*;
-//moomooomoomoooomoomooomoomooooomoomooomoomoooomoomooomoomoooooomoomooomoomoooomoomooomoomooooomoomooomoomoooomoomooomoomooooooomoomooomoomoooomoomooomo
-//01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678900123456789012345678901234567890123456789012345678901234567890
-//          111111111122222222223333333333444444444455555555556
 public class dna2 {
-	public static String merge(String a, String b){
+	static String[] seq;
+	static int best = Integer.MAX_VALUE;
+	static String beststr = "";
+	static void permute(String str, String ans) {
+		if(ans == null){return;}
+		//System.out.println(str+" and "+ans);
+		if (str.length() == 0) {
+			//System.out.println("FINAL: "+ans);
+			if(ans.length() < best){
+				best = ans.length();
+				beststr = ans;
+			}
+			return;
+		}
+		for (int i = 0; i < str.length(); i++) {
+			String rest = str.substring(0, i) + str.substring(i + 1);
+			char ch = str.charAt(i);
+			String newAns = merge(ans,seq[Integer.parseInt(Character.toString(ch))]);
+			System.out.println("Merge result of "+ans+" and "+seq[Integer.parseInt(Character.toString(ch))] + " is "+newAns);
+			permute(rest, newAns);
+		}
+	}
+
+	public static String merge(String a, String b) {
+		if(a.equals("")){return b;}
 		boolean found = false;
 		int cPos = 0;
 		int finalPos = -1;
 		int finalStart = 0;
-		for(int i = 0; i < a.length(); i ++){
+
+		for (int i = 0; i < a.length(); i++) {
 			char c = a.charAt(i);
-			System.out.println(cPos);
-			if(cPos < b.length() && c == b.charAt(cPos)){
-				cPos ++;
-			}else{
+			//System.out.println("C:" + cPos);
+			if (cPos < b.length() && c == b.charAt(cPos)) {
+				cPos++;
+			} else {
 				cPos = 0;
-			}
-			if(i == a.length()){
-				found = true;
-				finalPos = cPos;
-				finalStart = i - cPos;
+				if(c == b.charAt(0)){cPos = 1;}
 			}
 		}
-		System.out.println(finalStart+" "+finalPos);
-		if(!found){return null;}
+		//System.out.println(cPos);
+		if (cPos != 0) {
+			found = true;
+			finalPos = cPos;
+			finalStart = a.length() - cPos;
+		}
+		//System.out.println(finalStart+" "+finalPos);
+		if (!found) {
+			//return null;
+			return a + b;
+			//return (a.length() < b.length()) ? b:a;
+		}
 		StringBuilder sb = new StringBuilder(a);
-		sb.append(b.substring(finalStart, b.length()));
+		sb.append(b.substring(finalPos, b.length()));
 		return sb.toString();
 	}
-	public static void main(String[] args) throws IOException{
+
+	public static void main(String[] args) throws IOException {
 		// IO
-		//                                    new FileReader("cownomics.in")
+		// new FileReader("cownomics.in")
 		BufferedReader f = new BufferedReader(new InputStreamReader(System.in));
-		//                                    new BufferedWriter(new FileWriter("cownomics.out"))
+		// new BufferedWriter(new FileWriter("cownomics.out"))
 		PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
-		System.out.println(merge("abcdef", "cdefghijklm"));
+		//System.out.println(merge("GATTA", "TAGG"));
+		int N = Integer.parseInt(f.readLine());
+		seq = new String[N];
+		for (int i = 0; i < N; i++) {
+			seq[i] = f.readLine();
+		}
+		//System.out.println("0123456789".substring(0, seq.length));
+		permute("0123456789"
+		.substring(0, seq.length),"");
+		System.out.println(beststr.length());
 	}
 
 }
