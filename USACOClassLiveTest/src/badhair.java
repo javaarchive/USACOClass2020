@@ -11,21 +11,36 @@ public class badhair{
 		int N = Integer.parseInt(f.readLine());
 		int heightPos = -1;
 		int bestHeight = -1;
-		int ans = 0;
+		long ans = 0;
+		Stack<HairyCow> cows = new Stack<HairyCow>();
 		for(int i = 0; i < N; i ++){
 			int height = Integer.parseInt(f.readLine());
-			if(height >= bestHeight){
-				if(heightPos != -1){
-					ans += i - heightPos - 1;
+			while(!cows.isEmpty()){
+				HairyCow c = cows.peek();
+				if(c.height <= height){
+					cows.pop();
+				}else{
+					break;
 				}
-				bestHeight = height;
-				heightPos = i;
 			}
+			//System.out.println(cows);
+			ans += cows.size();
+			cows.push(new HairyCow(i, height));
 		}
-		ans += N - heightPos - 1;
+		//ans += N - heightPos - 1;
 		pw.println(ans);
 		pw.close();
 		
 	}
 
+}
+class HairyCow{
+	int pos, height;
+	public HairyCow(int pos, int height){
+		this.pos = pos;
+		this.height = height;
+	}
+	public String toString(){
+		return "Cow(^"+this.height+" pos: "+this.pos+");";
+	}
 }
