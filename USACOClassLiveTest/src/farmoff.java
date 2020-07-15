@@ -9,7 +9,6 @@ public class farmoff {
 	public static long W_(int i) {
 		return (((((((((((a * i % d) * i) % d) * i) % d) * i) % d) * i) % d) + (((b * i) % d) * i) + c)) % d;
 	}
-
 	public static long U_(int i) {
 		return (((((((((((e * i % h) * i) % h) * i) % h) * i) % h) * i) % h) + (((f * i % h) * i % h) * i) + g)) % h;
 	}
