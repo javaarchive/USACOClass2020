@@ -46,8 +46,8 @@ public class gates {
                     break;
             }
             int midX = (lastX+posX)/2, midY =  (posY+lastY)/2;
-            if(grid[midX][midY] != 0 && grid[midX][midY] != type){
-                p.setCoord(midX, midY);
+            if(grid[posX][posY] != 0 && grid[posX][posY] != type){
+                p.setCoord(posX, posY);
                 if(!visited.contains(p)){
                     ans ++;
                     visited.add(new Place(p.x, p.y)); // Clone
@@ -57,9 +57,9 @@ public class gates {
                 //lastIntersected = false;
         }
             
-            //grid[lastX][lastY] = type;
+            grid[lastX][lastY] = type;
             grid[midX][midY] = type;
-            //grid[posX][posY] = type;
+            grid[posX][posY] = type;
         }
         //grid[1001][1001] = false;
         /*for(int i = 996; i < 1110; i ++){
