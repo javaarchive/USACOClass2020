@@ -37,42 +37,22 @@ public class gates {
             switch(c){
                 case 'N':
                     posY ++;
+                    posY ++;
                     break;
                 case 'S':
+                    posY --;
                     posY --;
                     break;
                 case 'W':
                     posX --;
+                    posX --;
                     break;
                 case 'E':
                     posX ++;
+                    posX ++;
                     break;
             }
-            //System.out.println(posX+" "+posY+" "+c);
-            p.setCoord(posX, posY);
-
-           if(grid[posX][posY] && !visited.contains(p)){
-                ans ++;
-                visited.add(p);
-           }else{
-               //ans++;
-                grid[posX][posY] = true;
-           }
-           switch(c){
-            case 'N':
-                posY ++;
-                break;
-            case 'S':
-                posY --;
-                break;
-            case 'W':
-                posX --;
-                break;
-            case 'E':
-                posX ++;
-                break;
-            }
-        //grid[posX][posY] = true;
+            
         }
         //grid[1001][1001] = false;
         for(int i = 996; i < 1110; i ++){
