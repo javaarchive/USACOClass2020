@@ -17,23 +17,11 @@ public class gates {
         //System.out.println("\u001B[31m");
         Place p = new Place(0,0);
         Set<Place> visited = new HashSet<>();
-        char sc = line.charAt(0);
-        switch(sc){
-            case 'N':
-                posY --;
-                break;
-            case 'S':
-                posY ++;
-                break;
-            case 'W':
-                posX ++;
-                break;
-            case 'E':
-                posX --;
-                break;
-        }
+        int lastX, lastY;
         for(int i = 0 ; i < N; i ++){
             char c = line.charAt(i);
+            lastX = posX;
+            lastY = posY;
             switch(c){
                 case 'N':
                     posY ++;
@@ -52,7 +40,17 @@ public class gates {
                     posX ++;
                     break;
             }
-            
+            int midX = (lastX+posX)/2, midY =  (posY+lastY)/2;
+            if(grid[midX][midY]){
+                p.setCoord(midX, midY);
+                if(!visited.contains(p)){
+                    ans ++;
+                    visited.add(new Place(p.x, p.y)); // Clone
+                }
+            }
+            grid[lastX][lastY] = true;
+            grid[midX][midY] = true;
+            grid[posX][posY] = true;
         }
         //grid[1001][1001] = false;
         for(int i = 996; i < 1110; i ++){
