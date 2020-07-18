@@ -19,7 +19,7 @@ public class gates {
         Set<Place> visited = new HashSet<>();
         int lastX, lastY;
         char sc = line.charAt(0);
-        switch(sc){
+        /*switch(sc){
             case 'N':
                 posY --;
                 break;
@@ -32,11 +32,24 @@ public class gates {
             case 'E':
                 posX --;
                 break;
+        }*/
+        int stype = 0;
+        switch(sc){
+            case 'S':
+            case 'N':
+                stype = 1;
+                break;
+            case 'W':
+            case 'E':
+                stype = 2;
+                break;
         }
+        grid[posX][posY] = stype;
         for(int i = 0 ; i < N; i ++){
             char c = line.charAt(i);
             lastX = posX;
             lastY = posY;
+            //System.out.println("X "+" "+grid[posX][posY]+" "+posX+" "+posY);
             int type = 0;
             switch(c){
                 case 'N':
@@ -61,8 +74,9 @@ public class gates {
                     break;
             }
             int midX = (lastX+posX)/2, midY =  (posY+lastY)/2;
-            if(grid[midX][midY] != 0 && grid[midX][midY] != type){
-                p.setCoord(midX, midY);
+            //System.out.println(type+" "+grid[posX][posY]+" "+posX+" "+posY);
+            if(grid[posX][posY] != 0 && grid[posX][posY] != type){
+                p.setCoord(posX, posY);
                 if(!visited.contains(p)){
                     ans ++;
                     visited.add(new Place(p.x, p.y)); // Clone
@@ -83,12 +97,12 @@ public class gates {
             }
             System.out.println();
         }*/
-        for(int i = 996; i < 1050; i ++){
+        /*for(int i = 996; i < 1050; i ++){
             for(int j = 999; j < 1050; j ++){
                 System.out.print(((grid[i][j] > 0)?"\u001B[33m":"\u001B[37m")+grid[i][j]+"\u001B[0m");
             }
             System.out.println();
-        }
+        }*/
         pw.println(ans);
 
 		pw.close();
