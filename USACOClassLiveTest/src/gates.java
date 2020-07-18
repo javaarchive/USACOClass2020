@@ -84,8 +84,7 @@ public class gates {
                 }
             }else{
                 //lastIntersected = false;
-        }
-            
+            }
             //grid[lastX][lastY] = type;
             grid[midX][midY] = type;
             //grid[posX][posY] = type;
