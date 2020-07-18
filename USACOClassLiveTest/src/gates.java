@@ -18,6 +18,21 @@ public class gates {
         Place p = new Place(0,0);
         Set<Place> visited = new HashSet<>();
         int lastX, lastY;
+        char sc = line.charAt(0);
+        switch(sc){
+            case 'N':
+                posY --;
+                break;
+            case 'S':
+                posY ++;
+                break;
+            case 'W':
+                posX ++;
+                break;
+            case 'E':
+                posX --;
+                break;
+        }
         for(int i = 0 ; i < N; i ++){
             char c = line.charAt(i);
             lastX = posX;
@@ -46,8 +61,8 @@ public class gates {
                     break;
             }
             int midX = (lastX+posX)/2, midY =  (posY+lastY)/2;
-            if(grid[posX][posY] != 0 && grid[posX][posY] != type){
-                p.setCoord(posX, posY);
+            if(grid[midX][midY] != 0 && grid[midX][midY] != type){
+                p.setCoord(midX, midY);
                 if(!visited.contains(p)){
                     ans ++;
                     visited.add(new Place(p.x, p.y)); // Clone
@@ -57,9 +72,9 @@ public class gates {
                 //lastIntersected = false;
         }
             
-            grid[lastX][lastY] = type;
+            //grid[lastX][lastY] = type;
             grid[midX][midY] = type;
-            grid[posX][posY] = type;
+            //grid[posX][posY] = type;
         }
         //grid[1001][1001] = false;
         /*for(int i = 996; i < 1110; i ++){
@@ -68,6 +83,12 @@ public class gates {
             }
             System.out.println();
         }*/
+        for(int i = 996; i < 1050; i ++){
+            for(int j = 999; j < 1050; j ++){
+                System.out.print(((grid[i][j] > 0)?"\u001B[33m":"\u001B[37m")+grid[i][j]+"\u001B[0m");
+            }
+            System.out.println();
+        }
         pw.println(ans);
 
 		pw.close();
