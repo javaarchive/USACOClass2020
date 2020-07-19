@@ -11,14 +11,14 @@ public class gates {
         int N = Integer.parseInt(f.readLine());
         String line = f.readLine();
         int posX = 1001, posY = 1001;
-        List<List<Integer>> adjlist = new ArrayList<>();
+        List<List<Integer>> adjlist = new ArrayList<>(N);
         int lastNode = 1;
-        adjlist.add(new ArrayList<>());
+        //adjlist.add(new ArrayList<>());
         adjlist.add(new ArrayList<>());
         grid[posX][posY] = 1;
         for(int i = 0; i < N; i ++){
             char c = line.charAt(i);
-            int prevX = posX, prevY = posY;
+            //int prevX = posX, prevY = posY;
             switch(c){
                 case 'N':
                     posY ++;
@@ -35,6 +35,7 @@ public class gates {
             }
             int node = grid[posX][posY];
             if(node == 0){
+                //System.out.println("No node for "+i);
                 if(lastNode >= adjlist.size()){
                     adjlist.add(new ArrayList<>());
                 }
@@ -42,17 +43,24 @@ public class gates {
                 adjlist.get(lastNode).add(grid[posX][posY]);
                 lastNode = grid[posX][posY];
             }else{
+                if(lastNode >= adjlist.size()){
+                    adjlist.add(new ArrayList<>());
+                }
+                adjlist.get(lastNode).add(grid[posX][posY]);
                 lastNode = grid[posX][posY];
             }
         }
+        int node = grid[posX][posY];
+        adjlist.add(new ArrayList<>()); // Last node touches nothing
+        /*
          for(int i = 996; i < 1050; i ++){
             for(int j = 999; j < 1050; j ++){
                 System.out.print(((grid[i][j] > 0)?"\u001B[33m":"\u001B[37m")+Integer.toString(grid[i][j]).substring(0,1)+"\u001B[0m");
             }
             System.out.println();
-        }
-        System.out.println(adjlist);
-        pw.println(N - (adjlist.size() - 1) + 2);
+        }*/
+        //System.out.println(adjlist);
+        pw.println(N - (adjlist.size() - 1) + 2 - 1);
         f.close();
         pw.close();
 
