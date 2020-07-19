@@ -12,8 +12,10 @@ public class gates {
         String line = f.readLine();
         int posX = 1001, posY = 1001;
         List<List<Integer>> adjlist = new ArrayList<>();
-        int lastNode = 0;
+        int lastNode = 1;
         adjlist.add(new ArrayList<>());
+        adjlist.add(new ArrayList<>());
+        grid[posX][posY] = 1;
         for(int i = 0; i < N; i ++){
             char c = line.charAt(i);
             int prevX = posX, prevY = posY;
@@ -43,9 +45,16 @@ public class gates {
                 lastNode = grid[posX][posY];
             }
         }
+         for(int i = 996; i < 1050; i ++){
+            for(int j = 999; j < 1050; j ++){
+                System.out.print(((grid[i][j] > 0)?"\u001B[33m":"\u001B[37m")+Integer.toString(grid[i][j]).substring(0,1)+"\u001B[0m");
+            }
+            System.out.println();
+        }
         System.out.println(adjlist);
+        pw.println(N - (adjlist.size() - 1) + 2);
         f.close();
-        pw.println();
+        pw.close();
 
 	}
 }
