@@ -11,15 +11,18 @@ public class gates {
         int N = Integer.parseInt(f.readLine());
         String line = f.readLine();
         int posX = 1001, posY = 1001;
-        List<List<Integer>> adjlist = new ArrayList<>(N);
+        //List<List<Integer>> adjlist = new ArrayList<>(N);
         int lastNode = 1;
         //adjlist.add(new ArrayList<>());
-        adjlist.add(new ArrayList<>());
+        //adjlist.add(new ArrayList<>());
         grid[posX][posY] = 1;
         int nodeCount = 0;
+        Set<Connection> connectedEdges = new HashSet<Connection>();
+        Set<Place> pos = new HashSet<Place>();
+        pos.add(new Place(posX, posY));
         for(int i = 0; i < N; i ++){
             char c = line.charAt(i);
-            //int prevX = posX, prevY = posY;
+            int prevX = posX, prevY = posY;
             switch(c){
                 case 'N':
                     posY ++;
@@ -34,30 +37,17 @@ public class gates {
                     posX ++;
                     break;
             }
-            int node = grid[posX][posY];
-            if(node == 0){
-                nodeCount ++;
-                //System.out.println("No node for "+i);
-                if(lastNode >= adjlist.size()){
-                    adjlist.add(new ArrayList<>());
-                }
-                grid[posX][posY] = adjlist.size();
-                adjlist.get(lastNode).add(grid[posX][posY]);
-                lastNode = grid[posX][posY];
-            }else{
-                if(lastNode >= adjlist.size()){
-                    adjlist.add(new ArrayList<>());
-                }
-                adjlist.get(lastNode).add(grid[posX][posY]);
-                lastNode = grid[posX][posY];
-            }
+            pos.add(new Place(posX, posY));
+            connectedEdges.add(new Connection(prevX, prevY, posX, posY));
         }
-        int edgeCount = 0;
-        for(int i = 0; i < adjlist.size(); i ++){
+        nodeCount = pos.size();
+        int edgeCount = connectedEdges.size();
+        /*for(int i = 0; i < adjlist.size(); i ++){
             edgeCount += adjlist.get(i).size();
         }
         int node = grid[posX][posY];
-        adjlist.add(new ArrayList<>()); // Last node touches nothing
+        adjlist.add(new ArrayList<>()); // Last node touches nothing*/
+
         /*
          for(int i = 996; i < 1050; i ++){
             for(int j = 999; j < 1050; j ++){
@@ -71,6 +61,44 @@ public class gates {
         pw.close();
 
 	}
+}
+class Connection{
+    int x1,y1,x2,y2;
+    public Connection(int x1, int y1, int x2, int y2){
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + x1;
+        result = prime * result + x2;
+        result = prime * result + y1;
+        result = prime * result + y2;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!(obj instanceof Connection))
+            return false;
+        Connection other = (Connection) obj;
+        if (x1 != other.x1)
+            return false;
+        if (x2 != other.x2)
+            return false;
+        if (y1 != other.y1)
+            return false;
+        if (y2 != other.y2)
+            return false;
+        return true;
+    }
 }
 class Place{
     int x,y;
