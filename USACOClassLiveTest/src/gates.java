@@ -16,6 +16,7 @@ public class gates {
         //adjlist.add(new ArrayList<>());
         adjlist.add(new ArrayList<>());
         grid[posX][posY] = 1;
+        int nodeCount = 0;
         for(int i = 0; i < N; i ++){
             char c = line.charAt(i);
             //int prevX = posX, prevY = posY;
@@ -35,6 +36,7 @@ public class gates {
             }
             int node = grid[posX][posY];
             if(node == 0){
+                nodeCount ++;
                 //System.out.println("No node for "+i);
                 if(lastNode >= adjlist.size()){
                     adjlist.add(new ArrayList<>());
@@ -50,6 +52,10 @@ public class gates {
                 lastNode = grid[posX][posY];
             }
         }
+        int edgeCount = 0;
+        for(int i = 0; i < adjlist.size(); i ++){
+            edgeCount += adjlist.get(i).size();
+        }
         int node = grid[posX][posY];
         adjlist.add(new ArrayList<>()); // Last node touches nothing
         /*
@@ -60,7 +66,7 @@ public class gates {
             System.out.println();
         }*/
         //System.out.println(adjlist);
-        pw.println(N - (adjlist.size() - 1) + 2 - 1);
+        pw.println(edgeCount - (nodeCount) + 2 - 1);
         f.close();
         pw.close();
 
