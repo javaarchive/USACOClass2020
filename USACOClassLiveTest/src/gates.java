@@ -33,10 +33,10 @@ public class gates {
             }
             int node = grid[posX][posY];
             if(node == 0){
-                grid[posX][posY] = adjlist.size();
                 if(lastNode >= adjlist.size()){
                     adjlist.add(new ArrayList<>());
                 }
+                grid[posX][posY] = adjlist.size();
                 adjlist.get(lastNode).add(grid[posX][posY]);
                 lastNode = grid[posX][posY];
             }else{
