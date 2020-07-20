@@ -56,6 +56,8 @@ public class gates {
             System.out.println();
         }*/
         //System.out.println(adjlist);
+        //System.out.println(connectedEdges);
+        //System.out.println(pos);
         pw.println(edgeCount - (nodeCount) + 2 - 1);
         f.close();
         pw.close();
@@ -65,10 +67,22 @@ public class gates {
 class Connection{
     int x1,y1,x2,y2;
     public Connection(int x1, int y1, int x2, int y2){
-        this.x1 = x1;
-        this.y1 = y1;
-        this.x2 = x2;
-        this.y2 = y2;
+        if(x1 > x2){
+            this.x1 = x2;
+            this.x2 = x1;
+            this.y1 = y2;
+            this.y2 = y1;
+        }else if(x1 == x2){
+            this.x1 = x2;
+            this.x2 = x1;
+            this.y1 = Integer.min(y1,y2);
+            this.y2 = Integer.max(y1,y2);
+        }else{
+            this.x1 = x1;
+            this.x2 = x2;
+            this.y1 = y1;
+            this.y2 = y2;
+        }
     }
 
     @Override
@@ -99,6 +113,13 @@ class Connection{
             return false;
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Connection [x1=" + x1 + ", x2=" + x2 + ", y1=" + y1 + ", y2=" + y2 + "]";
+        //return "("+(this.x1-this.x2)+","+(this.y1-this.y2)+")";
+    
+    }
 }
 class Place{
     int x,y;
@@ -118,7 +139,7 @@ class Place{
         result = prime * result + y;
         return result;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -132,5 +153,11 @@ class Place{
             return false;
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Place [x=" + x + ", y=" + y + "]";
+    }
+
     
 }   
