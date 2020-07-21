@@ -13,7 +13,7 @@ public class measurement {
 		int N = Integer.parseInt(st.nextToken());
 		int G = Integer.parseInt(st.nextToken());
 		TreeMap<Integer, Integer> cowToProd = new TreeMap<>();
-		TreeMap<Integer, Integer> prodToAmount = new TreeMap<>();
+		//TreeMap<Integer, Integer> prodToAmount = new TreeMap<>();
 		TreeMap<Integer, Integer> prodToId = new TreeMap<>();
 		List<Cattle> days = new ArrayList<>();
 		for (int i = 0; i < N; i++) {
@@ -60,7 +60,7 @@ public class measurement {
 			if (lk != prevMax) {
 				//System.err.println("Best scorer prod is now " + prodToAmount.lastKey());
 				//System.out.println(lastProd);
-				if (!(prodToAmount.get(lk) == 1 && ((prodToId.keySet().contains(curProd)) ? prodToId.get(curProd) : c.id ) == c.id)) {
+				if (!(prodToAmount.get(lk) == 1) {
 					ans++;
 					//System.out.println("INC");
 				} else {
@@ -71,9 +71,9 @@ public class measurement {
 			} else if (prodToAmount.get(lk) != lastProd) {
 				// System.err.println("Amount is now "+prodToAmount.get(newProd));
 				ans++;
-				lastProd = prodToAmount.get(lk);
+				//lastProd = prodToAmount.get(lk);
 			}
-			prodToId.put(newProd, c.id);
+			//prodToId.put(newProd, c.id);
 			System.out.println(prodToId);
 			lastid = c.id;
 		}
