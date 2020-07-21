@@ -31,6 +31,7 @@ public class measurement {
 		int prevMax = G, ans = 0;
 		int lastProd = N;
 		int lastid = -1;
+		//int maxprod = ;
 		// Set<Integer> cows = new HashSet<>();
 		for (int i = 0; i < N; i++) {
 			Cattle c = days.get(i);
@@ -60,22 +61,26 @@ public class measurement {
 			if (lk != prevMax) {
 				//System.err.println("Best scorer prod is now " + prodToAmount.lastKey());
 				//System.out.println(lastProd);
-				if (!(prodToAmount.get(lk) == 1 && lastid == c.id)) {
+				//if (!(prodToAmount.get(lk) == 1 && lastid == c.id)) {
+					if (!(prodToAmount.get(lk) == 1 && c.id == lastid)){
 					ans++;
+					}else{
+						//System.out.println("triggered on lk "+)
+					}
 					//System.out.println("INC");
-				} else {
+				//} else {
 					//System.out.println(prodToAmount.lastKey() + " amount is the same as " + lastProd);
-				}
+				//}
 				prevMax = prodToAmount.lastKey();
 				lastProd = prodToAmount.get(lk);
 			} else if (prodToAmount.get(lk) != lastProd) {
 				// System.err.println("Amount is now "+prodToAmount.get(newProd));
 				ans++;
-				//lastProd = prodToAmount.get(lk);
+				lastProd = prodToAmount.get(lk);
+				lastid = c.id;
 			}
 			//prodToId.put(newProd, c.id);
 			//System.out.println(prodToId);
-			lastid = c.id;
 		}
 		pw.println(ans);
 		pw.close();
