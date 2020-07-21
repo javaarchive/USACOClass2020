@@ -10,40 +10,32 @@ public class shuffle {
         PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
         int N = Integer.parseInt(f.readLine());
         StringTokenizer st = new StringTokenizer(f.readLine());
-        int[] connections = new int[N];
+        List<List<Integer>> adjlist = new ArrayList<>();
         boolean[] looping = new boolean[N];
         for(int i = 0; i < N; i ++){
+            adjlist.add(new ArrayList<>());
+        }
+        for(int i = 0; i < N; i ++){
             int destNode = Integer.parseInt(st.nextToken())-1;
-            connections[i] = destNode; 
+            adjlist.get(destNode).add(i);
         }
+        Set<Integer> gone = new HashSet<Integer>();
+        for(int count = 0; count < 350; count ++){
         for(int i = 0; i < N; i ++){
-            if(looping[i]){
-                continue; // Save calculation time
-            }
-            hare = i;
-            tortoise = i;
-            //System.out.println("Starting at "+i);
-            while(true){
-                hare = connections[hare];
-                hare = connections[hare];
-                tortoise = connections[tortoise];
-                //System.out.println("Hare: "+hare+" Tortise: "+tortoise);
-                if(hare == tortoise){
-                    looping[hare] = true; 
-                    break;
-                }
-                if(hare == i){
-                    
+            List<Integer> nodes = adjlist.get(i);
+            for(int j = 0; j < nodes.size(); j ++){
+                if(gone.contains(nodes.get(j))){
+                    nodes.remove(j);
+                    j --; // Obviously some issues if I didn't do that
                 }
             }
+           if(nodes.size() == 0){
+               gone.add(i);
+           }
         }
-        int ans = 0;
-        for(int i = 0; i < N; i ++){
-            if(looping[i]){
-                ans ++;
-            }
-        }
-        pw.println(ans);
+    }
+        //System.out.println(adjlist);
+        pw.println(N - gone.size());
         pw.close();
     }
 }
