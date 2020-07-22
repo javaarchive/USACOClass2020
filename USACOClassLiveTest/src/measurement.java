@@ -59,11 +59,12 @@ public class measurement {
 			int lk = prodToAmount.lastKey();
 			int lkCount = prodToAmount.get(lk);
 			 //System.out.println(lk);
-			if (lk != prevMax) {
+			if  (lk!= prevMax) {
 				//System.err.println("Best scorer prod is now " + prodToAmount.lastKey());
 				//System.out.println(lastProd);
 				//if (!(prodToAmount.get(lk) == 1 && lastid == c.id)) {
-					if (!(lkCount == 1 && c.id == lastid)){
+					if (!(lkCount == 1 && c.id == lastid && lk == newProd)){
+						//System.out.println(c.day+" "+c.id+" "+c.change+" "+lkCount);
 						ans++;
 					}else{
 						//System.out.println("triggered on lk "+lk+" "+c.id);
@@ -79,6 +80,7 @@ public class measurement {
 				}
 			} else if (lkCount != lastProd) { // Amount of cows has not changed but milk production has
 				// System.err.println("Amount is now "+prodToAmount.get(newProd));
+				//System.out.println(c.day+" "+c.id+" "+c.change+" "+lkCount);
 				ans++;
 				lastProd = lkCount;
 				if(lkCount == 1){
