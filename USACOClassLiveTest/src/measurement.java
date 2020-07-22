@@ -40,7 +40,7 @@ public class measurement {
 			int curProd = cowToProd.get(c.id);
 			int newProd = curProd + c.change;
 			int alsoProducingAmount = prodToAmount.get(curProd);
-			if (alsoProducingAmount == 1) {
+			if (alsoProducingAmount == 1) { // Used to be only cow producing this amount of milk so remove number
 				prodToAmount.remove(curProd);
 				int newprodamount = 0;
 				if (prodToAmount.keySet().contains(newProd)) {
@@ -50,7 +50,7 @@ public class measurement {
 				// prodToAmount.put(newProd, 1);
 			} else {
 				if (!prodToAmount.keySet().contains(newProd)) {
-					prodToAmount.put(newProd, 0);
+					prodToAmount.put(newProd, 0); // Create key if needed
 				}
 				prodToAmount.put(curProd, prodToAmount.get(curProd) - 1);
 				prodToAmount.put(newProd, prodToAmount.get(newProd) + 1);
@@ -59,9 +59,6 @@ public class measurement {
 			int lk = prodToAmount.lastKey();
 			int lkCount = prodToAmount.get(lk);
 			 //System.out.println(lk);
-			 if(lkCount == 1){
-				 lastid = c.id;
-			 }
 			if (lk != prevMax) {
 				//System.err.println("Best scorer prod is now " + prodToAmount.lastKey());
 				//System.out.println(lastProd);
@@ -69,7 +66,7 @@ public class measurement {
 					if (!(lkCount == 1 && c.id == lastid)){
 						ans++;
 					}else{
-						//System.out.println("triggered on lk "+)
+						//System.out.println("triggered on lk "+lk+" "+c.id);
 					}
 					//System.out.println("INC");
 				//} else {
@@ -77,11 +74,18 @@ public class measurement {
 				//}
 				prevMax = prodToAmount.lastKey();
 				lastProd = lkCount;
+				if(lkCount == 1){
+					lastid = c.id;
+				}
 			} else if (lkCount != lastProd) {
 				// System.err.println("Amount is now "+prodToAmount.get(newProd));
 				ans++;
-				lastProd = lkCount);
+				lastProd = lkCount;
+				if(lkCount == 1){
+					lastid = c.id;
+				}
 			}
+			//System.out.println(prodToAmount);
 			//prodToId.put(newProd, c.id);
 			//System.out.println(prodToId);
 		}
