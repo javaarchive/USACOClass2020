@@ -67,14 +67,6 @@ public class measurement {
 						ans++;
 					}else{
 						//System.out.println("triggered on lk "+lk+" "+c.id);
-						if (lkCount != lastProd) {
-							// System.err.println("Amount is now "+prodToAmount.get(newProd));
-							ans++;
-							lastProd = lkCount;
-							if(lkCount == 1){
-								lastid = c.id;
-							}
-						}
 					}
 					//System.out.println("INC");
 				//} else {
@@ -85,7 +77,7 @@ public class measurement {
 				if(lkCount == 1){
 					lastid = c.id;
 				}
-			} else if (lkCount != lastProd) {
+			} else if (lkCount != lastProd) { // Amount of cows has not changed but milk production has
 				// System.err.println("Amount is now "+prodToAmount.get(newProd));
 				ans++;
 				lastProd = lkCount;
