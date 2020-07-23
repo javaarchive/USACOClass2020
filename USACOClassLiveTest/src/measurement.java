@@ -30,7 +30,7 @@ public class measurement {
 		// System.out.println(prodToAmount.lastKey());
 		int prevMax = G, ans = 0;
 		int lastProd = N;
-		int lastid = -1;
+		//int lastid = -1;
 		//int maxprod = ;
 		// Set<Integer> cows = new HashSet<>();
 		for (int i = 0; i < N; i++) {
@@ -54,6 +54,7 @@ public class measurement {
 				}
 				prodToAmount.put(curProd, prodToAmount.get(curProd) - 1);
 				prodToAmount.put(newProd, prodToAmount.get(newProd) + 1);
+				
 			}
 			cowToProd.put(c.id, newProd);
 			int lk = prodToAmount.lastKey();
@@ -63,7 +64,7 @@ public class measurement {
 				//System.err.println("Best scorer prod is now " + prodToAmount.lastKey());
 				//System.out.println(lastProd);
 				//if (!(prodToAmount.get(lk) == 1 && lastid == c.id)) {
-					if (!(lkCount == 1 && c.id == lastid && lk == newProd)){
+					if (!(lkCount == 1 && lastProd == 1 && (lk - prevMax) == c.change)){
 						//System.out.println(c.day+" "+c.id+" "+c.change+" "+lkCount);
 						ans++;
 					}else{
@@ -75,17 +76,17 @@ public class measurement {
 				//}
 				prevMax = prodToAmount.lastKey();
 				lastProd = lkCount;
-				if(lkCount == 1){
+				/*if(lkCount == 1){
 					lastid = c.id;
-				}
+				}*/
 			} else if (lkCount != lastProd) { // Amount of cows has not changed but milk production has
 				// System.err.println("Amount is now "+prodToAmount.get(newProd));
 				//System.out.println(c.day+" "+c.id+" "+c.change+" "+lkCount);
 				ans++;
 				lastProd = lkCount;
-				if(lkCount == 1){
+				/*if(lkCount == 1){
 					lastid = c.id;
-				}
+				}*/
 			}
 			//System.out.println(prodToAmount);
 			//prodToId.put(newProd, c.id);
