@@ -1,4 +1,5 @@
 import java.io.*;
+import java.nio.file.FileStore;
 import java.util.*;
 
 public class convention2 {
@@ -31,14 +32,19 @@ public class convention2 {
 		int most = 0;
 		cows.add(new Visitor(-1, Integer.MAX_VALUE, 0));
 		for (Visitor v : cows) {
+			System.out.println("Processing cow "+v.time+" who desires to eat "+v.consumptionTime+" time id: "+v.senority+" fTime "+finishTime);
+			//System.out.println("Finish Time: "+finishTime);
 			if (v.time >= finishTime) {
 				int curTime = finishTime;
-				//System.out.println(v.time+" "+finishTime);
-				//System.out.println(grazingAnimals);
+				System.out.println(v.time+" "+finishTime);
+				System.out.println(grazingAnimals);
+				
 				while (!grazingAnimals.isEmpty()) {
 					Visitor v2 = grazingAnimals.peek();
+					System.out.println("Peeked for a "+v2);
 					if (v2.time > finishTime) {
 						//System.out.println("Should this condition even fire?");
+						//System.out.println("Exceeded Finish time");
 						break;
 					}
 					//if(v2.time > curTime){System.out.println("ERROR");}
@@ -47,14 +53,21 @@ public class convention2 {
 					curTime += v2.consumptionTime;
 					grazingAnimals.poll();
 				}
-				currentCow = null;
+				//System.out.println("Ended with time "+curTime);
+				if(curTime <= v.time){
+					currentCow = null;
+				}else{
+					finishTime = curTime;
+				}
 			}
 			if (currentCow == null) {
 				currentCow = v;
 				finishTime = v.time + v.consumptionTime;
 			} else {
+				System.out.println("Added "+v.senority+" to the queue");
 				grazingAnimals.add(v);
 			}
+			//System.out.println("Outer loop iteration");
 		}
 		pw.println(most);
 		pw.close();
@@ -76,7 +89,9 @@ class Visitor implements Comparable<Visitor> {
 	@Override
 	public int compareTo(Visitor o) {
 		// TODO Auto-generated method stub
-		return Integer.compare(this.senority, o.senority);
+		int val = Integer.compare(this.time + this.consumptionTime, o.time + o.consumptionTime);
+		val = (val == 0) ? Integer.compare(this.senority, o.senority) : val;
+		return val;//Integer.compare(this.senority, o.senority);
 	}
 
 	@Override
