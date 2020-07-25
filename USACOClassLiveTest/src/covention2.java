@@ -2,7 +2,7 @@ import java.io.*;
 import java.nio.file.FileStore;
 import java.util.*;
 
-public class convention2 {
+public class covention2 {
 	public static void main(String[] args) throws IOException {
 		// IO
 		// new FileReader("reduce.in")
@@ -27,45 +27,37 @@ public class convention2 {
 				return Integer.compare(o1.time, o2.time);
 			}
 		});
-		Visitor currentCow = null;
-		int finishTime = -1;
+		//Visitor currentCow = null;
+		//int finishTime = -1;
 		int most = 0;
-		cows.add(new Visitor(-1, Integer.MAX_VALUE, 0));
-		for (Visitor v : cows) {
-			//System.out.println("Processing cow "+v.time+" who desires to eat "+v.consumptionTime+" time id: "+v.senority+" fTime "+finishTime);
-			//System.out.println("Finish Time: "+finishTime);
-			//System.out.println("The cow "+currentCow+" just finished");
-			
-			if (v.time > finishTime) {
-				int curTime = finishTime;
-				//System.out.println(v.time+" "+finishTime);
-				//System.out.println(grazingAnimals);
-				
-				while (!grazingAnimals.isEmpty()) {
-					Visitor v2 = grazingAnimals.peek();
-					//System.out.println("Selected cow with seniority: "+v2.senority+" info: "+v2);
-					//if(v2.time > curTime){System.out.println("ERROR");}
-					//System.out.println("Calculating time between "+curTime+" and "+v2.time);
-					most = Integer.max(most, curTime - v2.time);
-					curTime += v2.consumptionTime;
-					grazingAnimals.poll();
-				}
-				if(currentCow != null && finishTime == (currentCow.time + currentCow.consumptionTime)){
-					currentCow = null;
-				}
-				//System.out.println("Ended with time "+curTime);
-			}
-			//System.out.println(currentCow);
-			if (currentCow == null) {
-				//System.out.println("NEW COW "+v.senority);
-				currentCow = v;
-				finishTime = v.time + v.consumptionTime;
-			} else {
-				//System.out.println("Added "+v.senority+" to the queue");
+		//cows.add(new Visitor(-1, Integer.MAX_VALUE, 0));
+		int i = 0;
+		Visitor v = cows.get(i);
+		int start = v.time;
+        while(i < N){
+            while(v.time <= start && i < N){
+				v = cows.get(i);
+				//System.out.println("Check: "+v);
 				grazingAnimals.add(v);
+				i ++;
 			}
-			//System.out.println("Outer loop iteration");
-		}
+			if(!grazingAnimals.isEmpty()){
+				int elapsedTime = v.time + v.consumptionTime;
+				//System.out.println(grazingAnimals);
+                while(!grazingAnimals.isEmpty()){
+                    Visitor v3 = grazingAnimals.poll();
+					most = Integer.max(elapsedTime - v3.time, most);
+					//System.out.println("Compare "+elapsedTime+" "+v.time);
+					elapsedTime += v3.consumptionTime;
+					
+				}
+				start = elapsedTime;
+            }else{
+
+			}
+			
+			//System.out.println("i: "+i);
+        }
 		pw.println(most);
 		pw.close();
 	}
