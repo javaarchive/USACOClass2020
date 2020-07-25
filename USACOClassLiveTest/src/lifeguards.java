@@ -32,19 +32,23 @@ public class lifeguards {
         int curCount = 0;
         int lastTime = 0;
         int lastID = 0;
+        Set<Integer> cows = new HashSet<>();
         for(int i = 0; i < 2*N; i ++){
             Interval il = inters.get(i);
             int time = (il.type == 1) ? il.start: il.end;
             if(curCount == 1){
                 int selectedID = (il.type == 1) ? lastID: il.id;
-                System.out.println(time- lastTime+" id: "+selectedID);
+                System.out.println("Calc: "+time+" "+lastTime);
+                System.out.println(time- lastTime+" id: "+selectedID+" type: "+il.type);
                 lookup[selectedID][0].aloneTime += time- lastTime;
                 lookup[selectedID][1].aloneTime += time- lastTime;
             }
             if(il.type == 1){
+                cows.add(il.id);
                 curCount ++;
             }else{
                 curCount --;
+                cows.remove(il.id);
             }
             //System.out.println(curCount);
             lastTime = time;
