@@ -1,5 +1,4 @@
 import java.io.*;
-import java.nio.file.FileStore;
 import java.util.*;
 
 public class covention2 {
@@ -30,30 +29,25 @@ public class covention2 {
 		//Visitor currentCow = null;
 		//int finishTime = -1;
 		int most = 0;
-		//cows.add(new Visitor(-1, Integer.MAX_VALUE, 0));
+		cows.add(new Visitor(-1, Integer.MAX_VALUE, 0));
 		int i = 0;
 		Visitor v = cows.get(i);
 		int start = v.time;
         while(i < N){
-            while(v.time <= start && i < N){
-				v = cows.get(i);
+            while(v.time <= start ){
 				//System.out.println("Check: "+v);
 				grazingAnimals.add(v);
 				i ++;
+				v = cows.get(i);
 			}
 			if(!grazingAnimals.isEmpty()){
-				int elapsedTime = v.time + v.consumptionTime;
 				//System.out.println(grazingAnimals);
-                while(!grazingAnimals.isEmpty()){
-                    Visitor v3 = grazingAnimals.poll();
-					most = Integer.max(elapsedTime - v3.time, most);
-					//System.out.println("Compare "+elapsedTime+" "+v.time);
-					elapsedTime += v3.consumptionTime;
-					
-				}
-				start = elapsedTime;
+                Visitor v3 = grazingAnimals.poll();
+				most = Integer.max(start - v3.time, most);
+				//System.out.println("Compare "+start+" "+v.time);
+				start += v3.consumptionTime;
             }else{
-
+				start = cows.get(i).time;
 			}
 			
 			//System.out.println("i: "+i);

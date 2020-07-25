@@ -41,7 +41,7 @@ public class convention2 {
 				//System.out.println(v.time+" "+finishTime);
 				//System.out.println(grazingAnimals);
 				
-				while (!grazingAnimals.isEmpty()) {
+				if (!grazingAnimals.isEmpty()) {
 					Visitor v2 = grazingAnimals.peek();
 					//System.out.println("Selected cow with seniority: "+v2.senority+" info: "+v2);
 					//if(v2.time > curTime){System.out.println("ERROR");}
