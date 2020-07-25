@@ -34,7 +34,7 @@ public class convention2 {
 		for (Visitor v : cows) {
 			System.out.println("Processing cow "+v.time+" who desires to eat "+v.consumptionTime+" time id: "+v.senority+" fTime "+finishTime);
 			//System.out.println("Finish Time: "+finishTime);
-			if (v.time > finishTime) {
+			if (v.time >= finishTime) {
 				int curTime = finishTime;
 				System.out.println(v.time+" "+finishTime);
 				System.out.println(grazingAnimals);
@@ -55,11 +55,13 @@ public class convention2 {
 				}
 				System.out.println("Ended with time "+curTime);
 				if(curTime < v.time){
+					//System.out.println("Reset ccow");
 					currentCow = null;
 				}else{
 					finishTime = curTime;
 				}
 			}
+			System.out.println(currentCow);
 			if (currentCow == null) {
 				currentCow = v;
 				finishTime = v.time + v.consumptionTime;
