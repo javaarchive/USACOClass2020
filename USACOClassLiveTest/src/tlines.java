@@ -12,6 +12,7 @@ public class tlines{
 		//Set<Integer> yset = new TreeSet<>();
 		Map<Integer, List<Speck>> ymap = new TreeMap<>();
 		Map<Integer, List<Speck>> xmap = new TreeMap<>();
+		Set<Speck> sp = new TreeSet<>();
 		int N = Integer.parseInt(f.readLine());
 		for(int i = 0; i < N; i ++){
 			StringTokenizer st = new StringTokenizer(f.readLine());
@@ -41,31 +42,35 @@ public class tlines{
 			System.exit(0);
 		}
 	}
-	Set<Integer> x = new TreeSet<>();
-	Set<Integer> y = new TreeSet<>();
-		for(int xx: xmap.keySet()){
-			for(Speck s: xmap.get(xx)){
-				y.add(s.y);
-			}
+		for(int x: xmap.keySet()){
+			sp.removeAll(xmap.get(x));
+			//Set<Integer> y = new TreeSet<>();
+			//for(Speck s: xmap.get(x)){
+			//	y.add(s.y);
+			//}
+			/*if((Y - y.size()) < 3){
+				System.out.println("x: "+x+" y: "+ymap.get(x));
+				pw.println("1");
+				pw.close();
+				System.exit(0);
+			}*/
+			sp.addAll(xmap.get(x));
 		}
-		System.out.println("Y: "+y.size());
-		if((y.size()) < 3){
-			pw.println("1");
-			pw.close();
-			System.exit(0);
+		for(int y: ymap.keySet()){
+			sp.removeAll(ymap.get(y));
+			//Set<Integer> x = new TreeSet<>();
+			//for(Speck s: ymap.get(y)){
+			//	x.add(s.x);
+			//}
+			
+			/*if((X - x.size()) < 3){
+				System.out.println("y: "+y+" x: "+ymap.get(y));
+				pw.println("1");
+				pw.close();
+				System.exit(0);
+			}*/
+			sp.addAll(ymap.get(y));
 		}
-		for(int yy: ymap.keySet()){
-			for(Speck s: ymap.get(yy)){
-				x.add(s.x);
-			}
-		}
-		System.out.println("X: "+x.size());
-		if((x.size()) < 3){
-			pw.println("1");
-			pw.close();
-			System.exit(0);
-		}
-		
 		pw.println("0");
 		pw.close();
 	}
