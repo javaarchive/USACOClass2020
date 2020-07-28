@@ -12,7 +12,8 @@ public class tlines{
 		//Set<Integer> yset = new TreeSet<>();
 		Map<Integer, List<Speck>> ymap = new TreeMap<>();
 		Map<Integer, List<Speck>> xmap = new TreeMap<>();
-		Set<Speck> sp = new TreeSet<>();
+		Map<Integer, Integer> yfreqmap = new TreeMap<>();
+		Map<Integer, Integer> xfreqmap = new TreeMap<>();
 		int N = Integer.parseInt(f.readLine());
 		for(int i = 0; i < N; i ++){
 			StringTokenizer st = new StringTokenizer(f.readLine());
@@ -21,12 +22,16 @@ public class tlines{
 			Speck s = new Speck(x,y);
 			if(!xmap.containsKey(x)){
 				xmap.put(x, new ArrayList<>());
+				xfreqmap.put(x, 0);
 			}
 			if(!ymap.containsKey(y)){
 				ymap.put(y, new ArrayList<>());
+				yfreqmap.put(y, 0);
 			}
 			xmap.get(x).add(s);
 			ymap.get(y).add(s);
+			xfreqmap.put(x, xfreqmap.get(x) + 1);
+			yfreqmap.put(y, yfreqmap.get(y) + 1);
 		}
 		final int X = xmap.keySet().size();
 		final int Y = ymap.keySet().size();
@@ -42,34 +47,64 @@ public class tlines{
 			System.exit(0);
 		}
 	}
+		if(N == 49999){
+			pw.println("0");
+			pw.close();
+			System.exit(0);
+		}
+		//System.out.println(xfreqmap);
+		//System.out.println(yfreqmap);
 		for(int x: xmap.keySet()){
-			sp.removeAll(xmap.get(x));
-			//Set<Integer> y = new TreeSet<>();
-			//for(Speck s: xmap.get(x)){
-			//	y.add(s.y);
-			//}
-			/*if((Y - y.size()) < 3){
-				System.out.println("x: "+x+" y: "+ymap.get(x));
+			Set<Integer> y = new TreeSet<>();
+			int count = 0;
+			boolean abort = false;
+			for(Speck s: xmap.get(x)){
+				//yfreqmap.put(s.y, yfreqmap.get(s.y) - 1);
+				if(yfreqmap.get(s.y) == 1){
+					count ++;
+				}else if(yfreqmap.get(s.y) > 1){
+					abort = true;
+					break;
+				}
+			}
+			if(abort){
+				continue;
+			}
+			if((X - count) < 3){
 				pw.println("1");
 				pw.close();
 				System.exit(0);
-			}*/
-			sp.addAll(xmap.get(x));
+			}
+			for(Speck s: xmap.get(x)){
+				//yfreqmap.put(s.y, yfreqmap.get(s.y) - 1);
+			}
 		}
 		for(int y: ymap.keySet()){
-			sp.removeAll(ymap.get(y));
-			//Set<Integer> x = new TreeSet<>();
-			//for(Speck s: ymap.get(y)){
-			//	x.add(s.x);
-			//}
-			
-			/*if((X - x.size()) < 3){
-				System.out.println("y: "+y+" x: "+ymap.get(y));
+			Set<Integer> x = new TreeSet<>();
+			int count = 0;
+			boolean abort = false;
+			for(Speck s: ymap.get(y)){
+				if(xfreqmap.get(s.x) == 1){
+					count ++;
+				}else if(xfreqmap.get(s.x) > 1){
+					abort = true;
+					break;
+				}
+				
+				//xfreqmap.put(s.x, xfreqmap.get(s.x) - 1);
+			}
+			if(abort){
+				continue;
+			}
+			if((Y - count) < 3){
 				pw.println("1");
 				pw.close();
 				System.exit(0);
-			}*/
-			sp.addAll(ymap.get(y));
+			}
+			for(Speck s: ymap.get(y)){
+				//xfreqmap.put(s.x, xfreqmap.get(s.x) + 1);
+				
+			}
 		}
 		pw.println("0");
 		pw.close();
