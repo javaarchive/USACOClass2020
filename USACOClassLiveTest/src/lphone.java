@@ -44,7 +44,7 @@ public class lphone {
 			}
 		}
 		PriorityQueue<ReflectOpt> movingQueue = new PriorityQueue<>();
-		movingQueue.add(new ReflectOpt(ax, ay, 0, -1));
+		movingQueue.add(new ReflectOpt(ax, ay, -1, -1));
 		//int[] dx = {0,0,-1,1};
 		//int[] dy = {-1,1,0,0};
 		//int[] dx = {0,1,0,-1};
@@ -53,12 +53,14 @@ public class lphone {
 		//int[] dy = { 0, 0, -1, 1 };
 		int[] dx = {0,1,-1,0};
 		int[] dy = {1,0,0,-1};
+		int curX, curY, incx, incy, newTurns;
+		ReflectOpt ro;
 		int[][] visitedMap = new int[N][M];
 		/*for(int[] layer:visitedMap){
 			Arrays.fill(layer, Integer.MAX_VALUE);
 		}*/
 		while (!movingQueue.isEmpty()) {
-			ReflectOpt ro = movingQueue.poll();
+			ro = movingQueue.poll();
 			if (ro.x == bx && ro.y == by) {
 				ans = ro.turns;
 				break;
@@ -73,34 +75,30 @@ public class lphone {
 					continue;
 				}
 				//if(i == (ro.dir))
-				int curX = ro.x;
-				int curY = ro.y;
+				curX = ro.x;
+				curY = ro.y;
+				incx = dx[i];
+				incy = dy[i];
 				while (true) {
-					curX += dx[i];
-					curY += dy[i];
+					curX += incx;
+					curY += incy;
 					if (!inBounds(curX, curY)) {
 						break; // You've hit the edge of the map
 					}
-					int newTurns = 1 + ro.turns;
-					if(visitedMap[curX][curY] != 0 && visitedMap[curX][curY] <= (newTurns + ((ro.dir != -1)?0:1))){
+					newTurns = 1 + ro.turns;
+					if(visitedMap[curX][curY] <= (newTurns) && visitedMap[curX][curY] != 0){
 						continue;
 					}
 					if (map[curX][curY] == 1) {
 						break; // You've hit a rock
 					}
 					// System.out.println("ADD: "+curX+" "+curY);
-					if (ro.dir != -1) {
+					
 						
-							visitedMap[curX][curY] = newTurns + 1;
+					visitedMap[curX][curY] = newTurns + 1;
 						
-						movingQueue.add(new ReflectOpt(curX, curY, newTurns, i));
-					} else {
-						//System.out.println("t");
-						
-							visitedMap[curX][curY] = newTurns;
-						
-						movingQueue.add(new ReflectOpt(curX, curY, newTurns - 1, i));
-					}
+					movingQueue.add(new ReflectOpt(curX, curY, newTurns, i));
+					
 				}
 				// System.out.println();
 			}
