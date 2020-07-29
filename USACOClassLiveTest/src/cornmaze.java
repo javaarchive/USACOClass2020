@@ -22,9 +22,11 @@ public class cornmaze {
 			alphabet.add(alphabetstr.charAt(i));
 		}
 		Map<Integer, List<Pos2>> portals = new TreeMap<>();
+		int[][] bestVisits = new int[N][M];
 		for(int i = 0; i < N; i ++) {
 			String line = f.readLine();
 			for(int j = 0; j < M; j ++) {
+				bestVisits[i][j] = Integer.MAX_VALUE;
 				char type = line.charAt(j);
 				if(type == '#') {
 					map[i][j] = 1;
@@ -45,11 +47,12 @@ public class cornmaze {
 				}
 			}
 		}
-		String[] decoder = {"\033[0;37m.","\033[0;31m#","\033[0;36m="};
+		String[] col = {"\033[0;37m","\033[0;31m","\033[0;36m"};
+		String[] decoder = {".","#","="};
 		Queue<BFSChoice> bfsoptions = new LinkedList<>();
 		BFSChoice bc = new BFSChoice(-1,-1,-1);
 		bfsoptions.add(new BFSChoice(cowx,cowy,0));
-		
+		map[cowx][cowy] = 1;
 		while(!bfsoptions.isEmpty()) {
 			bc = bfsoptions.poll();
 		//	System.out.println(bc.x + " "+bc.y);
@@ -86,8 +89,8 @@ public class cornmaze {
 					bfsoptions.add(new BFSChoice(testx, testy, bc.depth + 1));
 				}
 			}
+			testx = bc.x - 1;
 			dircase:{
-				testx = bc.x - 1;
 				if(testx < N && 0 <= testx && 0<=testy && testy<M){
 					type = map[testx][testy];
 					if(type == 1){
@@ -173,12 +176,14 @@ public class cornmaze {
 				bfsoptions.add(new BFSChoice(testx, testy, bc.depth + 1));
 				}
 			}
-			System.out.println();
+			System.out.println("Depth: "+bc.depth);
 			for(int i = 0; i < N; i ++){
 				for(int j = 0; j < M; j ++){
 					type = map[i][j];
 					if(type < 3){
-					System.out.print(decoder[type] + "\033[0m");
+						if(i == bc.x && j == bc.y){System.out.print("\u001B[43m"+decoder[type] + "\033[0m");}else{
+					System.out.print(col[type] + decoder[type] + "\033[0m");
+						}
 				}else{
 					System.out.print((char) type);
 				}
