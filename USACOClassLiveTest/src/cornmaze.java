@@ -84,7 +84,7 @@ public class cornmaze {
 						}
 					}
 					if(type != 1 && type != 2){
-						map[testx][testy] = 1;
+						//map[testx][testy] = 1;
 					}
 					bfsoptions.add(new BFSChoice(testx, testy, bc.depth + 1));
 				}
@@ -112,7 +112,7 @@ public class cornmaze {
 						}
 					}
 					if(type != 1 && type != 2){
-							map[testx][testy] = 1;
+							//map[testx][testy] = 1;
 					}
 					bfsoptions.add(new BFSChoice(testx, testy, bc.depth + 1));
 				}
@@ -142,7 +142,7 @@ public class cornmaze {
 					
 				}
 				if(type != 1 && type != 2){
-						map[testx][testy] = 1;
+						//map[testx][testy] = 1;
 					}
 				bfsoptions.add(new BFSChoice(testx, testy, bc.depth + 1));
 			}
@@ -171,7 +171,7 @@ public class cornmaze {
 					
 				}
 				if(type != 1 && type != 2){
-						map[testx][testy] = 1;
+						//map[testx][testy] = 1;
 					}
 				bfsoptions.add(new BFSChoice(testx, testy, bc.depth + 1));
 				}
