@@ -74,12 +74,12 @@ public class cornmaze {
 						Pos2 e1 = endpoints.get(0);
 						Pos2 e2 = endpoints.get(1);
 						if(e1.x == testx && e1.y == testy){
-							map[testx][testy] = 1;
-							map[e2.x][e2.y] = 1;
+							//map[testx][testy] = 1;
+							//map[e2.x][e2.y] = 1;
 							bfsoptions.add(new BFSChoice(e2.x, e2.y, bc.depth + 1));
 						}else{
-							map[e1.x][e1.y] = 1;
-							map[e2.x][e2.y] = 1;
+							//map[e1.x][e1.y] = 1;
+							//map[e2.x][e2.y] = 1;
 							bfsoptions.add(new BFSChoice(e1.x, e1.y, bc.depth + 1));
 						}
 					}
@@ -102,12 +102,12 @@ public class cornmaze {
 						Pos2 e1 = endpoints.get(0);
 						Pos2 e2 = endpoints.get(1);
 						if(e1.x == testx && e1.y == testy){
-							map[testx][testy] = 1;
-							map[e2.x][e2.y] = 1;
+							//map[testx][testy] = 1;
+							//map[e2.x][e2.y] = 1;
 							bfsoptions.add(new BFSChoice(e2.x, e2.y, bc.depth + 1));
 						}else{
-							map[e1.x][e1.y] = 1;
-							map[e2.x][e2.y] = 1;
+							//map[e1.x][e1.y] = 1;
+							//map[e2.x][e2.y] = 1;
 							bfsoptions.add(new BFSChoice(e1.x, e1.y, bc.depth + 1));
 						}
 					}
@@ -131,12 +131,12 @@ public class cornmaze {
 					Pos2 e1 = endpoints.get(0);
 					Pos2 e2 = endpoints.get(1);
 					if(e1.x == testx && e1.y == testy){
-						map[testx][testy] = 1;
-						map[e2.x][e2.y] = 1;
+						//map[testx][testy] = 1;
+						//map[e2.x][e2.y] = 1;
 						bfsoptions.add(new BFSChoice(e2.x, e2.y, bc.depth + 1));
 					}else{
-						map[e1.x][e1.y] = 1;
-						map[e2.x][e2.y] = 1;
+						//map[e1.x][e1.y] = 1;
+						//map[e2.x][e2.y] = 1;
 						bfsoptions.add(new BFSChoice(e1.x, e1.y, bc.depth + 1));
 					}
 					
@@ -160,12 +160,12 @@ public class cornmaze {
 					Pos2 e1 = endpoints.get(0);
 					Pos2 e2 = endpoints.get(1);
 					if(e1.x == testx && e1.y == testy){
-						map[testx][testy] = 1;
-						map[e2.x][e2.y] = 1;
+						//map[testx][testy] = 1;
+						//map[e2.x][e2.y] = 1;
 						bfsoptions.add(new BFSChoice(e2.x, e2.y, bc.depth + 1));
 					}else{
-						map[e1.x][e1.y] = 1;
-						map[e2.x][e2.y] = 1;
+						//map[e1.x][e1.y] = 1;
+						//map[e2.x][e2.y] = 1;
 						bfsoptions.add(new BFSChoice(e1.x, e1.y, bc.depth + 1));
 					}
 					
