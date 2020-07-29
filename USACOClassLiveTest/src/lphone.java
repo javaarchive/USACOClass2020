@@ -87,7 +87,8 @@ public class lphone {
 					}
 					newTurns = 1 + ro.turns;
 					if(visitedMap[curX][curY] <= (newTurns) && visitedMap[curX][curY] != 0){
-						continue;
+						//continue;
+						break;
 					}
 					if (map[curX][curY] == 1) {
 						break; // You've hit a rock

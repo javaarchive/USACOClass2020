@@ -36,74 +36,94 @@ public class cornmaze {
 					}
 					Pos2 newpos = new Pos2(i,j);
 					portals.get((int) type).add(newpos);
+					map[i][j] = (int) type;
 				}else if(type == '@') {
 					cowx = i;
-					cowy = i;
+					cowy = j;
 				}else if(type == '=') {
 					map[i][j] = 2;
 				}
 			}
 		}
+		String[] decoder = {"\033[0;37m.","\033[0;31m#","\033[0;36m="};
 		Queue<BFSChoice> bfsoptions = new LinkedList<>();
 		BFSChoice bc = new BFSChoice(-1,-1,-1);
 		bfsoptions.add(new BFSChoice(cowx,cowy,0));
+		
 		while(!bfsoptions.isEmpty()) {
 			bc = bfsoptions.poll();
-			System.out.println(bc.x + " "+bc.y);
+		//	System.out.println(bc.x + " "+bc.y);
 			int testx, testy, type;
 			testx = bc.x + 1;
 			testy = bc.y;
 			if(map[bc.x][bc.y] == 2) {
 				break;
 			}
-			if(testx < N && 0 <= testx && 0<=testy && testy<M){
-				type = map[testx][testy];
-				if(portals.keySet().contains(type)){
-					List<Pos2> endpoints = portals.get(type);
-					Pos2 e1 = endpoints.get(0);
-					Pos2 e2 = endpoints.get(1);
-					if(e1.x == testx && e1.y == testy){
-						map[testx][testy] = 1;
-						map[e2.x][e2.y] = 1;
-						bfsoptions.add(new BFSChoice(e2.x, e2.y, bc.depth + 1));
-					}else{
-						map[e1.x][e1.y] = 1;
-						map[e2.x][e2.y] = 1;
-						bfsoptions.add(new BFSChoice(e1.x, e1.y, bc.depth + 1));
+			dircase:{
+				if(testx < N && 0 <= testx && 0<=testy && testy<M){
+					type = map[testx][testy];
+					if(type == 1){
+						break dircase;
 					}
+					if(portals.keySet().contains(type)){
+						//System.out.println("PORTAL");
+						List<Pos2> endpoints = portals.get(type);
+						Pos2 e1 = endpoints.get(0);
+						Pos2 e2 = endpoints.get(1);
+						if(e1.x == testx && e1.y == testy){
+							map[testx][testy] = 1;
+							map[e2.x][e2.y] = 1;
+							bfsoptions.add(new BFSChoice(e2.x, e2.y, bc.depth + 1));
+						}else{
+							map[e1.x][e1.y] = 1;
+							map[e2.x][e2.y] = 1;
+							bfsoptions.add(new BFSChoice(e1.x, e1.y, bc.depth + 1));
+						}
+					}
+					if(type != 1 && type != 2){
+						map[testx][testy] = 1;
+					}
+					bfsoptions.add(new BFSChoice(testx, testy, bc.depth + 1));
 				}
-				if(type != 1 && type != 2){
-					map[testx][testy] = 1;
-				}
-				bfsoptions.add(new BFSChoice(testx, testy, bc.depth + 1));
 			}
-			testx = bc.x - 1;
-			if(testx < N && 0 <= testx && 0<=testy && testy<M){
-				type = map[testx][testy];
-				if(portals.keySet().contains(type)){
-					List<Pos2> endpoints = portals.get(type);
-					Pos2 e1 = endpoints.get(0);
-					Pos2 e2 = endpoints.get(1);
-					if(e1.x == testx && e1.y == testy){
-						map[testx][testy] = 1;
-						map[e2.x][e2.y] = 1;
-						bfsoptions.add(new BFSChoice(e2.x, e2.y, bc.depth + 1));
-					}else{
-						map[e1.x][e1.y] = 1;
-						map[e2.x][e2.y] = 1;
-						bfsoptions.add(new BFSChoice(e1.x, e1.y, bc.depth + 1));
+			dircase:{
+				testx = bc.x - 1;
+				if(testx < N && 0 <= testx && 0<=testy && testy<M){
+					type = map[testx][testy];
+					if(type == 1){
+						break dircase;
 					}
+					if(portals.keySet().contains(type)){
+						//System.out.println("PORTAL");
+						List<Pos2> endpoints = portals.get(type);
+						Pos2 e1 = endpoints.get(0);
+						Pos2 e2 = endpoints.get(1);
+						if(e1.x == testx && e1.y == testy){
+							map[testx][testy] = 1;
+							map[e2.x][e2.y] = 1;
+							bfsoptions.add(new BFSChoice(e2.x, e2.y, bc.depth + 1));
+						}else{
+							map[e1.x][e1.y] = 1;
+							map[e2.x][e2.y] = 1;
+							bfsoptions.add(new BFSChoice(e1.x, e1.y, bc.depth + 1));
+						}
+					}
+					if(type != 1 && type != 2){
+							map[testx][testy] = 1;
+					}
+					bfsoptions.add(new BFSChoice(testx, testy, bc.depth + 1));
 				}
-				if(type != 1 && type != 2){
-						map[testx][testy] = 1;
-				}
-				bfsoptions.add(new BFSChoice(testx, testy, bc.depth + 1));
 			}
 			testx = bc.x;
 			testy = bc.y - 1;
+			dircase: {
 			if(testx < N && 0 <= testx && 0<=testy && testy<M){
 				type = map[testx][testy];
+				if(type == 1){
+					break dircase;
+				}
 				if(portals.keySet().contains(type)){
+					//System.out.println("PORTAL");
 					List<Pos2> endpoints = portals.get(type);
 					Pos2 e1 = endpoints.get(0);
 					Pos2 e2 = endpoints.get(1);
@@ -123,10 +143,16 @@ public class cornmaze {
 					}
 				bfsoptions.add(new BFSChoice(testx, testy, bc.depth + 1));
 			}
+		}
 			testy = bc.y + 1;
+			dircase:{
 			if(testx < N && 0 <= testx && 0<=testy && testy<M){
 				type = map[testx][testy];
+				if(type == 1){
+					break dircase;
+				}
 				if(portals.keySet().contains(type)){
+					//System.out.println("PORTAL");
 					List<Pos2> endpoints = portals.get(type);
 					Pos2 e1 = endpoints.get(0);
 					Pos2 e2 = endpoints.get(1);
@@ -145,6 +171,19 @@ public class cornmaze {
 						map[testx][testy] = 1;
 					}
 				bfsoptions.add(new BFSChoice(testx, testy, bc.depth + 1));
+				}
+			}
+			System.out.println();
+			for(int i = 0; i < N; i ++){
+				for(int j = 0; j < M; j ++){
+					type = map[i][j];
+					if(type < 3){
+					System.out.print(decoder[type] + "\033[0m");
+				}else{
+					System.out.print((char) type);
+				}
+				}
+				System.out.println();
 			}
 		}
 		pw.println(bc.depth);
