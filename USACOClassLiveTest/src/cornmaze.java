@@ -53,7 +53,8 @@ public class cornmaze {
 		Queue<BFSChoice> bfsoptions = new LinkedList<>();
 		BFSChoice bc = new BFSChoice(-1, -1, -1);
 		bfsoptions.add(new BFSChoice(cowx, cowy, 0));
-		//map[cowx][cowy] = 1;
+		// map[cowx][cowy] = 1;
+		// System.out.println(Arrays.toString(bestVisits[0]));
 		while (!bfsoptions.isEmpty()) {
 			bc = bfsoptions.poll();
 			// System.out.println(bc.x + " "+bc.y);
@@ -77,12 +78,20 @@ public class cornmaze {
 						if (e1.x == testx && e1.y == testy) {
 							// map[testx][testy] = 1;
 							// map[e2.x][e2.y] = 1;
-							if(bestVisits[e2.x][e2.y] <= bc.depth){break dircase;}
+							if (bestVisits[e2.x][e2.y] <= bc.depth) {
+								break dircase;
+							}else{
+								bestVisits[e2.x][e2.y] = bc.depth;
+							}
 							bfsoptions.add(new BFSChoice(e2.x, e2.y, bc.depth + 1));
 						} else {
 							// map[e1.x][e1.y] = 1;
 							// map[e2.x][e2.y] = 1;
-							if(bestVisits[e1.x][e1.y] <= bc.depth){break dircase;}
+							if (bestVisits[e1.x][e1.y] <= bc.depth) {
+								break dircase;
+							}else{
+								bestVisits[e1.x][e1.y] = bc.depth;
+							}
 							bfsoptions.add(new BFSChoice(e1.x, e1.y, bc.depth + 1));
 						}
 					}
@@ -107,12 +116,20 @@ public class cornmaze {
 						if (e1.x == testx && e1.y == testy) {
 							// map[testx][testy] = 1;
 							// map[e2.x][e2.y] = 1;
-							if(bestVisits[e2.x][e2.y] <= bc.depth){break dircase;}
+							if (bestVisits[e2.x][e2.y] <= bc.depth) {
+								break dircase;
+							}else{
+								bestVisits[e2.x][e2.y] = bc.depth;
+							}
 							bfsoptions.add(new BFSChoice(e2.x, e2.y, bc.depth + 1));
 						} else {
 							// map[e1.x][e1.y] = 1;
 							// map[e2.x][e2.y] = 1;
-							if(bestVisits[e1.x][e1.y] <= bc.depth){break dircase;}
+							if (bestVisits[e1.x][e1.y] <= bc.depth) {
+								break dircase;
+							}else{
+								bestVisits[e1.x][e1.y] = bc.depth;
+							}
 							bfsoptions.add(new BFSChoice(e1.x, e1.y, bc.depth + 1));
 						}
 					}
@@ -138,12 +155,20 @@ public class cornmaze {
 						if (e1.x == testx && e1.y == testy) {
 							// map[testx][testy] = 1;
 							// map[e2.x][e2.y] = 1;
-							if(bestVisits[e2.x][e2.y] <= bc.depth){break dircase;}
+							if (bestVisits[e2.x][e2.y] <= bc.depth) {
+								break dircase;
+							}else{
+								bestVisits[e2.x][e2.y] = bc.depth;
+							}
 							bfsoptions.add(new BFSChoice(e2.x, e2.y, bc.depth + 1));
 						} else {
 							// map[e1.x][e1.y] = 1;
 							// map[e2.x][e2.y] = 1;
-							if(bestVisits[e1.x][e1.y] <= bc.depth){break dircase;}
+							if (bestVisits[e1.x][e1.y] <= bc.depth) {
+								break dircase;
+							}else{
+								bestVisits[e1.x][e1.y] = bc.depth;
+							}
 							bfsoptions.add(new BFSChoice(e1.x, e1.y, bc.depth + 1));
 						}
 
@@ -169,14 +194,22 @@ public class cornmaze {
 						if (e1.x == testx && e1.y == testy) {
 							// map[testx][testy] = 1;
 							// map[e2.x][e2.y] = 1;
-							if(bestVisits[e2.x][e2.y] <= bc.depth){break dircase;}
+							if (bestVisits[e2.x][e2.y] <= bc.depth) {
+								break dircase;
+							}else{
+								bestVisits[e2.x][e2.y] = bc.depth;
+							}
 							bfsoptions.add(new BFSChoice(e2.x, e2.y, bc.depth + 1));
 						} else {
 							// map[e1.x][e1.y] = 1;
 							// map[e2.x][e2.y] = 1;
-							if(bestVisits[e1.x][e1.y] <= bc.depth){break dircase;}
+							if (bestVisits[e1.x][e1.y] <= bc.depth) {
+								break dircase;
+							}else{
+								bestVisits[e1.x][e1.y] = bc.depth;
+							}
 							bfsoptions.add(new BFSChoice(e1.x, e1.y, bc.depth + 1));
-							
+
 						}
 
 					}
