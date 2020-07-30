@@ -10,12 +10,12 @@ public class moregates {
             java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.OutputStreamWriter(System.out));
             int N = Integer.parseInt(f.readLine());
             String line = f.readLine();
-            boolean[][] map = new boolean[2002][2002];
-            int curX = 1001;
-            int curY = 1001;
+            boolean[][] map = new boolean[4002][4002];
+            int curX = 2001;
+            int curY = 2001;
             map[curX][curY] = true;
-            int minx = Integer.MAX_VALUE, miny = Integer.MAX_VALUE;
-            int maxx = Integer.MIN_VALUE, maxy = Integer.MIN_VALUE;
+            int minx = curX, miny = curY;
+            int maxx = curX, maxy = curY;
             int[] dx = {0,0,-1,1};
             int[] dy = {-1,1,0,0};
             for(int i = 0; i < N; i ++){
@@ -26,22 +26,57 @@ public class moregates {
                         break;
                     case 'S':
                         curY --;
+                        break;
                     case 'E':
                         curX ++;
+                        break;
                     case 'W':
                         curX --;
+                        break;
+                }
+                minx = Integer.min(curX, minx);
+                miny = Integer.min(curY, minx);
+                maxx = Integer.max(curX, maxx);
+                maxy = Integer.max(curY, maxy);
+                map[curX][curY] = true;
+                switch(c){
+                    case 'N':
+                        curY ++;
+                        break;
+                    case 'S':
+                        curY --;
+                        break;
+                    case 'E':
+                        curX ++;
+                        break;
+                    case 'W':
+                        curX --;
+                        break;
                 }
                 map[curX][curY] = true;
+                //System.out.println(curX + " "+curY);
                 minx = Integer.min(curX, minx);
                 miny = Integer.min(curY, minx);
                 maxx = Integer.max(curX, maxx);
                 maxy = Integer.max(curY, maxy);
             }
-            /*maxx ++;
+            for(int i = 0; i < 10; i++){
+            maxx ++;
             maxy ++;
             minx --;
-            miny --;*/
+            miny --;
+            }
+           // minx --;
+           // miny --;
+           //System.out.println(minx+" "+miny+" "+maxx+" "+maxy);
             int ans = 0;
+            /*for(int i = minx; i <= maxx; i ++){
+                for(int j = miny; j <= maxy; j ++){
+                    System.out.print((map[i][j] ? "\033[0;31m":"\033[0;32m") +( map[i][j] ? 1:0)+"\033[0m");
+                }
+                System.out.println();
+            }*/
+
             for(int i = minx; i <= maxx; i ++){
                 for(int j = miny; j <= maxy; j ++){
                     if(map[i][j]){
