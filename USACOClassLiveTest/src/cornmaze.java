@@ -57,7 +57,8 @@ public class cornmaze {
 		// System.out.println(Arrays.toString(bestVisits[0]));
 		while (!bfsoptions.isEmpty()) {
 			bc = bfsoptions.poll();
-			// System.out.println(bc.x + " "+bc.y);
+			//System.out.println(bc.depth);
+			//System.out.println(bc.x + " "+bc.y);
 			int testx, testy, type;
 			testx = bc.x + 1;
 			testy = bc.y;
@@ -74,6 +75,7 @@ public class cornmaze {
 						// System.out.println("PORTAL");
 						List<Pos2> endpoints = portals.get(type);
 						Pos2 e1 = endpoints.get(0);
+						if(endpoints.size() < 2){break dircase;}
 						Pos2 e2 = endpoints.get(1);
 						if (e1.x == testx && e1.y == testy) {
 							// map[testx][testy] = 1;
@@ -94,11 +96,14 @@ public class cornmaze {
 							}
 							bfsoptions.add(new BFSChoice(e1.x, e1.y, bc.depth + 1));
 						}
-					}
-					if (type != 1 && type != 2) {
-						// map[testx][testy] = 1;
+					}else{
+					if (bestVisits[testx][testy] <= bc.depth) {
+						break dircase;
+					}else{
+						bestVisits[testx][testy] = bc.depth;
 					}
 					bfsoptions.add(new BFSChoice(testx, testy, bc.depth + 1));
+				}
 				}
 			}
 			testx = bc.x - 1;
@@ -111,8 +116,11 @@ public class cornmaze {
 					if (portals.keySet().contains(type)) {
 						// System.out.println("PORTAL");
 						List<Pos2> endpoints = portals.get(type);
+						//System.out.println((char) type);
 						Pos2 e1 = endpoints.get(0);
+						if(endpoints.size() < 2){break dircase;}
 						Pos2 e2 = endpoints.get(1);
+						
 						if (e1.x == testx && e1.y == testy) {
 							// map[testx][testy] = 1;
 							// map[e2.x][e2.y] = 1;
@@ -132,11 +140,14 @@ public class cornmaze {
 							}
 							bfsoptions.add(new BFSChoice(e1.x, e1.y, bc.depth + 1));
 						}
-					}
-					if (type != 1 && type != 2) {
-						// map[testx][testy] = 1;
-					}
+					}else{
+						if (bestVisits[testx][testy] <= bc.depth) {
+							break dircase;
+						}else{
+							bestVisits[testx][testy] = bc.depth;
+						}
 					bfsoptions.add(new BFSChoice(testx, testy, bc.depth + 1));
+				}
 				}
 			}
 			testx = bc.x;
@@ -151,6 +162,7 @@ public class cornmaze {
 						// System.out.println("PORTAL");
 						List<Pos2> endpoints = portals.get(type);
 						Pos2 e1 = endpoints.get(0);
+						if(endpoints.size() < 2){break dircase;}
 						Pos2 e2 = endpoints.get(1);
 						if (e1.x == testx && e1.y == testy) {
 							// map[testx][testy] = 1;
@@ -172,11 +184,14 @@ public class cornmaze {
 							bfsoptions.add(new BFSChoice(e1.x, e1.y, bc.depth + 1));
 						}
 
-					}
-					if (type != 1 && type != 2) {
-						// map[testx][testy] = 1;
-					}
+					}else{
+						if (bestVisits[testx][testy] <= bc.depth) {
+							break dircase;
+						}else{
+							bestVisits[testx][testy] = bc.depth;
+						}
 					bfsoptions.add(new BFSChoice(testx, testy, bc.depth + 1));
+				}
 				}
 			}
 			testy = bc.y + 1;
@@ -190,6 +205,7 @@ public class cornmaze {
 						// System.out.println("PORTAL");
 						List<Pos2> endpoints = portals.get(type);
 						Pos2 e1 = endpoints.get(0);
+						if(endpoints.size() < 2){break dircase;}
 						Pos2 e2 = endpoints.get(1);
 						if (e1.x == testx && e1.y == testy) {
 							// map[testx][testy] = 1;
@@ -212,14 +228,17 @@ public class cornmaze {
 
 						}
 
-					}
-					if (type != 1 && type != 2) {
-						// map[testx][testy] = 1;
+					}else{
+					if (bestVisits[testx][testy] <= bc.depth) {
+						break dircase;
+					}else{
+						bestVisits[testx][testy] = bc.depth;
 					}
 					bfsoptions.add(new BFSChoice(testx, testy, bc.depth + 1));
 				}
+				}
 			}
-			System.out.println("Depth: " + bc.depth);
+			/*System.out.println("Depth: " + bc.depth);
 			for (int i = 0; i < N; i++) {
 				for (int j = 0; j < M; j++) {
 					type = map[i][j];
@@ -238,7 +257,7 @@ public class cornmaze {
 					}
 				}
 				System.out.println();
-			}
+			}*/
 		}
 		pw.println(bc.depth);
 		pw.close();
