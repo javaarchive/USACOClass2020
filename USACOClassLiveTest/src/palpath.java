@@ -6,17 +6,14 @@ public class palpath {
     public static int reflect(int a){
         return map.length - a - 1;
     }
-    static Map<String, Integer> freq1; 
-    static Map<String, Integer> freq2; 
+    static Set<String> pos1;
+    static Set<String> pos2;
     public static int xlimit, ylimit;
     public static void recur(int x, int y, String current){
         //System.out.println(x+" "+y+" "+current+" "+(char) (map[x][y] + 65) );
         String newString = current + (char) (map[x][y] + 65) ;
         if(x == xlimit && y == ylimit){
-            if(!freq1.keySet().contains(newString)){
-                freq1.put(newString, 0);
-            }
-            freq1.put(newString, freq1.get(newString) + 1);
+            pos1.add(newString);
             return;
         }
         if((x + 1) <= xlimit){
@@ -30,16 +27,13 @@ public class palpath {
        // System.out.println(x+" "+y+" "+current+" "+(char) (map[x][y] + 65) );
         String newString = current + (char) (map[x][y] + 65) ;
         if(reflect(x) == xlimit && reflect(y) == ylimit){
-            if(!freq2.keySet().contains(newString)){
-                freq2.put(newString, 0);
-            }
-            freq2.put(newString, freq2.get(newString) + 1);
+           pos2.add(newString);
             return;
         }
-        if(reflect(x - 1) <= xlimit){
+        if(reflect(x-1) <= xlimit){
            recur2(x-1,y, newString); 
         }
-        if(reflect(y - 1) <= ylimit){
+        if(reflect(y-1) <= ylimit){
             recur2(x,y-1, newString);
         }
     }
@@ -60,17 +54,24 @@ public class palpath {
             }
         }
         //int xlimit = N;
+        int ans = 0;
         for(int i = 0; i < N; i ++){
             xlimit = i;
             ylimit = N-i-1;
-            freq1 = new HashMap<>();
-            freq2 = new HashMap<>();
+            pos1 = new TreeSet<>();
+            pos2 = new TreeSet<>();
             recur(0,0, "");
+            xlimit = N-i-1;
+            ylimit = i;
             recur2(N-1,N-1, "");
-            System.out.println(freq1);
-            System.out.println(freq2);
-            freq1.clear();
-            freq2.clear();
+            //System.out.println("Symmetry: "+i);
+            //System.out.println(pos1);
+            //System.out.println(pos2);
+            pos1.retainAll(pos2);
+            possible.addAll(pos1);
+            //ans += pos1.size();
+            pos1.clear();
+            pos2.clear();
         }
         pw.println(possible.size());
         pw.close();
