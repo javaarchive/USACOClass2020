@@ -24,6 +24,7 @@ public class crazy {
             int x2 = Integer.parseInt(st.nextToken());
             int y2 = Integer.parseInt(st.nextToken());
             Line l = new Line(x1, y1, x2, y2);
+            //System.out.println("Read line "+l);
             allpoints[nextIndex] = new Coord(x1, y1); nextIndex ++;
             allpoints[nextIndex] = new Coord(x2, y2); nextIndex ++;
             fences.add(l);
@@ -53,7 +54,7 @@ public class crazy {
         for(int i = 0; i < allpoints.length; i ++){
             if(!coordmapperx.keySet().contains(allpoints[i].x)){
                 coordmapperx.put(allpoints[i].x, nextX);
-                nextX += 1;
+                nextX += 2;
             }
         }
         Arrays.sort(allpoints, new Comparator<Coord>(){
@@ -73,23 +74,35 @@ public class crazy {
         for(int i = 0; i < allpoints.length; i ++){
             if(!coordmappery.keySet().contains(allpoints[i].y)){
                 coordmappery.put(allpoints[i].y, nextY);
-                nextY += 1;
+                nextY += 2;
             }
         }
+        String[] colors = {"\033[0;37m","\033[0;34m","\033[0;31m"};
         //System.out.println(Arrays.toString(allpoints));
         // COMPRESS EM POINTS
         int maxx = -1, maxy = -1;
-        int[][] map = new int[1002][1002];
+        int[][] map = new int[2002][2002];
         for(Line l: fences){
             l.x1 = coordmapperx.get(l.x1);
             l.y1 = coordmappery.get(l.y1);
             l.x2 = coordmapperx.get(l.x2);
             l.y2 = coordmappery.get(l.y2);
-            for(int i = l.x1; i <= l.x2; i ++){
-                for(int j = l.y1; j <= l.y2; j ++){
+            //System.out.println("Filling "+l.x1+" "+l.y1+" to "+l.x2+" "+l.y2);
+            int min_x = Integer.min(l.x1, l.x2);
+            int max_x = Integer.max(l.x1, l.x2);
+            int min_y = Integer.min(l.y1, l.y2);
+            int max_y = Integer.max(l.y1, l.y2);
+            for(int i = min_x; i <= max_x; i ++){
+                for(int j = min_y; j <= max_y; j ++){
                     map[i][j] = 2;
                 }
             }
+            /*for(int i = 0; i < 30; i ++){
+                for(int j = 0; j < 30; j ++){
+                    System.out.print(colors[map[i][j]] + Integer.toString(map[i][j]) + "\033[0m");
+                }
+                System.out.println();
+            }*/
             maxx = Integer.max(maxx, l.x1);
             maxy = Integer.max(maxy, l.y1);
             maxx = Integer.max(maxx, l.x2);
@@ -102,13 +115,13 @@ public class crazy {
             maxx = Integer.max(maxx, c.x);
             maxy = Integer.max(maxy, c.y);
         }
-        String[] colors = {"\033[0;37m","\033[0;34m","\033[0;31m"};
-        for(int i = 0; i < 100; i ++){
-            for(int j = 0; j < 100; j ++){
+        
+        /*for(int i = 0; i < 30; i ++){
+            for(int j = 0; j < 30; j ++){
                 System.out.print(colors[map[i][j]] + Integer.toString(map[i][j]) + "\033[0m");
             }
             System.out.println();
-        }
+        }*/
         int[] dx = {0,0,-1,1};
         int[] dy = {1,-1,0,0};
         int best = 0;
@@ -154,6 +167,11 @@ class Coord{
         this.x = x;
         this.y = y;
     }
+
+    @Override
+    public String toString() {
+        return "Coord [x=" + x + ", y=" + y + "]";
+    }
 }
 class Line{
     int x1, y1, x2, y2;
@@ -162,6 +180,11 @@ class Line{
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
+    }
+
+    @Override
+    public String toString() {
+        return "Line [x1=" + x1 + ", x2=" + x2 + ", y1=" + y1 + ", y2=" + y2 + "]";
     }
 }
 class MovementArea{
