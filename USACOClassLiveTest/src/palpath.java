@@ -6,23 +6,41 @@ public class palpath {
     public static int reflect(int a){
         return map.length - a - 1;
     }
+    static Map<String, Integer> freq1; 
+    static Map<String, Integer> freq2; 
     public static int xlimit, ylimit;
     public static void recur(int x, int y, String current){
-        System.out.println(x+" "+y+" "+current+" "+(char) (map[x][y] + 65) );
+        //System.out.println(x+" "+y+" "+current+" "+(char) (map[x][y] + 65) );
         String newString = current + (char) (map[x][y] + 65) ;
         if(x == xlimit && y == ylimit){
-            possible.add(newString);
+            if(!freq1.keySet().contains(newString)){
+                freq1.put(newString, 0);
+            }
+            freq1.put(newString, freq1.get(newString) + 1);
             return;
         }
         if((x + 1) <= xlimit){
-            if(map[reflect(x+1)][reflect(y)] == map[x+1][y]){
-                recur(x+1,y, newString);
-            }
+           recur(x+1,y, newString); 
         }
         if((y + 1) <= ylimit){
-            if(map[reflect(x)][reflect(y+1)] == map[x][y+1]){
-                recur(x,y+1, newString);
+            recur(x,y+1, newString);
+        }
+    }
+    public static void recur2(int x, int y, String current){
+       // System.out.println(x+" "+y+" "+current+" "+(char) (map[x][y] + 65) );
+        String newString = current + (char) (map[x][y] + 65) ;
+        if(reflect(x) == xlimit && reflect(y) == ylimit){
+            if(!freq2.keySet().contains(newString)){
+                freq2.put(newString, 0);
             }
+            freq2.put(newString, freq2.get(newString) + 1);
+            return;
+        }
+        if(reflect(x - 1) <= xlimit){
+           recur2(x-1,y, newString); 
+        }
+        if(reflect(y - 1) <= ylimit){
+            recur2(x,y-1, newString);
         }
     }
     public static void main(String[] args) throws IOException{
@@ -44,8 +62,15 @@ public class palpath {
         //int xlimit = N;
         for(int i = 0; i < N; i ++){
             xlimit = i;
-            ylimit = N-i;
+            ylimit = N-i-1;
+            freq1 = new HashMap<>();
+            freq2 = new HashMap<>();
             recur(0,0, "");
+            recur2(N-1,N-1, "");
+            System.out.println(freq1);
+            System.out.println(freq2);
+            freq1.clear();
+            freq2.clear();
         }
         pw.println(possible.size());
         pw.close();
