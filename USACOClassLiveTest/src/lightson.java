@@ -11,24 +11,62 @@ public class lightson {
         return (0 <= i) && (i <= N);
     }
     public static int total = 1;
-    public static Room adj(int x, int y){
-        if(range(x-1) && map[x-1][y]){
-           return new Room()
+    public static List<Room> adj(int x, int y){
+        List<Room> out = new ArrayList<>();
+        if(range(x-1) && !map[x-1][y]){
+           out.add(new Room(x-1,y));
         }
+        if(range(x+1) && !map[x+1][y]){
+            out.add(new Room(x+1,y));
+         }
+         if(range(y-1) && !map[x][y-1]){
+            out.add(new Room(x,y-1));
+         }
+         if(range(y+1) && !map[x][y+1]){
+            out.add(new Room(x,y+1));
+         }
+        return out;
+    }
+    public static boolean nearBright(int x,int y){
+        if(range(x-1) && map[x-1][y]){
+            
+         }
+         if(range(x+1) && map[x+1][y]){
+             return true;
+          }
+          if(range(y-1) && map[x][y-1]){
+            return true;
+          }
+          if(range(y+1) && map[x][y+1]){
+             out.add(new Room(x,y+1));
+          }
     }
     public static void recur(int x, int y) {
+        map[x][y] = true;
         //System.out.println("recur("+x+","+y+")");
         //visited[x][y] = true;
         Room r = new Room(x, y);
         if (adjlist.keySet().contains(r)) {
             List<Room> connected = adjlist.get(r);
             for (Room room : connected) {
-            if(!map[room.x][room.y]){total ++; System.out.println("Lit "+room.x+" "+room.y);}
+            if(!map[room.x][room.y]){
+                total ++;
+                 //System.out.println("Lit "+room.x+" "+room.y);
+                 for(Room r3: adj(room.x, room.y)){
+                     if(r3.x == x && r3.y == y){
+                         continue;
+                     }
+                     if(!adjlist.keySet().contains(r3)){
+                         continue;
+                     }
+                     recur(r3.x, r3.y);
+                 }
+                }
                 map[room.x][room.y] = true;
             }
         }
         //for(int i = 0; i < 2; i ++){
-        /*if (range(x + 1) && map[x + 1][y] && !visited[x + 1][y]) {
+        if (range(x + 1) && map[x + 1][y] && !visited[x + 1][y]) {
             visited[x + 1][y] = true;
             recur(x + 1, y);
         }
@@ -43,7 +81,7 @@ public class lightson {
         if (range(y - 1) && map[x][y - 1] && !visited[x][y - 1]) {
             visited[x][y - 1] = true;
             recur(x, y - 1);
-        }*/
+        }
     //}
     }
 
