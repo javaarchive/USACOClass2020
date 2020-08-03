@@ -7,65 +7,67 @@ public class lightson {
     public static Map<Room, List<Room>> adjlist = new TreeMap<>();
     public static int N;
     public static int M;
+
     public static boolean range(int i) {
         return (0 <= i) && (i <= N);
     }
+
     public static int total = 1;
-    public static List<Room> adj(int x, int y){
+
+    public static List<Room> adj(int x, int y) {
         List<Room> out = new ArrayList<>();
-        if(range(x-1) && !map[x-1][y]){
-           out.add(new Room(x-1,y));
+        if (range(x - 1) && !map[x - 1][y]) {
+            out.add(new Room(x - 1, y));
         }
-        if(range(x+1) && !map[x+1][y]){
-            out.add(new Room(x+1,y));
-         }
-         if(range(y-1) && !map[x][y-1]){
-            out.add(new Room(x,y-1));
-         }
-         if(range(y+1) && !map[x][y+1]){
-            out.add(new Room(x,y+1));
-         }
+        if (range(x + 1) && !map[x + 1][y]) {
+            out.add(new Room(x + 1, y));
+        }
+        if (range(y - 1) && !map[x][y - 1]) {
+            out.add(new Room(x, y - 1));
+        }
+        if (range(y + 1) && !map[x][y + 1]) {
+            out.add(new Room(x, y + 1));
+        }
         return out;
     }
-    public static boolean nearBright(int x,int y){
-        if(range(x-1) && map[x-1][y]){
-            
-         }
-         if(range(x+1) && map[x+1][y]){
-             return true;
-          }
-          if(range(y-1) && map[x][y-1]){
+
+    public static boolean nearBright(int x, int y) {
+        if (range(x - 1) && map[x - 1][y]) {
             return true;
-          }
-          if(range(y+1) && map[x][y+1]){
-             out.add(new Room(x,y+1));
-          }
+        }
+        if (range(x + 1) && map[x + 1][y]) {
+            return true;
+        }
+        if (range(y - 1) && map[x][y - 1]) {
+            return true;
+        }
+        if (range(y + 1) && map[x][y + 1]) {
+            return true;
+        }
+        return false;
     }
+
     public static void recur(int x, int y) {
         map[x][y] = true;
-        //System.out.println("recur("+x+","+y+")");
-        //visited[x][y] = true;
+        // System.out.println("recur("+x+","+y+")");
+        // visited[x][y] = true;
         Room r = new Room(x, y);
         if (adjlist.keySet().contains(r)) {
             List<Room> connected = adjlist.get(r);
             for (Room room : connected) {
-            if(!map[room.x][room.y]){
-                total ++;
-                 //System.out.println("Lit "+room.x+" "+room.y);
-                 for(Room r3: adj(room.x, room.y)){
-                     if(r3.x == x && r3.y == y){
-                         continue;
-                     }
-                     if(!adjlist.keySet().contains(r3)){
-                         continue;
-                     }
-                     recur(r3.x, r3.y);
-                 }
+                if (!map[room.x][room.y]) {
+                    total++;
+                    // System.out.println("Lit "+room.x+" "+room.y);
+                    if (nearBright(room.x, room.y)) {
+                        map[room.x][room.y] = true;
+                        visited[room.x][room.y] = true;
+                        recur(room.x, room.y);
+                    }
                 }
                 map[room.x][room.y] = true;
             }
         }
-        //for(int i = 0; i < 2; i ++){
+        // for(int i = 0; i < 2; i ++){
         if (range(x + 1) && map[x + 1][y] && !visited[x + 1][y]) {
             visited[x + 1][y] = true;
             recur(x + 1, y);
@@ -82,7 +84,7 @@ public class lightson {
             visited[x][y - 1] = true;
             recur(x, y - 1);
         }
-    //}
+        // }
     }
 
     public static void main(String[] args) throws IOException {
@@ -154,8 +156,10 @@ class Room implements Comparable<Room> {
     public int compareTo(Room o) {
         // TODO Auto-generated method stub
         int xcompare = Integer.compare(this.x, o.x);
-        if(xcompare == 0){return Integer.compare(this.y, o.y);}
+        if (xcompare == 0) {
+            return Integer.compare(this.y, o.y);
+        }
         return xcompare;
     }
-    
+
 }
