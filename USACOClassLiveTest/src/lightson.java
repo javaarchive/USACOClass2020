@@ -12,7 +12,7 @@ public class lightson {
         return (0 <= i) && (i <= N);
     }
 
-    public static int total = 1;
+    public static int total = 0;
 
     public static List<Room> adj(int x, int y) {
         List<Room> out = new ArrayList<>();
@@ -52,11 +52,12 @@ public class lightson {
         // System.out.println("recur("+x+","+y+")");
         visited[x][y] = true;
         Room r = new Room(x, y);
+        
         if (adjlist.keySet().contains(r)) {
             List<Room> connected = adjlist.get(r);
             for (Room room : connected) {
                 if (!map[room.x][room.y]) {
-                    total++;
+                    //total++;
                     // System.out.println("Lit "+room.x+" "+room.y);
                     if (nearBright(room.x, room.y)) {
                         map[room.x][room.y] = true;
@@ -69,21 +70,22 @@ public class lightson {
         }
         // for(int i = 0; i < 2; i ++){
         if (range(x + 1) && map[x + 1][y] && !visited[x + 1][y]) {
-            visited[x + 1][y] = true;
+            //visited[x + 1][y] = true;
             recur(x + 1, y);
         }
         if (range(x - 1) && map[x - 1][y] && !visited[x - 1][y]) {
-            visited[x - 1][y] = true;
+            //visited[x - 1][y] = true;
             recur(x - 1, y);
         }
         if (range(y + 1) && map[x][y + 1] && !visited[x][y + 1]) {
-            visited[x][y + 1] = true;
+            //visited[x][y + 1] = true;
             recur(x, y + 1);
         }
         if (range(y - 1) && map[x][y - 1] && !visited[x][y - 1]) {
-            visited[x][y - 1] = true;
+            //visited[x][y - 1] = true;
             recur(x, y - 1);
         }
+    
         // }
     }
 
@@ -116,6 +118,13 @@ public class lightson {
         visited[1][1] = true;
         map[1][1] = true;
         recur(1, 1);
+        for(int i =0; i < map.length; i ++){
+            for(int j = 0; j < map[i].length; j ++){
+                if(map[i][j]){
+                    total ++;
+                }
+            }
+        }
         pw.println(total);
         pw.close();
     }
