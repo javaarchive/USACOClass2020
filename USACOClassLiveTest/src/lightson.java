@@ -58,11 +58,11 @@ public class lightson {
                 if (!map[room.x][room.y]) {
                     total++;
                     // System.out.println("Lit "+room.x+" "+room.y);
-                }
-                if (nearBright(room.x, room.y)) {
-                    map[room.x][room.y] = true;
-                    visited[room.x][room.y] = true;
-                    recur(room.x, room.y);
+                    if (nearBright(room.x, room.y)) {
+                        map[room.x][room.y] = true;
+                        visited[room.x][room.y] = true;
+                        recur(room.x, room.y);
+                    }
                 }
                 map[room.x][room.y] = true;
             }
