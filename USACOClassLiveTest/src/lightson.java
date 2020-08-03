@@ -50,7 +50,7 @@ public class lightson {
     public static void recur(int x, int y) {
         map[x][y] = true;
         // System.out.println("recur("+x+","+y+")");
-        // visited[x][y] = true;
+        visited[x][y] = true;
         Room r = new Room(x, y);
         if (adjlist.keySet().contains(r)) {
             List<Room> connected = adjlist.get(r);
@@ -58,11 +58,11 @@ public class lightson {
                 if (!map[room.x][room.y]) {
                     total++;
                     // System.out.println("Lit "+room.x+" "+room.y);
-                    if (nearBright(room.x, room.y)) {
-                        map[room.x][room.y] = true;
-                        visited[room.x][room.y] = true;
-                        recur(room.x, room.y);
-                    }
+                }
+                if (nearBright(room.x, room.y)) {
+                    map[room.x][room.y] = true;
+                    visited[room.x][room.y] = true;
+                    recur(room.x, room.y);
                 }
                 map[room.x][room.y] = true;
             }
