@@ -84,6 +84,21 @@ public class lightson {
             visited[x][y - 1] = true;
             recur(x, y - 1);
         }
+        if (adjlist.keySet().contains(r)) {
+            List<Room> connected = adjlist.get(r);
+            for (Room room : connected) {
+                if (!map[room.x][room.y]) {
+                    total++;
+                    // System.out.println("Lit "+room.x+" "+room.y);
+                    if (nearBright(room.x, room.y)) {
+                        map[room.x][room.y] = true;
+                        visited[room.x][room.y] = true;
+                        recur(room.x, room.y);
+                    }
+                }
+                map[room.x][room.y] = true;
+            }
+        }
         // }
     }
 
