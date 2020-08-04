@@ -11,13 +11,13 @@ public class minesweeper {
     static int targetMatched;
 
     public static boolean recur(int x, int y, int K) {
-        /*System.out.println("recur("+x+","+y+","+K+") ");
+        System.out.println("recur("+x+","+y+","+K+") ");
         for(int px = 0; px < attempt.length; px ++){
             for(int py = 0; py < attempt[px].length; py ++){
-                System.out.print(attempt[px][py] + ",");
+                System.out.print(attempt[px][py] + " ");
             }
             System.out.println();
-        }*/
+        }
         int addedMatch = 0;
         boolean failed = false;
         for (int i = 0; i < dx.length; i++) {
@@ -51,13 +51,13 @@ public class minesweeper {
         for (int i = 0; i < count.length; i++) {
             for (int j = 0; j < count[i].length; j++) {
                 if (K > 0 && recur(i, j, K - 1)) {
-                    System.out.println("Map: ");
+                    /*System.out.println("Map: ");
                     for(int px = 0; px < attempt.length; px ++){
                         for(int py = 0; py < attempt[px].length; py ++){
                             System.out.print(attempt[px][py] + " ");
                         }
                         System.out.println();
-                    }
+                    }*/
                     return true;
                 }else{
                     /*System.out.println("Recur "+i+" "+j+" failed");
@@ -114,7 +114,11 @@ public class minesweeper {
             for (int j = 0; j < count[i].length; j++) {
                 if(recur(i, j, K - 1)){
                     matched = 0;
-                    System.out.println(path);
+                    for(Location l: path){
+                        System.out.println((l.x + 1)+" "+(l.y + 1));
+                    }
+                    break;
+                    //System.out.println(path);
                 }
             }
         }
@@ -133,6 +137,12 @@ class Location implements Comparable<Location>{
     @Override
     public String toString() {
         return "("+ x + " , " + y + ")";
+    }
+
+    @Override
+    public int compareTo(Location o) {
+        // TODO Auto-generated method stub
+        return (this.toString()).compareTo(o.toString());
     }
     
 }
