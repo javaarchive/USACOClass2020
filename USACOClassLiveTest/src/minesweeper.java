@@ -26,6 +26,10 @@ public class minesweeper {
             if (0 <= checkx && checkx < attempt.length) {
                 if (0 <= checky && checky < attempt[checkx].length) {
                     attempt[checkx][checky]++;
+                    if(attempt[checkx][checky] > count[checkx][checky]){
+                        matched--;
+                        addedMatch --;
+                    }
                    if (attempt[checkx][checky] == count[checkx][checky]) {
                         matched++;
                         addedMatch++;
@@ -47,6 +51,13 @@ public class minesweeper {
         for (int i = 0; i < count.length; i++) {
             for (int j = 0; j < count[i].length; j++) {
                 if (K > 0 && recur(i, j, K - 1)) {
+                    System.out.println("Map: ");
+                    for(int px = 0; px < attempt.length; px ++){
+                        for(int py = 0; py < attempt[px].length; py ++){
+                            System.out.print(attempt[px][py] + " ");
+                        }
+                        System.out.println();
+                    }
                     return true;
                 }else{
                     /*System.out.println("Recur "+i+" "+j+" failed");
@@ -67,7 +78,6 @@ public class minesweeper {
             int checky = y + dy[i];
             if (0 <= checkx && checkx < attempt.length) {
                 if (0 <= checky && checky < attempt[checkx].length) {
-                    
                     attempt[checkx][checky] --;
                 }
             }
@@ -102,14 +112,17 @@ public class minesweeper {
         }
         for (int i = 0; i < count.length; i++) {
             for (int j = 0; j < count[i].length; j++) {
-                System.out.println(recur(i, j, K - 1));
+                if(recur(i, j, K - 1)){
+                    matched = 0;
+                    System.out.println(path);
+                }
             }
         }
     }
 
 }
 
-class Location {
+class Location implements Comparable<Location>{
     int x, y;
 
     public Location(int x, int y) {
@@ -117,4 +130,9 @@ class Location {
         this.y = y;
     }
 
+    @Override
+    public String toString() {
+        return "("+ x + " , " + y + ")";
+    }
+    
 }
