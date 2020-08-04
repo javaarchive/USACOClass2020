@@ -32,16 +32,16 @@ public class lightson {
     }
 
     public static boolean nearBright(int x, int y) {
-        if (range(x - 1) && map[x - 1][y]) {
+        if (range(x - 1) && map[x - 1][y] && visited[x - 1][y]) {
             return true;
         }
-        if (range(x + 1) && map[x + 1][y]) {
+        if (range(x + 1) && map[x + 1][y] && visited[x + 1][y]) {
             return true;
         }
-        if (range(y - 1) && map[x][y - 1]) {
+        if (range(y - 1) && map[x][y - 1] && visited[x][y - 1]) {
             return true;
         }
-        if (range(y + 1) && map[x][y + 1]) {
+        if (range(y + 1) && map[x][y + 1] && visited[x][y + 1]) {
             return true;
         }
         return false;
