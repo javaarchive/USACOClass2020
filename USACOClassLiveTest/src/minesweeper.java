@@ -11,26 +11,36 @@ public class minesweeper {
     static int targetMatched;
 
     public static boolean recur(int x, int y, int K) {
+        System.out.println("recur("+x+","+y+","+K+") ");
+        for(int px = 0; px < attempt.length; px ++){
+            for(int py = 0; py < attempt[px].length; py ++){
+                System.out.print(attempt[px][py] + ",");
+            }
+            System.out.println();
+        }
         int addedMatch = 0;
         boolean failed = false;
         for (int i = 0; i < dx.length; i++) {
             int checkx = x + dx[i];
-            int checky = y + dx[i];
+            int checky = y + dy[i];
             if (0 <= checkx && checkx < attempt.length) {
                 if (0 <= checky && checky < attempt[checkx].length) {
 
                     attempt[checkx][checky]++;
-                    if (attempt[checkx][checky] > count[checkx][checky]) {
-                        failed = true;
-                        break;
-                    } else if (attempt[checkx][checky] == count[checkx][checky]) {
+                   if (attempt[checkx][checky] == count[checkx][checky]) {
                         matched++;
                         addedMatch++;
                     }
                 }
             }
         }
-
+        System.out.println("afterrecur("+x+","+y+","+K+") ");
+        for(int px = 0; px < attempt.length; px ++){
+            for(int py = 0; py < attempt[px].length; py ++){
+                System.out.print(attempt[px][py] + ",");
+            }
+            System.out.println();
+        }
         path.add(new Location(x, y));
         if (matched == targetMatched && !failed) {
             return true;
@@ -40,13 +50,13 @@ public class minesweeper {
                 if (K > 0 && recur(i, j, K - 1)) {
                     return true;
                 }else{
-                    System.out.println("Recur "+i+" "+j+" failed");
+                    /*System.out.println("Recur "+i+" "+j+" failed");
                     for(int px = 0; px < attempt.length; px ++){
-                        for(int py = 0; py < attempt[i].length; py ++){
+                        for(int py = 0; py < attempt[px].length; py ++){
                             System.out.print(attempt[px][py] + ",");
                         }
                         System.out.println();
-                    }
+                    }*/
                 }
             }
         }
@@ -55,13 +65,11 @@ public class minesweeper {
         matched -= addedMatch;
         for (int i = 0; i < dx.length; i++) {
             int checkx = x + dx[i];
-            int checky = y + dx[i];
+            int checky = y + dy[i];
             if (0 <= checkx && checkx < attempt.length) {
                 if (0 <= checky && checky < attempt[checkx].length) {
-                    if (attempt[checkx][checky] > count[checkx][checky]) {
-                        break;
-                    }
-                    attempt[checkx][checky] -= 54;
+                    
+                    attempt[checkx][checky] --;
                 }
             }
 
