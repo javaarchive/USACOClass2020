@@ -18,6 +18,7 @@ public class minesweeper {
             int checky = y + dx[i];
             if (0 <= checkx && checkx < attempt.length) {
                 if (0 <= checky && checky < attempt[checkx].length) {
+
                     attempt[checkx][checky]++;
                     if (attempt[checkx][checky] > count[checkx][checky]) {
                         failed = true;
@@ -34,12 +35,18 @@ public class minesweeper {
         if (matched == targetMatched && !failed) {
             return true;
         }
-        for (int i = 0; i < dx.length; i++) {
-            int checkx = x + dx[i];
-            int checky = y + dx[i];
-            if (0 <= checkx && checkx < attempt.length) {
-                if (0 <= checky && checky < attempt[checkx].length) {
-                    attempt[checkx][checky]--;
+        for (int i = 0; i < count.length; i++) {
+            for (int j = 0; j < count[i].length; j++) {
+                if (K > 0 && recur(i, j, K - 1)) {
+                    return true;
+                }else{
+                    System.out.println("Recur "+i+" "+j+" failed");
+                    for(int px = 0; px < attempt.length; px ++){
+                        for(int py = 0; py < attempt[i].length; py ++){
+                            System.out.print(attempt[px][py] + ",");
+                        }
+                        System.out.println();
+                    }
                 }
             }
         }
@@ -49,10 +56,15 @@ public class minesweeper {
         for (int i = 0; i < dx.length; i++) {
             int checkx = x + dx[i];
             int checky = y + dx[i];
-            if (attempt[checkx][checky] > count[checkx][checky]) {
-                break;
+            if (0 <= checkx && checkx < attempt.length) {
+                if (0 <= checky && checky < attempt[checkx].length) {
+                    if (attempt[checkx][checky] > count[checkx][checky]) {
+                        break;
+                    }
+                    attempt[checkx][checky] -= 54;
+                }
             }
-            attempt[checkx][checky]--;
+
         }
         return false;
     }
