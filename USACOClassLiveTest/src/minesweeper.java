@@ -8,6 +8,7 @@ public class minesweeper {
     public static int targetMatched;
     static int[] dx = { -1, -1, -1, 1, 1, 1, 0, 0, 0 };
     static int[] dy = { -1, 0, 1, -1, 0, 1, -1, 0, 1 };
+    
     public static boolean checkBounds(int x, int y){
         return (0 <= x) && (x < attempt.length) && (0 <= y) && (y < attempt[x].length);
     }
@@ -40,8 +41,11 @@ public class minesweeper {
         }
         return match;
     }
+    static int Ktotal = 0;
     public static boolean recur(int K, int curMatch) {
-        System.out.println("recur("+K+","+curMatch+")");
+        //System.out.println("recur("+K+","+curMatch+")");
+        //System.out.println(K);
+        //progressPercentage(K, Ktotal);
         if(curMatch == targetMatched){
             return true;
         }
@@ -49,7 +53,8 @@ public class minesweeper {
             return false; // No point adding more mines
         }
         if(K == 0){
-            return false;
+           // return true;
+           return false; 
         }
         for(int i = 0; i < attempt.length; i ++){
             for(int j = 0; j < attempt[i].length; j ++){
@@ -76,6 +81,7 @@ public class minesweeper {
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
+        Ktotal = K;
         targetMatched = N * M;
         count = new int[N][M];
         attempt = new int[N][M];
