@@ -50,13 +50,15 @@ public class minesweeper {
         if (curMatched == goal) {
             return true;
         }
+        if(curMatched > goal){
+            return false;
+        }
         if (k == 0) {
             return false;
         }
         if (x == N) {
             return false;
         }
-        
         if(y == 0 && x > 1){
             int row = x - 2;
             for(int i = 0; i < M; i ++){
@@ -65,6 +67,7 @@ public class minesweeper {
                 }
             }
         }
+        
         // CASE 1
         if (valid(x, y)) {
             int newMatched = place(x, y, 1); // Place mine
@@ -80,6 +83,17 @@ public class minesweeper {
             }
             path.remove(path.size() - 1);
             place(x, y, -1); // Undo changes
+        }
+         // Pruning
+         if(x > 0 && y > 0){
+            if(count[x-1][y-1] != test[x-1][y-1]){
+                return false;
+            }
+        }
+        if(x == N-1 && y > 0){
+            if(count[x][y-1] != test[x][y-1]){
+                return false;
+            }
         }
         // CASE 2
         if (y == M - 1) {
