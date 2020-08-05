@@ -34,12 +34,8 @@ public class minesweeper {
         for (int i = 0; i < DIRS; i++) {
             int newx = x + dx[i];
             int newy = y + dy[i];
-            if(dx[i] == 0 && dy[i] == 0){
-                if (count[newx][newy] == 0) {
-                    return false;
-                }
-            }else if (inBounds(newx, newy)) {
-                if (count[newx][newy] <= test[newx][newy] - 1) {
+            if (inBounds(newx, newy)) {
+                if (count[newx][newy]  <= test[newx][newy]) {
                     return false;
                 }
             }
@@ -61,6 +57,14 @@ public class minesweeper {
             return false;
         }
         
+        if(y == 0 && x > 1){
+            int row = x - 2;
+            for(int i = 0; i < M; i ++){
+                if(count[row][i] != test[row][i]){
+                    return false;
+                }
+            }
+        }
         // CASE 1
         if (valid(x, y)) {
             int newMatched = place(x, y, 1); // Place mine
