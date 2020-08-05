@@ -5,11 +5,66 @@ public class minesweeper {
     public static int[][] count;
     public static int[][] attempt;
     static List<Location> path = new ArrayList<>();
+    public static int targetMatched;
     static int[] dx = { -1, -1, -1, 1, 1, 1, 0, 0, 0 };
     static int[] dy = { -1, 0, 1, -1, 0, 1, -1, 0, 1 };
+    public static boolean checkBounds(int x, int y){
+        return (0 <= x) && (x < attempt.length) && (0 <= y) && (y < attempt[x].length);
+    }
+    public static boolean valid(int x, int y){
+        for(int i = 0; i < dx.length; i ++){
+            int newx = x + dx[i];
+            int newy = y + dy[i];
+            if(!checkBounds(newx,newy)){
+                continue;
+            }
+            if(attempt[newx][newy] >= count[newx][newy]){
+                return false;
+            }
+        }
+        return true;
+    }
 
-    public static boolean recur(int x, int y, int K) {
-        
+    public static int place(int x, int y, int inc){
+        int match  =0;
+        for(int i = 0; i < dx.length; i ++){
+            int newx = x + dx[i];
+            int newy = y + dy[i];
+            if(!checkBounds(newx,newy)){
+                continue;
+            }
+            attempt[newx][newy] += inc;
+            if(attempt[newx][newy] == count[newx][newy]){
+                match ++;
+            }
+        }
+        return match;
+    }
+    public static boolean recur(int K, int curMatch) {
+        System.out.println("recur("+K+","+curMatch+")");
+        if(curMatch == targetMatched){
+            return true;
+        }
+        if(curMatch > targetMatched){
+            return false; // No point adding more mines
+        }
+        if(K == 0){
+            return false;
+        }
+        for(int i = 0; i < attempt.length; i ++){
+            for(int j = 0; j < attempt[i].length; j ++){
+                if(valid(i,j)){
+                    int newMatch = place(i,j, 1);
+                    path.add(new Location(i,j));
+                    if(recur(K - 1, curMatch = newMatch)){
+                        return true;
+                    }
+                    path.remove(path.size() - 1);
+                    place(i,j, -1); // Undo Action
+                }
+            }
+        }
+        return false;
     }
     public static void main(String[] args) throws IOException {
         // IO
@@ -21,7 +76,7 @@ public class minesweeper {
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
-        // targetMatched = N * M;
+        targetMatched = N * M;
         count = new int[N][M];
         attempt = new int[N][M];
         for (int i = 0; i < N; i++) {
@@ -30,6 +85,9 @@ public class minesweeper {
                 int mineCount = Integer.parseInt(st.nextToken());
                 count[i][j] = mineCount;
                 // attempt[i][j] = mineCount;
+                if(mineCount == 0){
+                    targetMatched --;
+                }
             }
         }
         for (int i = 0; i < count.length; i++) {
@@ -37,7 +95,7 @@ public class minesweeper {
                 if(count[i][j] == 0){
                     continue; // PRUNE 1
                 }
-                if(recur(i, j, K - 1)){
+                if(recur(K, 0)){
                     // matched = 0;
                     for(Location l: path){
                         System.out.println((l.x + 1)+" "+(l.y + 1));
