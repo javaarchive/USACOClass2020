@@ -33,21 +33,21 @@ public class planting {
                 return Integer.compare(o1.x, o2.x);
             }
         });
-        System.out.println(eps);
+        //System.out.println(eps);
         TreeSet<Endpoint> yvalues = new TreeSet<>();
         boolean first = true;
         Endpoint last = new Endpoint(-1,-1,-1,-1);
         int ans = 0;
         for(Endpoint ep: eps){
-            System.out.println(yvalues);
+            /*System.out.println(yvalues);
             for(Endpoint covering: yvalues){
                 Rect r = rects.get(covering.id);
                 System.out.println(r.x1 + " " + r.y1 + " " + r.x2 + " " + r.y2);
-            }
+            }*/
             if(yvalues.size() > 0){
                 if(!first){
                     int distance = ep.x - last.x;
-                    System.out.println("xvalues " + last.x + " "+ep.x);
+                    //System.out.println("xvalues " + last.x + " "+ep.x);
                     int miny = Integer.MAX_VALUE, maxy = Integer.MIN_VALUE;
                     for(Endpoint covering: yvalues){
                         Rect r = rects.get(covering.id);
@@ -56,7 +56,7 @@ public class planting {
                         miny = Integer.min(r.y2, miny);
                         maxy = Integer.max(r.y2, maxy);
                     }
-                    System.out.println("Range " + miny + " " + maxy + " adding "+((maxy - miny) * distance));
+                    //System.out.println("Range " + miny + " " + maxy + " adding "+((maxy - miny) * distance));
                     ans += (maxy - miny) * distance;
                 }
             }
