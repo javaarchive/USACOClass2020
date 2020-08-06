@@ -52,8 +52,8 @@ public class planting {
                     List<Integer> endpoints2 = new ArrayList<>();
                     for(Endpoint covering: yvalues){
                         Rect r = rects.get(covering.id);
-                        int y1 = Integer.min(r.x1, r.x2) + 1; // Anti -0
-                        int y2 = Integer.max(r.x1, r.x2) + 1; // Anti -0
+                        int y1 = Integer.min(r.y1, r.y2) + 1; // Anti -0
+                        int y2 = Integer.max(r.y1, r.y2) + 1; // Anti -0
                         endpoints2.add(-y1);
                         endpoints2.add(y2);
                     }
@@ -70,9 +70,7 @@ public class planting {
                     System.out.println("Calculating y sum for "+ep.x);
                     System.out.println(endpoints2);
                     for(Integer yvalue: endpoints2){
-                        if(yvalue > 0){
-                            covercount --;
-                        }else{
+                        if(yvalue < 0){
                             covercount ++;
                         }
                         int absyvalue = Math.abs(yvalue);
@@ -82,7 +80,9 @@ public class planting {
                             ysum += absyvalue - last2;
                         }
                         last2 = absyvalue;
-                        
+                        if(yvalue > 0){
+                            covercount --;
+                        }
                     }
                     //System.out.println("Range " + miny + " " + maxy + " adding "+((maxy - miny) * distance));
                     ans += (last2) * distance;
