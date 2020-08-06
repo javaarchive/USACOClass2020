@@ -49,15 +49,38 @@ public class planting {
                     int distance = ep.x - last.x;
                     //System.out.println("xvalues " + last.x + " "+ep.x);
                     int miny = Integer.MAX_VALUE, maxy = Integer.MIN_VALUE;
+                    List<Integer> endpoints2 = new ArrayList<>();
                     for(Endpoint covering: yvalues){
                         Rect r = rects.get(covering.id);
-                        miny = Integer.min(r.y1, miny);
-                        maxy = Integer.max(r.y1, maxy);
-                        miny = Integer.min(r.y2, miny);
-                        maxy = Integer.max(r.y2, maxy);
+                        int y1 = Integer.min(r.x1, r.x2) + 1; // Anti -0
+                        int y2 = Integer.max(r.x1, r.x2) + 1; // Anti -0
+                        endpoints2.add(-y1);
+                        endpoints2.add(y2);
+                    }
+                    endpoints2.sort(new Comparator<Integer>(){
+                        @Override
+                        public int compare(Integer o1, Integer o2) {
+                            // TODO Auto-generated method stub
+                            return Integer.compare((o1 > 0) ? o1:-o1, (o2 > 0) ? o2:-o2);
+                        }
+                    });
+                    int covercount = 0;
+                    int last2 = endpoints2.get(0);
+                    int ysum = 0;
+                    for(Integer yvalue: endpoints2){
+                        if(yvalue > 0){
+                            covercount --;
+                        }else{
+                            covercount ++;
+                        }
+                        int absyvalue = Math.abs(yvalue);
+                        if(covercount >= 1){
+                            ysum += absyvalue - last2;
+                        }
+                        last2 = absyvalue;
                     }
                     //System.out.println("Range " + miny + " " + maxy + " adding "+((maxy - miny) * distance));
-                    ans += (maxy - miny) * distance;
+                    ans += (last2) * distance;
                 }
             }
             if(ep.type == -1){
