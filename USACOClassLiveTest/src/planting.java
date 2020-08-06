@@ -52,10 +52,16 @@ public class planting {
                     List<Integer> endpoints2 = new ArrayList<>();
                     for(Endpoint covering: yvalues){
                         Rect r = rects.get(covering.id);
+                        if(r.x1 == last.x){
                         int y1 = Integer.min(r.y1, r.y2) + 1; // Anti -0
-                        int y2 = Integer.max(r.y1, r.y2) + 1; // Anti -0
                         endpoints2.add(-y1);
+                        }
+                        if(r.x2 == last.x){
+                        int y2 = Integer.max(r.y1, r.y2) + 1; // Anti -0
                         endpoints2.add(y2);
+                        }
+                        
+                       
                     }
                     endpoints2.sort(new Comparator<Integer>(){
                         @Override
@@ -65,6 +71,9 @@ public class planting {
                         }
                     });
                     int covercount = 0;
+                    if(endpoints2.size() <= 0){
+                        continue;
+                    }
                     int last2 = Math.abs(endpoints2.get(0));
                     int ysum = 0;
                     System.out.println("Calculating y sum for "+ep.x);
@@ -73,6 +82,7 @@ public class planting {
                         if(yvalue < 0){
                             covercount ++;
                         }
+                       
                         int absyvalue = Math.abs(yvalue);
                         System.out.println(absyvalue+" "+covercount);
                         if(covercount >= 1){
@@ -80,12 +90,12 @@ public class planting {
                             ysum += absyvalue - last2;
                         }
                         last2 = absyvalue;
-                        if(yvalue > 0){
+                         if(yvalue > 0){
                             covercount --;
                         }
                     }
                     //System.out.println("Range " + miny + " " + maxy + " adding "+((maxy - miny) * distance));
-                    ans += (last2) * distance;
+                    ans += ysum * distance;
                 }
             }
             if(ep.type == -1){
