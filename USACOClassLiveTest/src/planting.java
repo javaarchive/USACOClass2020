@@ -84,9 +84,9 @@ public class planting {
                         }
                        
                         int absyvalue = Math.abs(yvalue);
-                        System.out.println(absyvalue+" "+covercount);
+                        //System.out.println(absyvalue+" "+covercount);
                         if(covercount >= 1){
-                            System.out.println("S: "+(absyvalue - last2));
+                            //System.out.println("S: "+(absyvalue - last2));
                             ysum += absyvalue - last2;
                         }
                         last2 = absyvalue;
