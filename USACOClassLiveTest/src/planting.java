@@ -65,8 +65,10 @@ public class planting {
                         }
                     });
                     int covercount = 0;
-                    int last2 = endpoints2.get(0);
+                    int last2 = Math.abs(endpoints2.get(0));
                     int ysum = 0;
+                    System.out.println("Calculating y sum for "+ep.x);
+                    System.out.println(endpoints2);
                     for(Integer yvalue: endpoints2){
                         if(yvalue > 0){
                             covercount --;
@@ -74,10 +76,13 @@ public class planting {
                             covercount ++;
                         }
                         int absyvalue = Math.abs(yvalue);
+                        System.out.println(absyvalue+" "+covercount);
                         if(covercount >= 1){
+                            System.out.println("S: "+(absyvalue - last2));
                             ysum += absyvalue - last2;
                         }
                         last2 = absyvalue;
+                        
                     }
                     //System.out.println("Range " + miny + " " + maxy + " adding "+((maxy - miny) * distance));
                     ans += (last2) * distance;
