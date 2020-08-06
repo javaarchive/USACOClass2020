@@ -52,14 +52,14 @@ public class planting {
                     List<Integer> endpoints2 = new ArrayList<>();
                     for(Endpoint covering: yvalues){
                         Rect r = rects.get(covering.id);
-                        if(r.x1 == last.x){
+                        
                         int y1 = Integer.min(r.y1, r.y2) + 1; // Anti -0
                         endpoints2.add(-y1);
-                        }
-                        if(r.x2 == last.x){
+                        
+                        
                         int y2 = Integer.max(r.y1, r.y2) + 1; // Anti -0
                         endpoints2.add(y2);
-                        }
+                        
                         
                        
                     }
@@ -76,8 +76,8 @@ public class planting {
                     }
                     int last2 = Math.abs(endpoints2.get(0));
                     int ysum = 0;
-                    System.out.println("Calculating y sum for "+ep.x);
-                    System.out.println(endpoints2);
+                    //System.out.println("Calculating y sum for "+ep.x);
+                    //System.out.println(endpoints2);
                     for(Integer yvalue: endpoints2){
                         if(yvalue < 0){
                             covercount ++;
