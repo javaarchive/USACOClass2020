@@ -25,24 +25,24 @@ public class planting{
             int y2 = Integer.max(yy1, yy2);
             xList.add(x1);
             xList.add(x2);
-            rectList.add(new Rect(x1, y1, x2, y2));
+            yList.add(new YCoord(y1, -1));
+            yList.add(new YCoord(y1, 1));
         }
         xList.sort(null); // Natural Ordering, low to high
         int j = 0;
         for(int i = 0; i < 2*N; i ++){
-            while(i < 2*N){
-                Rect r = rectList.get(j);
-
-            }
+            
+                YCoord r = yList.get(i);
+            
         }
         pw.println(ans);
         pw.close();
     }
 }
-class Ycoord{
+class YCoord{
     int y;
     int type;
-    public Ycoord(int y, int type){
+    public YCoord(int y, int type){
         this.y = y;
         this.type = type;
     }
