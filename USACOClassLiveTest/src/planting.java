@@ -41,27 +41,19 @@ public class planting {
         boolean first = true;
         Endpoint last = new Endpoint(-1, -1, -1, -1);
         int ans = 0;
-        List<List<Endpoint>> yvals = new ArrayList<>();
-        for (int i = 0; i < xset.size(); i++) {
-            yvals.add(new ArrayList<>());
-        }
-        int counter = 0;
-        Map<Integer, Integer> xassigns = new HashMap<>();
+        Map<Integer, List<Endpoint>> xtoendpoints = new HashMap<>(); 
         for (Endpoint ep : eps) {
             if (ep.type == -1) {
                 yvalues.add(ep);
             } else {
                 yvalues.remove(ep);
             }
-            if(!xassigns.keySet().contains(ep.x)){
-                xassigns.put(ep.x, counter);
-                counter ++;
-            }
+            
             List<Endpoint> myys = yvals.get(xassigns.get(ep.x));
             if (!first) {
                 if (yvalues.size() > 0) {
-                    for(Endpoint ep2: yvalues){
-                        myys.add(ep2);
+                    if(!xtoendpoints.keySet().contains(last.x)){
+                        xtoendpoints.putIfAbsent(key, value)
                     }
                 }
             }
