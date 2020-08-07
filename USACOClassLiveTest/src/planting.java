@@ -49,18 +49,21 @@ public class planting {
                 yvalues.remove(ep);
             }
             
-            List<Endpoint> myys = yvals.get(xassigns.get(ep.x));
+            //List<Endpoint> myys = yvals.get(xassigns.get(ep.x));
             if (!first) {
                 if (yvalues.size() > 0) {
-                    if(!xtoendpoints.keySet().contains(last.x)){
-                        xtoendpoints.putIfAbsent(key, value)
+                    xtoendpoints.putIfAbsent(last.x, new ArrayList<>());
+                    xtoendpoints.putIfAbsent(ep.x, new ArrayList<>());
+                    for(Endpoint ep2: yvalues){
+                        xtoendpoints.get(last.x).add(ep);
+                        xtoendpoints.get(ep2.x).add(ep);
                     }
                 }
             }
             last = ep;
             first = false;
         }
-        System.out.println(yvals);
+        System.out.println(xtoendpoints);
         pw.println(ans);
         pw.close();
     }
@@ -90,7 +93,11 @@ class Endpoint implements Comparable<Endpoint> {
     @Override
     public int compareTo(Endpoint o) {
         // TODO Auto-generated method stub
-        return Integer.compare(this.id, o.id);
+        int ycompare = Integer.compare(this.y, o.y);
+        if(ycompare == 0){
+            return Integer.compare(this.id, o.id);
+        }
+        return ycompare;
     }
 
     @Override
