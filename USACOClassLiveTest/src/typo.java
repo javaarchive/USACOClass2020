@@ -39,12 +39,12 @@ public class typo {
 				right ++;
 			}
 			if(t >= 2 && mode > 0 && !curP){
-				//System.out.println("L");
+				System.out.println("L");
 				useLeft = true;
 				goodLeft = left;
 				curP = true;
 				//break;
-				mode = 0;
+				//mode = 0;
 			}else{
 				curP = false;
 			}
