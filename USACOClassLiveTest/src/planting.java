@@ -34,8 +34,13 @@ public class planting{
         }
         xList.sort(null); // Natural Ordering, low to high
         //int j = 0;
-        for(int i = 0; i < 2*N; i ++){
+        int i = 0;
+        while(i < 2 * N) {
             int x = xList.get(i);
+            if(i != 0 && x == xList.get(i - 1)) {
+            	i ++;
+            	continue;
+            }
             List<YCoord> rel = new ArrayList<>();
             for(int j = 0; j < N; j ++){
                 if(arrx1[j] <= x && x < arrx2[j]){
@@ -49,21 +54,40 @@ public class planting{
                 }
                 int cCount = 0;
                 int vertical = 0;
-                int lasty = rel.get(0).y;
-                for(YCoord cy:rel){
-                    if(cy.type == -1){
-                        cCount ++;
+                //int lasty = rel.get(0).y;
+                //System.out.println(i);
+                int count = 0;
+                rel.sort(new Comparator<YCoord>() {
+
+					@Override
+					public int compare(YCoord arg0, YCoord arg1) {
+						// TODO Auto-generated method stub
+						return Integer.compare(arg0.y, arg1.y);
+					}
+                	
+                });
+                while(count < rel.size()){
+                	//System.out.println(count);
+                    YCoord bottom = rel.get(count);
+                    int by = bottom.y;
+                    cCount -= bottom.type;
+                    while(cCount > 0){
+                        count ++;
+                        cCount -= rel.get(count).type;
                     }
-                    if(cCount > 0){
-                        vertical += cy.y - lasty;
-                    }
-                    if(cy.type == 1){
-                        cCount --;
-                    }
-                    lasty = cy.y;
+                    int ty = rel.get(count).y;
+                    //System.out.println("top n bottom "+ty+" "+by);
+                    vertical += ty-by;
+                    count ++;
                 }
-            
-            
+            //System.out.println(i);
+            i ++;
+            while(i < 2*N && xList.get(i) == x){
+                i ++;
+            }
+            //System.out.println("X: "+x);
+            //System.out.println(i+" "+(xList.get(i)-x)+" "+vertical);
+            ans += vertical * (xList.get(i) - x);
         }
         pw.println(ans);
         pw.close();
