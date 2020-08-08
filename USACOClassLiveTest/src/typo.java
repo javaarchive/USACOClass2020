@@ -10,32 +10,21 @@ public class typo {
 		int t = 0;
 		int out = 0;
 		int pos = 0;
-		while(true) {
-			int chartype = f.read(); // One char at a time how magical!
-			if(chartype == -1 || ((char) chartype == '\n') || chartype == 13) {
-				break;
-			}
-			
-			char c = (char) chartype;
-			//System.out.println(c);
-			if(c == '(') {
-				t ++;
-				if(t > 1) {
-					//System.out.println("Reverse at "+pos);
-					out++;
-				}
-			}else if(c == ')') {
-				t --;
-				if(t < 0) {
-					System.out.println("Reverse at "+pos);
-					out ++;
-				}
-			}else {
-				throw new IOException("What the heck is this INPUT!");
-			}
-			pos++;
+		char[] line = f.readLine().toCharArray();
+		int N = line.length;
+		int[] ps = new int[N + 1];
+		for(int i = 0; i < N; i ++){
+			ps[i + 1] = ps[i] + ((line[i] == '(') ? 1:-1);
 		}
-		pw.println(out);
+		int sol = 0;
+		System.out.println(Arrays.toString(ps));
+		for(int i = 0; i < N; i ++){
+			//System.out.println(ps[i] + ((line[i] == '(') ? -1:1) + ps[N] - ps[i + 1]);
+			if((ps[i] + ((line[i] == '(') ? -1:1) + ps[N] - ps[i + 1]) == 0){
+				sol ++;
+			}
+		}
+		pw.println(sol);
 		pw.close();
 		f.close();
 	}
