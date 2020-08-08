@@ -1,5 +1,8 @@
 import java.io.*;
 import java.util.*;
+/*
+Typo (typo): In ‘typo’ the “depth” of a string can be defined as the number of ‘(‘ minus the number of ‘)’. For instance, the depth of the string “(()(” would be two. A string is balanced if and only if the depth at the end is equal to zero and at no point is it negative. Any strings of odd length can be preliminarily discarded. As we iterate through the string, if the depth becomes negative at any point, signalling an excess of ‘)’, any ‘)’ before or including the current one can be converted to a ‘(’ to fix the issue. Directly attempting to solve the case of too many ‘(’ characters is harder (if end depth is positive, any ‘(’ after the depth is last less than 2 can be converted). A simpler solution is to flip the string and apply the same solution as for ‘)’. This means a “((())” would become “(()))” (the parentheses themselves are being flipped), then evaluated once more.
+*/
 public class typo {
 	public static void main(String[] args) throws IOException{
 		// IO
