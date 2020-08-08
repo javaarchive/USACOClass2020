@@ -12,19 +12,44 @@ public class typo {
 		int pos = 0;
 		char[] line = f.readLine().toCharArray();
 		int N = line.length;
-		int[] ps = new int[N + 1];
+		int left = 0;
+		int right = 0;
+		int goodLeft = 0;
+		int goodRight = 0;
+		boolean curNegative = false;
+		boolean useLeft = false;
+		if(N % 2 == 0){
 		for(int i = 0; i < N; i ++){
-			ps[i + 1] = ps[i] + ((line[i] == '(') ? 1:-1);
-		}
-		int sol = 0;
-		System.out.println(Arrays.toString(ps));
-		for(int i = 0; i < N; i ++){
-			//System.out.println(ps[i] + ((line[i] == '(') ? -1:1) + ps[N] - ps[i + 1]);
-			if((ps[i] + ((line[i] == '(') ? -1:1) + ps[N] - ps[i + 1]) == 0){
-				sol ++;
+			t += ((line[i] == '(') ? 1:-1);
+			if(t == 1){
+				left ++;
+			}else{
+				right ++;
 			}
+			if(t > 2){
+				useLeft = true;
+				goodLeft = left;
+				break;
+			}
+			if(t < 0){
+				goodRight = right;
+				//curNegative = true;
+				break;
+			}else{
+				//curNegative = false;
+			}
+			//System.out.println(t);
 		}
-		pw.println(sol);
+		//System.out.println(right+" "+left);
+		//System.out.println(goodRight + " " + goodLeft);
+		out = (goodRight);
+		if(useLeft){
+			out += (left - goodLeft);
+		}
+	}
+		//int sol = 0;
+		
+		pw.println(out);
 		pw.close();
 		f.close();
 	}
