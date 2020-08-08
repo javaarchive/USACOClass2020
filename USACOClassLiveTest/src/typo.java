@@ -38,7 +38,7 @@ public class typo {
 			}else{
 				right ++;
 			}
-			if(t >= 2 && mode > 0 && !curP && right > 0){
+			if(t >= 2 && mode > 0 && !curP && left > 0 && line[i] == '('){
 				//System.out.println("L");
 				useLeft = true;
 				goodLeft = left;
