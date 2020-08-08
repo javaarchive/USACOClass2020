@@ -21,17 +21,23 @@ public class typo {
 		if(N % 2 == 0){
 		for(int i = 0; i < N; i ++){
 			t += ((line[i] == '(') ? 1:-1);
-			if(t == 1){
+		}
+		int mode = t;
+		t = 0;
+		for(int i = 0; i < N; i ++){
+			t += ((line[i] == '(') ? 1:-1);
+			if(((line[i] == '(') ? 1:-1) == 1){
 				left ++;
 			}else{
 				right ++;
 			}
-			if(t > 2){
+			if(t >= 2 && mode > 0){
 				useLeft = true;
 				goodLeft = left;
-				break;
+				//break;
+				mode = 0;
 			}
-			if(t < 0){
+			if(t < 0 && mode < 0){
 				goodRight = right;
 				//curNegative = true;
 				break;
@@ -44,7 +50,7 @@ public class typo {
 		//System.out.println(goodRight + " " + goodLeft);
 		out = (goodRight);
 		if(useLeft){
-			out += (left - goodLeft);
+			out += (left - goodLeft) + 1;
 		}
 	}
 		//int sol = 0;
