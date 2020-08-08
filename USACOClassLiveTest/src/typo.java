@@ -38,13 +38,13 @@ public class typo {
 			}else{
 				right ++;
 			}
-			if(t >= 2 && mode > 0 && !curP && left > 0 && line[i] == '('){
+			if(t >= 2 && mode > 0 && !curP){
 				//System.out.println("L");
 				useLeft = true;
 				goodLeft = left;
 				curP = true;
 				//break;
-				//mode = 0;
+				mode = 0;
 			}else{
 				curP = false;
 			}
@@ -57,9 +57,9 @@ public class typo {
 			}
 			//System.out.println(t);
 		}
-		System.out.println(right+" "+left);
-		System.out.println(r + " " + l);
-		System.out.println(goodRight + " " + goodLeft);
+		//System.out.println(right+" "+left);
+		//System.out.println(r + " " + l);
+		//System.out.println(goodRight + " " + goodLeft);
 		out = (goodRight);
 		if(useLeft){
 			out += (l - goodLeft) + 1 ;
