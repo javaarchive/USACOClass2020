@@ -19,11 +19,18 @@ public class typo {
 		boolean curNegative = false;
 		boolean useLeft = false;
 		if(N % 2 == 0){
+			int l = 0,r = 0;
 		for(int i = 0; i < N; i ++){
 			t += ((line[i] == '(') ? 1:-1);
+			if(line[i] == '('){
+				l ++;
+			}else{
+				r ++;
+			}
 		}
 		int mode = t;
 		t = 0;
+		boolean curP = true;
 		for(int i = 0; i < N; i ++){
 			t += ((line[i] == '(') ? 1:-1);
 			if(((line[i] == '(') ? 1:-1) == 1){
@@ -31,11 +38,15 @@ public class typo {
 			}else{
 				right ++;
 			}
-			if(t >= 2 && mode > 0){
+			if(t >= 2 && mode > 0 && !curP){
+				//System.out.println("L");
 				useLeft = true;
 				goodLeft = left;
+				curP = true;
 				//break;
 				mode = 0;
+			}else{
+				curP = false;
 			}
 			if(t < 0 && mode < 0){
 				goodRight = right;
@@ -50,7 +61,7 @@ public class typo {
 		//System.out.println(goodRight + " " + goodLeft);
 		out = (goodRight);
 		if(useLeft){
-			out += (left - goodLeft) + 1;
+			out += (l - goodLeft) + 1;
 		}
 	}
 		//int sol = 0;
