@@ -38,8 +38,8 @@ public class typo {
 			}else{
 				right ++;
 			}
-			if(t >= 2 && mode > 0 && !curP){
-				System.out.println("L");
+			if(t >= 2 && mode > 0 && !curP && right > 0){
+				//System.out.println("L");
 				useLeft = true;
 				goodLeft = left;
 				curP = true;
@@ -57,11 +57,12 @@ public class typo {
 			}
 			//System.out.println(t);
 		}
-		//System.out.println(right+" "+left);
-		//System.out.println(goodRight + " " + goodLeft);
+		System.out.println(right+" "+left);
+		System.out.println(r + " " + l);
+		System.out.println(goodRight + " " + goodLeft);
 		out = (goodRight);
 		if(useLeft){
-			out += (l - goodLeft) + 1;
+			out += (l - goodLeft) + 1 ;
 		}
 	}
 		//int sol = 0;
