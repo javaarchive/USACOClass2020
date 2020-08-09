@@ -1,20 +1,26 @@
 import java.io.*;
 import java.util.*;
 /*
-Typo (typo): In ‘typo’ the “depth” of a string can be defined as the number of ‘(‘ minus the number of ‘)’. For instance, the depth of the string “(()(” would be two. A string is balanced if and only if the depth at the end is equal to zero and at no point is it negative. Any strings of odd length can be preliminarily discarded. As we iterate through the string, if the depth becomes negative at any point, signalling an excess of ‘)’, any ‘)’ before or including the current one can be converted to a ‘(’ to fix the issue. Directly attempting to solve the case of too many ‘(’ characters is harder (if end depth is positive, any ‘(’ after the depth is last less than 2 can be converted). A simpler solution is to flip the string and apply the same solution as for ‘)’. This means a “((())” would become “(()))” (the parentheses themselves are being flipped), then evaluated once more.
 */
 
 public class typo {
-	public static void main(String[] args) throws IOException{
+	static String reverse(String str){
+		StringBuilder sb = new StringBuilder();
+		sb.append(str);
+		sb.reverse();
+		return sb.toString();
+	  }
+	public static void main(String[] args) throws IOException {
 		// IO
-		//                                    new FileReader("cownomics.in")
+		// new FileReader("cownomics.in")
 		BufferedReader f = new BufferedReader(new InputStreamReader(System.in));
-		//                               new BufferedWriter(new FileWriter("cownomics.out"))
+		// new BufferedWriter(new FileWriter("cownomics.out"))
 		PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
 		int t = 0;
 		int out = 0;
 		int pos = 0;
-		char[] line = f.readLine().toCharArray();
+		String inp = f.readLine();
+		char[] line = inp.toCharArray();
 		int N = line.length;
 		int left = 0;
 		int right = 0;
@@ -22,47 +28,66 @@ public class typo {
 		int goodRight = 0;
 		boolean curNegative = false;
 		boolean useLeft = false;
-		if(N % 2 == 0){
-			int l = 0,r = 0;
-		for(int i = 0; i < N; i ++){
-			t += ((line[i] == '(') ? 1:-1);
-			if(line[i] == '('){
-				l ++;
-			}else{
-				r ++;
+		if (N % 2 == 0) {
+			int l = 0, r = 0;
+			for (int i = 0; i < N; i++) {
+				t += ((line[i] == '(') ? 1 : -1);
+				if (line[i] == '(') {
+					l++;
+				} else {
+					r++;
+				}
 			}
-		}
-		int mode = t;
-		t = 0;
-		boolean curP = true;
-		if(mode < 0){
-		for(int i = 0; i < N; i ++){
-			t += ((line[i] == '(') ? 1:-1);
-			if(((line[i] == '(') ? 1:-1) == 1){
-				left ++;
+			int mode = t;
+			t = 0;
+			boolean curP = true;
+			if (mode < 0) {
+				for (int i = 0; i < N; i++) {
+					t += ((line[i] == '(') ? 1 : -1);
+					if (((line[i] == '(') ? 1 : -1) == 1) {
+						left++;
+					} else {
+						right++;
+					}
+					if (t < 0) {
+						goodRight = right;
+						// curNegative = true;
+						break;
+					} else {
+						// curNegative = false;
+					}
+					// System.out.println(t);
+				}
 			}else{
-				right ++;
+				int temp = left;
+				left = right;
+				right = temp;
+				//mode = -mode;
+				line = reverse(inp).toCharArray();
+				for (int i = 0; i < N; i++) {
+					t += ((line[i] == '(') ? -1 : 1);
+					if (((line[i] == '(') ? -1 : 1) == 1) {
+						left++;
+					} else {
+						right++;
+					}
+					if (t < 0) {
+						goodRight = right;
+						// curNegative = true;
+						break;
+					} else {
+						// curNegative = false;
+					}
+					// System.out.println(t);
+				}
 			}
-			if(t < 0){
-				goodRight = right;
-				//curNegative = true;
-				break;
-			}else{
-				//curNegative = false;
-			}
-			//System.out.println(t);
+			// System.out.println(right+" "+left);
+			// System.out.println(r + " " + l);
+			// System.out.println(goodRight + " " + goodLeft);
+			out = goodRight;
 		}
-	}
-		//System.out.println(right+" "+left);
-		//System.out.println(r + " " + l);
-		//System.out.println(goodRight + " " + goodLeft);
-		out = (goodRight);
-		if(useLeft){
-			out += (l - goodLeft) + 1 ;
-		}
-	}
-		//int sol = 0;
-		
+		// int sol = 0;
+
 		pw.println(out);
 		pw.close();
 		f.close();
