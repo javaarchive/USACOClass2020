@@ -3,7 +3,7 @@ import java.util.*;
 
 public class milk3 {
     public static int limit(int initial, int newAmount, int overflow) {
-        System.out.println("limit("+initial+","+newAmount+","+overflow+")");
+        //////////////System.out.println("limit("+initial+","+newAmount+","+overflow+")");
         if ((initial + newAmount) > overflow) {
             return overflow - initial;
         }
@@ -27,9 +27,9 @@ public class milk3 {
         TreeSet<Integer> answers = new TreeSet<>();
         while (!states.isEmpty()) {
             State s = states.poll();
-            System.out.println("("+s.A+","+s.B+","+s.C+")");
+            //////////////System.out.println("("+s.A+","+s.B+","+s.C+")");
             if(s.A == 0){
-                System.out.println("Added "+s.C);
+                //////////////System.out.println("Added "+s.C);
                 answers.add(s.C);
             }
             if (s.A != A) {
@@ -38,7 +38,7 @@ public class milk3 {
                 if (pourAmount != 0) {
                     State newState = new State(pourAmount + s.A, s.B, s.C - pourAmount);
                     if (!checked[newState.A][newState.B][newState.C]) {
-                        System.out.println("Pouring C to A, A would have " + (pourAmount + s.A));
+                        //////////////System.out.println("Pouring C to A, A would have " + (pourAmount + s.A));
                         checked[newState.A][newState.B][newState.C] = true;
                         states.add(newState);
                     }
@@ -51,7 +51,7 @@ public class milk3 {
                 if (pourAmount != 0) {
                     State newState = new State(s.A - pourAmount, s.B, s.C + pourAmount);
                     if (!checked[newState.A][newState.B][newState.C]) {
-                        System.out.println("Pouring A to C, C would have " + (pourAmount + s.C));
+                        ////////////System.out.println("Pouring A to C, C would have " + (pourAmount + s.C));
                         checked[newState.A][newState.B][newState.C] = true;
                         states.add(newState);
                     }
@@ -62,8 +62,21 @@ public class milk3 {
                 int leftOver = s.A - pourAmount;
                 if (pourAmount != 0) {
                     State newState = new State(s.A - pourAmount, s.B + pourAmount, s.C);
+                    ////////////System.out.println(newState.A+" "+newState.B+" "+newState.C);
                     if (!checked[newState.A][newState.B][newState.C]) {
-                        System.out.println("Pouring A to B, B would have " + (pourAmount + s.B));
+                        ////////////System.out.println("Pouring A to B, B would have " + (pourAmount + s.B));
+                        checked[newState.A][newState.B][newState.C] = true;
+                        states.add(newState);
+                    }
+                }
+            }
+            if (s.A != A) {
+                int pourAmount = limit(s.A, s.B, A);
+                int leftOver = s.B - pourAmount;
+                if (pourAmount != 0) {
+                    State newState = new State(s.A + pourAmount, s.B - pourAmount, s.C);
+                    if (!checked[newState.A][newState.B][newState.C]) {
+                        ////////////System.out.println("Pouring B to A, A would have " + (pourAmount + s.A));
                         checked[newState.A][newState.B][newState.C] = true;
                         states.add(newState);
                     }
@@ -75,7 +88,19 @@ public class milk3 {
                 if (pourAmount != 0) {
                     State newState = new State(s.A , s.B + pourAmount, s.C - pourAmount);
                     if (!checked[newState.A][newState.B][newState.C]) {
-                        System.out.println("Pouring C to B, B would have " + (pourAmount + s.B));
+                        ////////////System.out.println("Pouring C to B, B would have " + (pourAmount + s.B));
+                        checked[newState.A][newState.B][newState.C] = true;
+                        states.add(newState);
+                    }
+                }
+            }
+            if (s.C != C) {
+                int pourAmount = limit(s.C, s.B, C);
+                int leftOver = s.B - pourAmount;
+                if (pourAmount != 0) {
+                    State newState = new State(s.A , s.B - pourAmount, s.C + pourAmount);
+                    if (!checked[newState.A][newState.B][newState.C]) {
+                        //////////////System.out.println("Pouring B to C, C would have " + (pourAmount + s.C));
                         checked[newState.A][newState.B][newState.C] = true;
                         states.add(newState);
                     }
