@@ -43,16 +43,16 @@ public class flow {
         int[] flows = new int[graph.size()];
         // BFS
         visited[start] = true;
-        Queue<MovementChoice> searchQ = new LinkedList<>();
-        searchQ.add(new MovementChoice(start, Integer.MAX_VALUE));
+        Stack<MovementChoice> searchStack = new Stack<>();
+        searchStack.add(new MovementChoice(start, Integer.MAX_VALUE));
 
-        while(!searchQ.isEmpty()){
-            MovementChoice mc = searchQ.poll();
+        while(!searchStack.isEmpty()){
+            MovementChoice mc = searchStack.pop();
             flows[mc.node] += mc.flow;
             for(Connection c: graph.get(mc.node)){
                 if(!visited[c.node]){
                     visited[c.node] = true;
-                    searchQ.add(new MovementChoice(c.node, Integer.min(c.flow, mc.flow)));
+                    searchStack.add(new MovementChoice(c.node, Integer.min(c.flow, mc.flow)));
                 }
             }
         }
