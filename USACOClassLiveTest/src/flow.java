@@ -10,8 +10,8 @@ public class flow {
         PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
         int N = Integer.parseInt(f.readLine());
         int nextId = 0;
-        List<List<Integer>> graph = new ArrayList<>(2*N); // worst case
-        List<List<Integer>> rgraph = new ArrayList<>(2*N); // worst case
+        List<List<Connection>> graph = new ArrayList<>(2*N); // worst case
+        List<List<Connection>> rgraph = new ArrayList<>(2*N); // worst case
         Map<String, Integer> stringtoid = new TreeMap<>();
         for(int i = 0; i < N; i ++){
             graph.add(new ArrayList<>());
@@ -20,6 +20,7 @@ public class flow {
             StringTokenizer st = new StringTokenizer(st.nextToken());
             String a = st.nextToken();
             String b = st.nextToken();
+            int length = Integer.parseInt(st.nextToken());
             if(!stringtoid.keySet().contains(a)){
                 stringtoid.put(a, nextId);
                 nextId ++;
@@ -30,8 +31,8 @@ public class flow {
             }
             int na = stringtoid.get(a);
             int nb = stringtoid.get(b);
-            graph.get(na).add(nb);
-            rgraph.get(nb).add(na);
+            graph.get(na).add(new Connection(nb, length));
+            rgraph.get(nb).add(new Connection(na, length));
         }
         int start = stringtoid.get("A");
         int end = stringtoid.get("Z");
@@ -41,13 +42,15 @@ public class flow {
         Queue<MovementChoice> searchQ = new LinkedList<>();
         while(!searchQ.isEmpty()){
             MovementChoice mc = searchQ.poll();
-            for(int node: graph.get(mc.node)){
+            for(Connection c: graph.get(mc.node)){
+                int node = c.node;
                 if(!visited[node]){
                     visited[node] = true;
                     searchQ.add(new MovementChoice(node));
                 }
             }
-            for(int node: rgraph.get(mc.node)){
+            for(Connection c: rgraph.get(mc.node)){
+                int node = c.node;
                 if(!visited[node]){
                     visited[node] = true;
                     searchQ.add(new MovementChoice(node));
