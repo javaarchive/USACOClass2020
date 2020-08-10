@@ -54,27 +54,20 @@ public class flow {
                 }
             }
         }
-        for(int i = 0; i < graph.size(); i ++){
-            for(int otherNode: graph.get(i)){
-                if(!visited[otherNode] && !visited[i]){
-                    graph.get(i).remove((Object) otherNode);
-                    rgraph.get(otherNode).remove((Object) i);
-                }
-            }
-        }
-        for(int i = 0; i < rgraph.size(); i ++){
-            for(int otherNode: rgraph.get(i)){
-                if(!visited[otherNode] && !visited[i]){
-                    rgraph.get(i).remove((Object) otherNode);
-                    graph.get(otherNode).remove((Object) i);
-                }
-            }
-        }
+        
     }
 }
 class MovementChoice{
     int node;
     public MovementChoice(int node){
         this.node = node;
+    }
+}
+class Connection{
+    int node;
+    int flow;
+    public Connection(int nid, int flowVal){
+        this.node = nid;
+        this.flow = flowVal;
     }
 }
