@@ -11,6 +11,7 @@ public class flow {
         int N = Integer.parseInt(f.readLine());
         int nextId = 0;
         List<List<Integer>> graph = new ArrayList<>(N);
+        List<List<Integer>> rgraph = new ArrayList<>(N);
         Map<String, Integer> stringtoid = new TreeMap<>();
         for(int i = 0; i < N; i ++){
             graph.add(new ArrayList<>());
@@ -30,9 +31,17 @@ public class flow {
             int na = stringtoid.get(a);
             int nb = stringtoid.get(b);
             graph.get(na).add(nb);
-            graph.get(nb).add(na);
+            rgraph.get(nb).add(na);
         }
         int start = stringtoid.get("A");
         int end = stringtoid.get("Z");
+        boolean[] visited = new boolean[N];
+        // Find edges to delete
+        visited[end] = true;
+    }
+}
+class MovementChoice{
+    public MovementChoice(int node){
+
     }
 }
