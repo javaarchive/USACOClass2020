@@ -17,110 +17,46 @@ public class flow {
         // new BufferedWriter(new FileWriter("cownomics.out"))
         PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
         int N = Integer.parseInt(f.readLine());
-        int nextId = 0;
-        List<List<Connection>> graph = new ArrayList<>(2 * N); // worst case
-        // List<List<Connection>> rgraph = new ArrayList<>(2 * N); // worst case
-        Map<String, Integer> stringtoid = new TreeMap<>();
-        for (int i = 0; i < 2 * N; i++) {
-            graph.add(new ArrayList<>());
-        }
-        /*
-         * for (int i = 0; i < 2 * N; i++) { rgraph.add(new ArrayList<>()); }
-         */
-        for (int i = 0; i < N; i++) {
+        int range = 'z' - 'A' + 1;
+        int[][] matrix = new int[range][range];
+        int[] neighborCount = new int[range];
+        for(int i = 0; i < N; i ++){
             StringTokenizer st = new StringTokenizer(f.readLine());
-            String a = st.nextToken();
-            String b = st.nextToken();
-            int length = Integer.parseInt(st.nextToken());
-            if (!stringtoid.keySet().contains(a)) {
-                stringtoid.put(a, nextId);
-                nextId++;
-            }
-            if (!stringtoid.keySet().contains(b)) {
-                stringtoid.put(b, nextId);
-                nextId++;
-            }
-            int na = stringtoid.get(a);
-            int nb = stringtoid.get(b);
-            graph.get(na).add(new Connection(nb, length));
-            // rgraph.get(nb).add(new Connection(na, length));
+            int a = st.nextToken().charAt(0) - 'A';
+            int b = st.nextToken().charAt(0) - 'A';
+            int edge = Integer.parseInt(st.nextToken());
+            matrix[a][b] += edge;
+            neighborCount[a] ++;
         }
-        int start = stringtoid.get("A");
-        int end = stringtoid.get("Z");
-        boolean[] visited = new boolean[graph.size()];
-        int[] flows = new int[graph.size()];
-        // Reduction
-        visited[start] = true;
-        System.out.println(graph);
-        for (int k = 0; k < N; k++) {
-            for (int i = 0; i < graph.size(); i++) {
-                List<Connection> adj = graph.get(i);
-                adj.sort(new Comparator<Connection>() {
-                    @Override
-                    public int compare(Connection o1, Connection o2) {
-                        // TODO Auto-generated method stub
-                        return Integer.compare(o1.node, o2.node);
-                    }
-                });
-                int j = 0;
-                if(checkNoDup(adj)){
-                while (j < adj.size()) {
-                    int node = adj.get(j).node;
-                    if (graph.get(node).size() == 0 && !(node == end)) {
-                        System.out.println("Removing " + i + " " + j);
-                        adj.remove(j);
-                    } else {
-                        j++;
-                    }
-                }
+        for(int k = 0; k < N; k ++){
+            if(k == 'Z'){
+                continue;
             }
-                j = 0;
-                while (j < adj.size()) {
-                    // Combine edges
-                    List<Connection> c = graph.get(j);
-                    if(c.size() > 0){
-                    int middleNode = c.get(0).node;
-                    List<Connection> c2 = graph.get(middleNode);
-                    if (c2.size() == 1) {
-                        int otherNode = c2.get(0).node;
-                        int combinedFlow = Integer.min(c.get(0).flow, c2.get(0).flow);
-                        c2.remove(0);
-                        c.get(0).node = otherNode;
-                        c.get(0).flow = combinedFlow;
-                        System.out.println("Shortened " + j + " " + middleNode + " " + otherNode);
-                    } else {
-                        j++;
-                    }
-                }else{
-                    j ++;
-                }
-                    // c2. = Integer.min(,c2.get(index))
-                }
+            if(neighborCount[k] == 0){
+
             }
-            for (int i = 0; i < graph.size(); i++) {
-                List<Connection> adj = graph.get(i);
-                adj.sort(new Comparator<Connection>() {
-                    @Override
-                    public int compare(Connection o1, Connection o2) {
-                        // TODO Auto-generated method stub
-                        return Integer.compare(o1.node, o2.node);
+        }
+        for(int i = 0; i < range; i ++){
+            for(int j = 0; j < range; j ++){
+                if(matrix[i][j] == 0){
+                    continue;
+                }
+                if(neighborCount[j] == 1){
+                    // Combine nodes
+                    int neighbor = -1;
+                    for(int k = 0; k < matrix[j].length; k ++){
+                        if(0 < matrix[j][k]){
+                            neighbor = k;
+                            break;
+                        }
                     }
-                });
-                int j = 0;
-                while (j < adj.size() - 1) {
-                    Connection a = adj.get(j);
-                    Connection b = adj.get(j + 1);
-                    if (a.node == b.node) {
-                        adj.remove(j + 1);
-                        a.flow = a.flow + b.flow;
-                    } else {
-                        j++;
-                    }
+                    matrix[i][neighbor] += Integer.min(matrix[i][j], matrix[j][neighbor]);
+                    matrix[j][neighbor] = 0;
+                    matrix[i][j] = 0;
                 }
             }
         }
-        System.out.println(graph);
-        pw.println(graph.get(start).get(0).flow);
+        //pw.println(graph.get(start).get(0).flow);
         pw.close();
     }
 }

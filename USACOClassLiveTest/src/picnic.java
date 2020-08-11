@@ -45,9 +45,9 @@ public class picnic {
 			while(!placestogo.isEmpty()) {
 				int node = placestogo.poll();
 				for(int neighbor: travelguide.get(node)) {
-					if(visited.get(neighbor)) {
+					/*if(visited.get(neighbor)) {
 						continue;
-					}
+					}*/
 					visitcount.put(neighbor, visitcount.get(neighbor) + 1);
 					visited.put(neighbor, true);
 					placestogo.add(neighbor);
