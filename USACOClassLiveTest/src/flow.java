@@ -64,6 +64,8 @@ public class flow {
                     }
                 }
             }
+        }
+        for (int ll = 0; ll < N; ll ++) {
             for (int i = 0; i < range; i++) {
                 for (int j = 0; j < range; j++) {
                     if (matrix[i][j] == 0) {
@@ -82,16 +84,18 @@ public class flow {
                         if(neighbor == -1){
                             continue; // No neighbors
                         }
-                        if(matrix[i][neighbor] == 0){
-                            out[i] ++;
-                            in [neighbor] ++;
+                        if(matrix[i][neighbor] != 0){
+                            out[i] --;
+                            in [neighbor] --;
                         }
                         matrix[i][neighbor] += Integer.min(matrix[i][j], matrix[j][neighbor]);
                         matrix[j][neighbor] = 0;
                         out[j] = 0;
                         in[j]  = 0;
-                        matrix[i][j] = 0;
+                        in[neighbor] --;
                         out[i] --;
+                        matrix[i][j] = 0;
+                        //out[i] --;
                     }
                 }
             }
