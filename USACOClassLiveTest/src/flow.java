@@ -45,17 +45,28 @@ public class flow {
         visited[start] = true;
         Stack<MovementChoice> searchStack = new Stack<>();
         searchStack.add(new MovementChoice(start, Integer.MAX_VALUE));
+        for(int i = 0; i < graph.size(); i ++){
+            graph.get(i).sort(new Comparator<Connection>(){
 
+                @Override
+                public int compare(Connection o1, Connection o2) {
+                    // TODO Auto-generated method stub
+                    return Integer.compare(o2.flow, o1.flow);
+                }
+
+            });
+        }
         while(!searchStack.isEmpty()){
             MovementChoice mc = searchStack.pop();
             flows[mc.node] += mc.flow;
             for(Connection c: graph.get(mc.node)){
-                if(!visited[c.node]){
+                if(!visited[c.node]){ 
                     visited[c.node] = true;
                     searchStack.add(new MovementChoice(c.node, Integer.min(c.flow, mc.flow)));
                 }
             }
         }
+        //pw.println(Arrays.toString(flows));
         pw.println(flows[end]);
         pw.close();
     }
