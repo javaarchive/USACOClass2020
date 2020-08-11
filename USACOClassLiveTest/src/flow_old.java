@@ -71,7 +71,7 @@ public class flow {
         pw.close();
     }
 }
-class MovementChoice{
+/*class MovementChoice{
     int node;
     int flow;
     public MovementChoice(int node, int curflow){
@@ -86,4 +86,4 @@ class Connection{
         this.node = nid;
         this.flow = flowVal;
     }
-}
+}*/

@@ -2,6 +2,14 @@ import java.io.*;
 import java.util.*;
 
 public class flow {
+    public static boolean checkNoDup(List<Connection> cList) {
+        for(int i = 0; i < cList.size()-1; i ++){
+            if(cList.get(i).node == cList.get(i + 1).node){
+                return false;
+            }
+        }
+        return true;
+    }
     public static void main(String[] args) throws IOException {
         // IO
         // new FileReader("cownomics.in")
@@ -11,14 +19,14 @@ public class flow {
         int N = Integer.parseInt(f.readLine());
         int nextId = 0;
         List<List<Connection>> graph = new ArrayList<>(2 * N); // worst case
-        List<List<Connection>> rgraph = new ArrayList<>(2 * N); // worst case
+        // List<List<Connection>> rgraph = new ArrayList<>(2 * N); // worst case
         Map<String, Integer> stringtoid = new TreeMap<>();
         for (int i = 0; i < 2 * N; i++) {
             graph.add(new ArrayList<>());
         }
-        for (int i = 0; i < 2 * N; i++) {
-            rgraph.add(new ArrayList<>());
-        }
+        /*
+         * for (int i = 0; i < 2 * N; i++) { rgraph.add(new ArrayList<>()); }
+         */
         for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(f.readLine());
             String a = st.nextToken();
@@ -35,7 +43,7 @@ public class flow {
             int na = stringtoid.get(a);
             int nb = stringtoid.get(b);
             graph.get(na).add(new Connection(nb, length));
-            rgraph.get(nb).add(new Connection(na, length));
+            // rgraph.get(nb).add(new Connection(na, length));
         }
         int start = stringtoid.get("A");
         int end = stringtoid.get("Z");
@@ -44,46 +52,75 @@ public class flow {
         // Reduction
         visited[start] = true;
         System.out.println(graph);
-        for (int i = 0; i < graph.size(); i++) {
-            List<Connection> adj = graph.get(i);
-            int j = 0;
-            while (j < adj.size()) {
-                int node = adj.get(j).node;
-                if (graph.get(node).size() == 0 && !(node == end)) {
-                    System.out.println("Removing "+i+" "+j);
-                    adj.remove(j);
-                } else {
-                    j++;
+        for (int k = 0; k < N; k++) {
+            for (int i = 0; i < graph.size(); i++) {
+                List<Connection> adj = graph.get(i);
+                adj.sort(new Comparator<Connection>() {
+                    @Override
+                    public int compare(Connection o1, Connection o2) {
+                        // TODO Auto-generated method stub
+                        return Integer.compare(o1.node, o2.node);
+                    }
+                });
+                int j = 0;
+                if(checkNoDup(adj)){
+                while (j < adj.size()) {
+                    int node = adj.get(j).node;
+                    if (graph.get(node).size() == 0 && !(node == end)) {
+                        System.out.println("Removing " + i + " " + j);
+                        adj.remove(j);
+                    } else {
+                        j++;
+                    }
                 }
             }
-            j = 0;
-            while (j < adj.size()) {
-                // Combine edges
-                List<Connection> c = graph.get(j);
-                if (c.size() == 1) {
+                j = 0;
+                while (j < adj.size()) {
+                    // Combine edges
+                    List<Connection> c = graph.get(j);
+                    if(c.size() > 0){
                     int middleNode = c.get(0).node;
                     List<Connection> c2 = graph.get(middleNode);
-                    if(c2.size() == 1){
+                    if (c2.size() == 1) {
                         int otherNode = c2.get(0).node;
                         int combinedFlow = Integer.min(c.get(0).flow, c2.get(0).flow);
                         c2.remove(0);
                         c.get(0).node = otherNode;
                         c.get(0).flow = combinedFlow;
-                        System.out.println("Shortened "+j+" "+middleNode+" "+otherNode);
-                    }else{
-                        System.out.println("Could not shorten "+j+" "+middleNode+" due to non-striaght node");
+                        System.out.println("Shortened " + j + " " + middleNode + " " + otherNode);
+                    } else {
                         j++;
                     }
-                    
-                    
-                    //c2. = Integer.min(,c2.get(index))
                 }else{
-                    j++;
+                    j ++;
+                }
+                    // c2. = Integer.min(,c2.get(index))
+                }
+            }
+            for (int i = 0; i < graph.size(); i++) {
+                List<Connection> adj = graph.get(i);
+                adj.sort(new Comparator<Connection>() {
+                    @Override
+                    public int compare(Connection o1, Connection o2) {
+                        // TODO Auto-generated method stub
+                        return Integer.compare(o1.node, o2.node);
+                    }
+                });
+                int j = 0;
+                while (j < adj.size() - 1) {
+                    Connection a = adj.get(j);
+                    Connection b = adj.get(j + 1);
+                    if (a.node == b.node) {
+                        adj.remove(j + 1);
+                        a.flow = a.flow + b.flow;
+                    } else {
+                        j++;
+                    }
                 }
             }
         }
-
-        pw.println(graph);
+        System.out.println(graph);
+        pw.println(graph.get(start).get(0).flow);
         pw.close();
     }
 }
