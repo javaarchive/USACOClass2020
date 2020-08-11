@@ -43,25 +43,47 @@ public class flow {
         int[] flows = new int[graph.size()];
         // Reduction
         visited[start] = true;
+        System.out.println(graph);
         for (int i = 0; i < graph.size(); i++) {
             List<Connection> adj = graph.get(i);
             int j = 0;
             while (j < adj.size()) {
                 int node = adj.get(j).node;
-                if (graph.get(node).size() == 0) {
+                if (graph.get(node).size() == 0 && !(node == end)) {
+                    System.out.println("Removing "+i+" "+j);
                     adj.remove(j);
-                }else{
-                    j ++;
+                } else {
+                    j++;
                 }
             }
-            for(Connection c: adj){
+            j = 0;
+            while (j < adj.size()) {
                 // Combine edges
-                if(adj < ){
-
+                List<Connection> c = graph.get(j);
+                if (c.size() == 1) {
+                    int middleNode = c.get(0).node;
+                    List<Connection> c2 = graph.get(middleNode);
+                    if(c2.size() == 1){
+                        int otherNode = c2.get(0).node;
+                        int combinedFlow = Integer.min(c.get(0).flow, c2.get(0).flow);
+                        c2.remove(0);
+                        c.get(0).node = otherNode;
+                        c.get(0).flow = combinedFlow;
+                        System.out.println("Shortened "+j+" "+middleNode+" "+otherNode);
+                    }else{
+                        System.out.println("Could not shorten "+j+" "+middleNode+" due to non-striaght node");
+                        j++;
+                    }
+                    
+                    
+                    //c2. = Integer.min(,c2.get(index))
+                }else{
+                    j++;
                 }
             }
         }
-        pw.println(flows[end]);
+
+        pw.println(graph);
         pw.close();
     }
 }
@@ -83,5 +105,10 @@ class Connection {
     public Connection(int nid, int flowVal) {
         this.node = nid;
         this.flow = flowVal;
+    }
+
+    @Override
+    public String toString() {
+        return "Connection [flow=" + flow + ", node=" + node + "]";
     }
 }
