@@ -16,8 +16,8 @@ public class snowboots {
             best = Integer.min(best, curBootIndex);
             return;
         }
-        for(int j = curSnowIndex; j < snow.size() &&; j ++){
-            if(snow.get(j) <= boots.get(curBootIndex).speed){
+        for(int j = curSnowIndex; j < snow.size() && (j - curSnowIndex) <= range; j ++){
+            if(snow.get(j) <= bootDepth){
                 solve(curBootIndex,j);
             }
         }
