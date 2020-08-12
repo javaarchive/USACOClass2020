@@ -4,6 +4,7 @@ public class snowboots {
     static List<Integer> snow;
     static List<Boot> boots;
     static boolean[][] visited = new boolean[250][250];
+    static int best = Integer.MAX_VALUE;
     public static void solve(int curBootIndex, int curSnowIndex) {
         if(visited[curBootIndex][curSnowIndex]){
             return;
@@ -11,19 +12,19 @@ public class snowboots {
         visited[curBootIndex][curSnowIndex] = true;
         int range = boots.get(curBootIndex).speed;
         int bootDepth = boots.get(curBootIndex).maxDepth;
-        int best = Integer.MAX_VALUE;
-        for(int i = curSnowIndex; i < (curSnowIndex + range); i ++){
-            int depthOfSnow = snow.get(i + 1);
-            if(depthOfSnow > bootDepth){
-                int bootIdx = curBootIndex;
-                while(bootIdx < boots.size()){
-                    if(boots.get(bootIdx).maxDepth >= depthOfSnow){
-                        break;
-                    }
-                    bootIdx ++;
-                }
+        if(curSnowIndex == snow.size()-1){
+            best = Integer.min(best, curBootIndex);
+            return;
+        }
+        for(int j = curSnowIndex; j < snow.size() &&; j ++){
+            if(snow.get(j) <= boots.get(curBootIndex).speed){
+                solve(curBootIndex,j);
             }
-            
+        }
+        for(int j = curBootIndex; j < boots.size(); j ++){
+            if(snow.get(curSnowIndex) <= boots.get(j).maxDepth){
+                solve(j, curSnowIndex);
+            }
         }
         //return best;
     }
@@ -50,6 +51,9 @@ public class snowboots {
             Boot b = new Boot(snowDepth, snowSpeed);
             boots.add(b);
         }
+        solve(0, 0);
+        pw.println(best);
+        pw.close();
     }
 }
 class Boot{
