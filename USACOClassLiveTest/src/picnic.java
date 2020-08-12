@@ -13,7 +13,7 @@ public class picnic {
 		int K = Integer.parseInt(st.nextToken());
 		int N = Integer.parseInt(st.nextToken());
 		int M = Integer.parseInt(st.nextToken());
-		Set<Integer> pastures = new TreeSet<>();
+		List<Integer> pastures = new ArrayList<>();
 		for(int i = 0; i < K; i ++) {
 			int node = Integer.parseInt(f.readLine());
 			pastures.add(node);
@@ -31,7 +31,7 @@ public class picnic {
 		//System.out.println("Main loop");
 		for(int key: pastures) {
 			//System.out.println("Main loop 2");
-			//System.out.println(key);
+			//System.out.println("BFSing for cow at "+key);
 			Map<Integer, Boolean> visited = new TreeMap<>();
 			for(int i = 0; i < N; i ++) {
 				visited.put(i+1, false);
@@ -45,9 +45,10 @@ public class picnic {
 			while(!placestogo.isEmpty()) {
 				int node = placestogo.poll();
 				for(int neighbor: travelguide.get(node)) {
-					/*if(visited.get(neighbor)) {
+					if(visited.get(neighbor)) {
 						continue;
-					}*/
+					}
+					//System.out.println("Reached "+neighbor);
 					visitcount.put(neighbor, visitcount.get(neighbor) + 1);
 					visited.put(neighbor, true);
 					placestogo.add(neighbor);
@@ -56,6 +57,7 @@ public class picnic {
 		}
 		//System.out.println(visitcount);
 		int answer =0 ;
+		//System.out.println(visitcount);
 		for(int i = 0; i < N; i ++) {
 			if(visitcount.get(i+1) == K) {
 				answer++;
