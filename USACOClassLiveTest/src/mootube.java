@@ -4,11 +4,11 @@ public class mootube {
 	public static void main(String[] args) throws IOException{
 		// IO
 		//                                    new FileReader("cownomics.in")
-		BufferedReader f = new BufferedReader(new InputStreamReader(System.in));
-		//BufferedReader f = new BufferedReader(new FileReader("mootube.in"));
+		//BufferedReader f = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader f = new BufferedReader(new FileReader("mootube.in"));
 		//                                    new BufferedWriter(new FileWriter("cownomics.out"))
-		PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
-		//PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("mootube.out")));
+		//PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
+		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("mootube.out")));
 		int N, Q;
 		StringTokenizer st = new StringTokenizer(f.readLine());
 		N = Integer.parseInt(st.nextToken());
@@ -50,7 +50,7 @@ public class mootube {
 				//System.out.println("Reached "+nodeId);
 				for(AdjItem adji: adjlist.get(nodeId)){
 					nextNode = adji.connNode;
-					if(adji.weight < minrev && visited[nextNode]){
+					if(adji.weight < minrev || visited[nextNode]){
 						continue;
 					}
 					visited[nextNode] = true;
