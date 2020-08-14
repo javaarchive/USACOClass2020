@@ -14,15 +14,6 @@ public class clocks {
 			{ false, false, true, false, false, true, false, false, true },// 6
 			{ false, false, false, true, true, false, true, true, false }, // 7
 			{ false, false, false, false, false, false, true, true, true },// 8
-			{ false, false, false, false, true, true, false, true, true } ,
-			{ true, true, false, true, true, false, false, false, false }, // 1
-			{ true, true, true, false, false, false, false, false, false }, //2
-			{ false, true, true, false, true, true, false, false, false }, // 3
-			{ true, false, false, true, false, false, true, false, false },// 4
-			{ false, true, false, true, true, true, false, true, false },  // 5
-			{ false, false, true, false, false, true, false, false, true },// 6
-			{ false, false, false, true, true, false, true, true, false }, // 7
-			{ false, false, false, false, false, false, true, true, true },// 8
 			{ false, false, false, false, true, true, false, true, true } };//9
 	static List<Integer> bestpath = new ArrayList<>();
 	public static int sum(int[] arr) {
@@ -63,16 +54,46 @@ public class clocks {
 				}
 			}
 		}
-		if(ind == ref.length || path.size() == ref.length) {
+		if(ind == ref.length*3 || path.size() == ref.length*3) {
 			
 			//System.out.println(path+": "+Arrays.deepToString(map));
 			return;
 		}
 		path.add(-(ind%9+1));
+		path.add(-(ind%9+1));
+		path.add(-(ind%9+1));
 		int row = (int) Math.floor(ind/3);
 		int col = ind % 3;
 		search(ind+1, path);
 		path.remove(path.size() - 1);
+		path.remove(path.size() - 1);
+		path.remove(path.size() - 1);
+		path.add(ind % 9 + 1);
+		path.add(-(ind % 9 + 1));
+		path.add(-(ind % 9 + 1));
+		for(int i = 0; i < ref[ind].length; i ++) {
+			int r,c;
+			r = (int) Math.floor(i/ 3);
+			c = i % 3;
+			if(ref[ind][i]) {
+				map[r][c] = (4 + map[r][c] + 1)%4;
+			}
+		}
+		search(ind+1, path);
+		path.remove(path.size() - 1);
+		path.add(ind % 9 + 1);
+		for(int i = 0; i < ref[ind].length; i ++) {
+			int r,c;
+			r = (int) Math.floor(i/ 3);
+			c = i % 3;
+			if(ref[ind][i]) {
+				map[r][c] = (4 + map[r][c] + 1)%4;
+			}
+		}
+		search(ind+1, path);
+		path.remove(path.size() - 1);
+		path.remove(path.size() - 1);
+		path.add(ind % 9 + 1);
 		path.add(ind % 9 + 1);
 		for(int i = 0; i < ref[ind].length; i ++) {
 			int r,c;
@@ -88,9 +109,11 @@ public class clocks {
 			r = (int) Math.floor(i/ 3);
 			c = i % 3;
 			if(ref[ind][i]) {
-				map[r][c] = (4 + map[r][c] - 1)%4;
+				map[r][c] = (8 + map[r][c] - 3)%4;
 			}
 		}
+		path.remove(path.size() - 1);
+		path.remove(path.size() - 1);
 		path.remove(path.size() - 1);
 	}
 	public static void main(String[] args) throws IOException{
