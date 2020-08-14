@@ -9,12 +9,12 @@ public class wormsort {
         int N = orderOfCows.size();
         //int found = 0;
         Stack<Integer> searchStack = new Stack<>();
-        boolean[] visited = new boolean[N];
+        //boolean[] visited = new boolean[N];
         int[] comp = new int[N];
         Arrays.fill(comp, -1);
         //int nc = 0;
         for (int i = 0; i < N; i++) {
-            visited[i] = true;
+            //visited[i] = true;
             if(comp[i] != -1){
                 continue;
             }
@@ -51,11 +51,11 @@ public class wormsort {
     public static void main(String[] args) throws IOException {
         // IO
         // new FileReader("pathfindin")
-        //BufferedReader f = new BufferedReader(new InputStreamReader(System.in));
-        BufferedReader f = new BufferedReader(new FileReader("wormsort.in"));
+        BufferedReader f = new BufferedReader(new InputStreamReader(System.in));
+        //BufferedReader f = new BufferedReader(new FileReader("wormsort.in"));
         // new BufferedWriter(new FileWriter("pathfind.out"))
-        //PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
-        PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("wormsort.out")));
+        PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
+        //PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("wormsort.out")));
         StringTokenizer st = new StringTokenizer(f.readLine());
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
