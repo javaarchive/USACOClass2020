@@ -28,10 +28,10 @@ public class revegetate {
         boolean fail = false;
         //pw.print("1");
         for(int i = 0; i < N; i ++){
-            if(visited[i]){
+            if(nodeTypes[i] != 0){
                 continue;
             }
-            visited[i] = true;
+            //visited[i] = true;
             Queue<Integer> q = new LinkedList<>();
             q.add(i);
             nodeTypes[i] = 1;
@@ -44,29 +44,33 @@ public class revegetate {
                         continue;
                     }
                     byte otherType = nodeTypes[fe.type];
+                    boolean updated = false;
                     if(fe.type == 1){
                         if(otherType == 0){
                             otherType = nType;
                             nodeTypes[otherType] = nType;
+                            updated = true;
                         }
                         if(nType != otherType){
                             fail = true;
                         }else{
-                            if(!visited[fe.conn]){
-                                //visited[fe.conn] = true;
+                            if(updated || !visited[fe.conn]){
+                                visited[fe.conn] = true;
                                 q.add(fe.conn);
                             }
                         }
                     }
+                    updated = false;
                     if(fe.type == 2){
                         if(otherType == 0){
                             otherType = (byte) (3 - nType);
                             nodeTypes[otherType] = (byte) (3 - nType);
+                            updated = true;
                         }
                         if(nType == otherType){
                             fail = true;
                         }else{
-                            if(!visited[fe.conn]){
+                            if(updated || !visited[fe.conn]){
                                 visited[fe.conn] = true;
                                 q.add(fe.conn);
                             }
@@ -75,8 +79,8 @@ public class revegetate {
                 }
             }           
         }
-        // /System.out.println(comps+" "+fail);
-       // System.out.println(Arrays.toString(visited));
+        //System.out.println(comps+" "+fail);
+        //System.out.println(Arrays.toString(visited));
         //System.out.println(Arrays.toString(nodeTypes));
         if(fail){
             pw.println("0");
