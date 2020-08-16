@@ -54,7 +54,7 @@ public class revegetate {
                         if(nType != otherType){
                             fail = true;
                         }else{
-                            if(updated || !visited[fe.conn]){
+                            if(!visited[fe.conn]){
                                 visited[fe.conn] = true;
                                 q.add(fe.conn);
                             }
@@ -70,7 +70,7 @@ public class revegetate {
                         if(nType == otherType){
                             fail = true;
                         }else{
-                            if(updated || !visited[fe.conn]){
+                            if(!visited[fe.conn]){
                                 visited[fe.conn] = true;
                                 q.add(fe.conn);
                             }
