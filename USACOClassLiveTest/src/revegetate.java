@@ -43,7 +43,7 @@ public class revegetate {
                     /*if(nodeTypes[fe.conn] != 0){
                         continue;
                     }*/
-                    byte otherType = nodeTypes[fe.type];
+                    byte otherType = nodeTypes[fe.conn];
                     boolean updated = false;
                     if(fe.type == 1){
                         if(otherType == 0){
