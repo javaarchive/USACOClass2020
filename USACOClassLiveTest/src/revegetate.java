@@ -28,7 +28,7 @@ public class revegetate {
         boolean fail = false;
         //pw.print("1");
         for(int i = 0; i < N; i ++){
-            if(nodeTypes[i] != 0){
+            if(visited[i]){
                 continue;
             }
             //visited[i] = true;
@@ -53,6 +53,7 @@ public class revegetate {
                         }
                         if(nType != otherType){
                             fail = true;
+                            break;
                         }else{
                             if(!visited[fe.conn]){
                                 visited[fe.conn] = true;
@@ -69,6 +70,7 @@ public class revegetate {
                         }
                         if(nType == otherType){
                             fail = true;
+                            break;
                         }else{
                             if(!visited[fe.conn]){
                                 visited[fe.conn] = true;
@@ -76,6 +78,9 @@ public class revegetate {
                             }
                         }
                     }
+                }
+                if(fail){
+                    break;
                 }
             }           
         }
