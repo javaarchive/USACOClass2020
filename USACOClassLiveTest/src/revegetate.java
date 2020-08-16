@@ -31,6 +31,7 @@ public class revegetate {
             if(visited[i]){
                 continue;
             }
+            visited[i] = true;
             Queue<Integer> q = new LinkedList<>();
             q.add(i);
             nodeTypes[i] = 1;
@@ -39,7 +40,7 @@ public class revegetate {
                 int node = q.poll();
                 byte nType = nodeTypes[i];
                 for(FlavorEdge fe: graph.get(node)){
-                    if(visited[fe.conn]){
+                    if(nodeTypes[fe.conn] != 0){
                         continue;
                     }
                     byte otherType = nodeTypes[fe.type];
@@ -52,7 +53,7 @@ public class revegetate {
                             fail = true;
                         }else{
                             if(!visited[fe.conn]){
-                                visited[fe.conn] = true;
+                                //visited[fe.conn] = true;
                                 q.add(fe.conn);
                             }
                         }
@@ -74,7 +75,8 @@ public class revegetate {
                 }
             }           
         }
-        //System.out.println(comps);
+        // /System.out.println(comps+" "+fail);
+       // System.out.println(Arrays.toString(visited));
         //System.out.println(Arrays.toString(nodeTypes));
         if(fail){
             pw.println("0");
