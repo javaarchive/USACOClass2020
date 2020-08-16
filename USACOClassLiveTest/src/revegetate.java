@@ -28,7 +28,7 @@ public class revegetate {
         boolean fail = false;
         //pw.print("1");
         for(int i = 0; i < N; i ++){
-            if(nodeTypes[i] != 0){
+            if(visited[i]){
                 continue;
             }
             Queue<Integer> q = new LinkedList<>();
@@ -42,24 +42,49 @@ public class revegetate {
                     if(visited[fe.conn]){
                         continue;
                     }
-                    if(nType == 0){
-                        nType = fe.type;
-                        nodeTypes[i] = nType;
+                    byte otherType = nodeTypes[fe.type];
+                    if(fe.type == 1){
+                        if(otherType == 0){
+                            otherType = nType;
+                            nodeTypes[otherType] = nType;
+                        }
+                        if(nType != otherType){
+                            fail = true;
+                        }else{
+                            if(!visited[fe.conn]){
+                                visited[fe.conn] = true;
+                                q.add(fe.conn);
+                            }
+                        }
                     }
-                    if(nodeTypes[fe.conn] == 0 && nType != fe.type){
-                        nodeTypes[fe.conn] = fe.type;
+                    if(fe.type == 2){
+                        if(otherType == 0){
+                            otherType = (byte) (3 - nType);
+                            nodeTypes[otherType] = (byte) (3 - nType);
+                        }
+                        if(nType == otherType){
+                            fail = true;
+                        }else{
+                            if(!visited[fe.conn]){
+                                visited[fe.conn] = true;
+                                q.add(fe.conn);
+                            }
+                        }
                     }
-                    if(nodeTypes[fe.conn] != fe.type && nType != fe.type){
-                        fail = true;
-                    }
-                    visited[fe.conn] = true;
                 }
             }           
         }
-        //ystem.out.println(comps);
+        //System.out.println(comps);
         //System.out.println(Arrays.toString(nodeTypes));
         if(fail){
             pw.println("0");
+        }else{
+            pw.print("1");
+            for(int i = 0; i < comps; i ++){
+                pw.print("0");
+            }
+            pw.println();
+            pw.close();
         }
         pw.close();
     }
