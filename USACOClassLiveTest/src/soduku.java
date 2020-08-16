@@ -6,9 +6,6 @@ public class soduku {
     static int N;
 
     static boolean checkCol(int col, int num) {
-        if(col > N){
-            return true;
-        }
         for (int i = 0; i < N; i++) {
             if (board[i][col] == num) {
                 return false;
@@ -18,9 +15,6 @@ public class soduku {
     }
 
     static boolean checkRow(int row, int num) {
-        if(row >= N){
-            return true;
-        }
         //System.out.println("R: "+row);
         for (int i = 0; i < N; i++) {
             if (board[row][i] == num) {
@@ -31,9 +25,6 @@ public class soduku {
     }
 
     static boolean checkSquare(int x, int y, int num) {
-        if(x >= N || y > N){
-            return true;
-        }
         int startX = (int) Math.floor(x / 3) * 3;
         int startY = (int) Math.floor(y / 3) * 3;
         for (int i = startX; i < startX + 3; i++) {
@@ -49,12 +40,13 @@ public class soduku {
     static boolean recur(int pos, int num) {
         int x = (int) Math.floor(pos / N);
         int y = pos % N;
-        System.out.println(x + " " + y);
-        if (x >= N && y >= N) {
-            return true;
-        }
+        //System.out.println(x + " " + y);
+        
 
         board[x][y] = num;
+        if (x >= N-1 && y >= N-1) {
+            return true;
+        }
         int nextPlace = -1;
         for (int p = pos + 1; p <= N * N; p++) {
             if (p == N * N) {
@@ -71,7 +63,9 @@ public class soduku {
         if (nextPlace != -1) {
             int newx = (int) Math.floor(nextPlace / N);
             int newy = nextPlace % N;
-            
+            if(nextPlace >= N*N){
+                return true;
+            }
             for (int i = 1; i <= N; i++) {
                 if (checkRow(newx, i)) {
                     if (checkCol(newy, i)) {
