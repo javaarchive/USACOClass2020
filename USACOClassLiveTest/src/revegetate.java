@@ -48,7 +48,7 @@ public class revegetate {
                     if(fe.type == 1){
                         if(otherType == 0){
                             otherType = nType;
-                            nodeTypes[otherType] = nType;
+                            nodeTypes[fe.conn] = nType;
                             updated = true;
                         }
                         if(nType != otherType){
@@ -65,7 +65,7 @@ public class revegetate {
                     if(fe.type == 2){
                         if(otherType == 0){
                             otherType = (byte) (3 - nType);
-                            nodeTypes[otherType] = (byte) (3 - nType);
+                            nodeTypes[fe.conn] = (byte) (3 - nType);
                             updated = true;
                         }
                         if(nType == otherType){
