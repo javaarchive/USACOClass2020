@@ -31,18 +31,21 @@ public class revegetate {
             if(visited[i]){
                 continue;
             }
-            //visited[i] = true;
+            visited[i] = true;
             Queue<Integer> q = new LinkedList<>();
             q.add(i);
             nodeTypes[i] = 1;
             comps ++;
             while(!q.isEmpty()){
                 int node = q.poll();
-                byte nType = nodeTypes[i];
+                byte nType = nodeTypes[node];
+                //System.out.println("Picked node from queue "+node);
                 for(FlavorEdge fe: graph.get(node)){
+                    //nType = nodeTypes[i];
                     /*if(nodeTypes[fe.conn] != 0){
                         continue;
                     }*/
+                    //System.out.println("Loop "+fe.conn+" : "+Arrays.toString(nodeTypes));
                     byte otherType = nodeTypes[fe.conn];
                     boolean updated = false;
                     if(fe.type == 1){
@@ -51,28 +54,34 @@ public class revegetate {
                             nodeTypes[fe.conn] = nType;
                             updated = true;
                         }
+                        nType = nodeTypes[node];
                         if(nType != otherType){
+                            //System.out.println("Fail S "+node+" "+fe.conn);
                             fail = true;
                             break;
                         }else{
-                            if(updated || !visited[fe.conn]){
+                            if(updated){
                                 visited[fe.conn] = true;
                                 q.add(fe.conn);
                             }
                         }
                     }
                     updated = false;
+                    //nType = nodeTypes[i];
                     if(fe.type == 2){
                         if(otherType == 0){
                             otherType = (byte) (3 - nType);
                             nodeTypes[fe.conn] = (byte) (3 - nType);
                             updated = true;
                         }
+                        nType = nodeTypes[node];
                         if(nType == otherType){
+                            
+                            //System.out.println("Fail D "+node+" "+fe.conn+" "+Arrays.toString(nodeTypes)+" "+nType+" "+otherType+" "+updated);
                             fail = true;
                             break;
                         }else{
-                            if(updated || !visited[fe.conn]){
+                            if(updated){
                                 visited[fe.conn] = true;
                                 q.add(fe.conn);
                             }
@@ -84,7 +93,7 @@ public class revegetate {
                 }
             }           
         }
-        //System.out.println(comps+" "+fail);
+       // System.out.println(comps+" "+fail);
         //System.out.println(Arrays.toString(visited));
         //System.out.println(Arrays.toString(nodeTypes));
         if(fail){
