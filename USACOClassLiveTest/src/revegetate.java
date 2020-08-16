@@ -24,17 +24,44 @@ public class revegetate {
             graph.get(b).add(new FlavorEdge(a, type));
         }
         boolean[] visited = new boolean[N];
-        int comps;
+        int comps = 0;
+        boolean fail = false;
+        //pw.print("1");
         for(int i = 0; i < N; i ++){
+            if(nodeTypes[i] != 0){
+                continue;
+            }
             Queue<Integer> q = new LinkedList<>();
             q.add(i);
+            nodeTypes[i] = 1;
+            comps ++;
             while(!q.isEmpty()){
                 int node = q.poll();
+                byte nType = nodeTypes[i];
                 for(FlavorEdge fe: graph.get(node)){
-                    
+                    if(visited[fe.conn]){
+                        continue;
+                    }
+                    if(nType == 0){
+                        nType = fe.type;
+                        nodeTypes[i] = nType;
+                    }
+                    if(nodeTypes[fe.conn] == 0 && nType != fe.type){
+                        nodeTypes[fe.conn] = fe.type;
+                    }
+                    if(nodeTypes[fe.conn] != fe.type && nType != fe.type){
+                        fail = true;
+                    }
+                    visited[fe.conn] = true;
                 }
             }           
         }
+        //ystem.out.println(comps);
+        //System.out.println(Arrays.toString(nodeTypes));
+        if(fail){
+            pw.println("0");
+        }
+        pw.close();
     }
 }
 class FlavorEdge{
