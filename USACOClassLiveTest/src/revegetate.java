@@ -40,9 +40,9 @@ public class revegetate {
                 int node = q.poll();
                 byte nType = nodeTypes[i];
                 for(FlavorEdge fe: graph.get(node)){
-                    if(nodeTypes[fe.conn] != 0){
+                    /*if(nodeTypes[fe.conn] != 0){
                         continue;
-                    }
+                    }*/
                     byte otherType = nodeTypes[fe.type];
                     boolean updated = false;
                     if(fe.type == 1){
@@ -55,7 +55,7 @@ public class revegetate {
                             fail = true;
                             break;
                         }else{
-                            if(!visited[fe.conn]){
+                            if(updated || !visited[fe.conn]){
                                 visited[fe.conn] = true;
                                 q.add(fe.conn);
                             }
@@ -72,7 +72,7 @@ public class revegetate {
                             fail = true;
                             break;
                         }else{
-                            if(!visited[fe.conn]){
+                            if(updated || !visited[fe.conn]){
                                 visited[fe.conn] = true;
                                 q.add(fe.conn);
                             }
