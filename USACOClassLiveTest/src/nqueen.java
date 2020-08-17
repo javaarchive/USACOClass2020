@@ -5,8 +5,10 @@ public class nqueen{
     static int[][] board;
     static int ans = 0;
     static int N;
-    static int[] dx = {0,1,1,0,1};
-    static int[] dy = {1,0,1,-1,-1};
+    static int[] dx = {1,1};
+    static int[] dy = {1,-1};
+    static Set<Integer> rows = new HashSet<>();
+    static Set<Integer> cols = new HashSet<>();
     public static void place(int x, int y, int inc){
         board[x][y] += inc;
         for(int i = 1; i < N+1; i ++){
@@ -19,6 +21,13 @@ public class nqueen{
                     }
                 }
             }
+        }
+        if(inc == 1){
+            rows.add(x);
+            cols.add(y);
+        }else{
+            rows.remove(x);
+            cols.remove(y);
         }
     }
     public static void recur(int x, int y){
@@ -42,7 +51,7 @@ public class nqueen{
             nextx ++;
         }
         while(nextx < N && nexty < N){
-            if(board[nextx][nexty] == 0){
+            if(!rows.contains(nextx) && !cols.contains(nexty) && board[nextx][nexty] == 0){
                 place(nextx, nexty, 1);
                 recur(nextx, nexty);
                 place(nextx, nexty, -1);
