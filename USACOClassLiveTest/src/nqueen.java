@@ -5,8 +5,8 @@ public class nqueen{
     static int[][] board;
     static int ans = 0;
     static int N;
-    static int[] dx = {0,0,-1,1,-1,1,-1,1};
-    static int[] dy = {-1,1,-1,1,1,-1,0,0};
+    static int[] dx = {0,1,1,0,1};
+    static int[] dy = {1,0,1,-1,-1};
     public static void place(int x, int y, int inc){
         board[x][y] += inc;
         for(int i = 1; i < N+1; i ++){
