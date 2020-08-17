@@ -1,22 +1,76 @@
 import java.io.*;
 import java.util.*;
 public class nqueen{
+    static int depth = 0;
+    static int[][] board;
+    static int ans = 0;
+    static int N;
+    static int[] dx = {0,0,-1,1,-1,1,-1,1};
+    static int[] dy = {-1,1,-1,1,1,-1,0,0};
+    public static void place(int x, int y, int inc){
+        board[x][y] += inc;
+        for(int i = 1; i < N+1; i ++){
+            for(int j = 0; j < dx.length; j ++){
+                int curX = x + dx[j] * i;
+                int curY = y + dy[j] * i;
+                if(0 <= curX && curX < N){
+                    if(0 <= curY && curY < N){
+                        board[curX][curY] += inc;
+                    }
+                }
+            }
+        }
+    }
+    public static void recur(int x, int y){
+        /*for(int i = 0; i < N; i ++){
+            for(int j = 0; j < N; j ++){
+                System.out.print(board[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println("x: "+x+" y: "+y+" enter depth "+depth);*/
+        depth ++;
+        if(depth == N){
+            ans ++;
+            depth --;
+            return;
+        }
+        int nextx = x;
+        int nexty = y + 1;
+        if(nexty == N){
+            nexty = 0;
+            nextx ++;
+        }
+        while(nextx < N && nexty < N){
+            if(board[nextx][nexty] == 0){
+                place(nextx, nexty, 1);
+                recur(nextx, nexty);
+                place(nextx, nexty, -1);
+            }
+            nexty ++;
+            if(nexty == N){
+                nexty = 0;
+                nextx ++;
+            }
+        }
+        depth --;
+    }
     public static void main(String[] args) throws IOException{
         // new FileReader("reduce.in")
         BufferedReader f = new BufferedReader(new InputStreamReader(System.in));
         // new BufferedWriter(new FileWriter("reduce.out"))
         PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
-        int N = Integer.parseInt(f.readLine());
+        N = Integer.parseInt(f.readLine());
         f.close();
-        int[][] board = new int[N][N];
-
+        board = new int[N][N];
+        for(int i = 0; i < N; i ++){
+            for(int j = 0; j < N; j ++){
+                place(i, j, 1);
+                recur(i, j);
+                place(i,j, -1);
+            }
+        }
+        pw.println(ans);
         pw.close();
-    }
-}
-class DepthChoice{
-    int x,y;
-    public DepthChoice(int x, int y){
-        this.x = x;
-        this.y = y;
     }
 }
