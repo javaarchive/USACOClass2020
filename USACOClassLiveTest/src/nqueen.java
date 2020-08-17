@@ -18,19 +18,13 @@ public class nqueen{
             return false;
         }
         
-        for(int i = 0; i < N; i ++){
-            for(int j = 0; j < dx.length; j ++){
-                int curX = x + dx[j] * i;
-                int curY = y + dy[j] * i;
-                if(0 <= curX && curX < N){
-                    if(0 <= curY && curY < N){
-                        if(board[curX][curY] != 0){
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
+       for(int i = 0; i < qx.size(); i ++){
+           int ox = qx.get(i);
+           int oy = qy.get(i);
+           if(Math.abs(oy - y) == Math.abs(ox - x)){
+                return false; // Diagonally
+           }
+       }
         return true;
     }
     public static void place(int x, int y, int inc){
@@ -73,23 +67,17 @@ public class nqueen{
             return;
         }
         int nextx = x + 1;
-        int nexty = 0;
-        if(nexty == N){
-            nexty = 0;
-            nextx ++;
-        }
-        while(nextx < N && nexty < N){
+        //int nexty = 0;
+        if(nextx < N){
+        for(int nexty = 0; nexty < N; y ++){
             if(check(nextx,nexty)){
                 place(nextx, nexty, 1);
                 recur(nextx, nexty);
                 place(nextx, nexty, -1);
             }
             nexty ++;
-            if(nexty == N){
-                nexty = 0;
-                nextx ++;
-            }
         }
+    }
         depth --;
         qx.remove(qx.size() - 1);
         qy.remove(qy.size() - 1);
