@@ -48,6 +48,8 @@ public class wrongdir {
 			int bx = ps[i][0];
 			int by = ps[i][1];
 			int bd = ps[i][2];
+			// fx,fy,fd f = final
+			// 
 			if(data.charAt(i-1) == 'F') {
 				int fx, fy, fd;
 				int tx, ty, td;
