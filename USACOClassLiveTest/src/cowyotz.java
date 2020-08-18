@@ -10,10 +10,10 @@ public class cowyotz {
     public static void recur(int side, int depth) {
         if (depth > N) {
             boolean working = false;
-            //System.out.println(Arrays.toString(freq));
+            
             for (int j = 0; j < E; j++) {
                 boolean failed = false;
-                for (int i = 0; i < N; i++) {
+                for (int i = 0; i < S; i++) {
                     if (freq[i] < desired[j][i]) {
                         failed = true;
                         break;
@@ -25,6 +25,7 @@ public class cowyotz {
                 }
             }
             if(working){
+                //System.out.println(Arrays.toString(freq));
                 ans ++;
             }
             return;
@@ -34,7 +35,7 @@ public class cowyotz {
         freq[side]++;
         
         for (int j = 0; j < E; j++) {
-            boolean nw = true;
+            boolean nw = false;
             for (int i = 0; i < S; i++) {
 
                 if (desired[j][i] - freq[i] > leftToPlace) {
@@ -47,11 +48,15 @@ public class cowyotz {
                 nonworking++;
             }
         }
-        System.out.println(nonworking);
+        //System.out.println(nonworking);
         if (nonworking != E) {
+            if(depth != N){
             for (int i = 0; i < S; i++) {
                 recur(i, depth + 1);
             }
+        }else{
+            recur(-1, depth + 1);
+        }
         }
         freq[side]--;
     }
@@ -79,7 +84,7 @@ public class cowyotz {
                 desired[i][side] = count;
             }
         }
-        System.out.println(Arrays.deepToString(desired));
+        //System.out.println(Arrays.deepToString(desired));
         for (int i = 0; i < S; i++) {
             recur(i, 1);
         }

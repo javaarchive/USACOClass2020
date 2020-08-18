@@ -56,7 +56,7 @@ public class wrongdir {
 				td = ps[ps.length-1][2] - ps[i-1][2];
 				fx = bx - ty;
 				fy = by + tx;
-				//fd = (bd + td + 3) % 4;
+				fd = (bd + td + 3) % 4;
 				System.out.println(fx+" "+fy);
 				fails.add(new Pos2D(fx,fy));
 				fx = bx + ty;
@@ -71,7 +71,7 @@ public class wrongdir {
 				td = ps[ps.length-1][2] - ps[i-1][2];
 				fx = bx + tx + dxdy[bd][0];
 				fy = by + ty + dxdy[bd][1];
-				//fd = (bd + td + 3) % 4;
+				fd = (bd + td + 3) % 4;
 				System.out.println(fx+" "+fy);
 				fails.add(new Pos2D(fx,fy));
 				fx = bx - ty;
@@ -86,7 +86,7 @@ public class wrongdir {
 				td = ps[ps.length-1][2] - ps[i-1][2];
 				fx = bx + tx + dxdy[bd][0];
 				fy = by + ty + dxdy[bd][1];
-				//fd = (bd + td + 3) % 4;
+				fd = (bd + td + 3) % 4;
 				System.out.println(fx+" "+fy);
 				fails.add(new Pos2D(fx,fy));
 				fx = bx + ty;
