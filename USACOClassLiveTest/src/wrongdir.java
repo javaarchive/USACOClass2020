@@ -44,7 +44,7 @@ public class wrongdir {
 		//System.out.println(Arrays.deepToString(ps).replaceAll("]", "]\n"));
 		Set<Pos2D> fails = new HashSet<>();
 		for(int i = 1; i <= data.length(); i ++) {
-			System.out.println(i+"th !!!!");
+			//System.out.println(i+"th !!!!");
 			int bx = ps[i-1][0];
 			int by = ps[i-1][1];
 			int bd = ps[i-1][2];
@@ -56,14 +56,16 @@ public class wrongdir {
 				tx = ps[ps.length-1][0] - ps[i][0];
 				ty = ps[ps.length-1][1] - ps[i][1];
 				td = ps[ps.length-1][2] - ps[i][2];
+				//replace R
 				fx = bx - ty;
 				fy = by + tx;
 				//fd = (bd + td + 3) % 4;
-				System.out.println(fx+" "+fy);
+				//System.out.println(fx+" "+fy);
 				fails.add(new Pos2D(fx,fy));
+				// replace L
 				fx = bx + ty;
 				fy = by - tx;
-				System.out.println(fx+" "+fy);
+				//System.out.println(fx+" "+fy);
 				fails.add(new Pos2D(fx,fy));
 			}else if(data.charAt(i-1) == 'R') {
 				int fx, fy, fd;
@@ -71,15 +73,15 @@ public class wrongdir {
 				tx = ps[ps.length-1][0] - ps[i][0];
 				ty = ps[ps.length-1][1] - ps[i][1];
 				td = ps[ps.length-1][2] - ps[i][2];
-				System.out.println(Arrays.toString(dxdy[(bd + 3)%4]));
-				fx = bx + tx + dxdy[(bd + 1)%4][0];
-				fy = by + ty + dxdy[(bd + 1)%4][1];
+				//System.out.println(Arrays.toString(dxdy[(bd + 3)%4]));
+				fx = bx - ty + dxdy[bd][0];
+				fy = by + tx + dxdy[bd][1];
 				fd = (bd + td + 1) % 4;
-				System.out.println(fx+" "+fy);
+				//System.out.println(fx+" "+fy);
 				fails.add(new Pos2D(fx,fy));
-				fx = bx + ty;
-				fy = by - tx;
-				System.out.println(fx+" "+fy);
+				fx = bx - tx;
+				fy = by - ty;
+				//System.out.println(fx+" "+fy);
 				fails.add(new Pos2D(fx,fy));
 			}else if(data.charAt(i-1) == 'L') {
 				int fx, fy, fd;
@@ -87,20 +89,20 @@ public class wrongdir {
 				tx = ps[ps.length-1][0] - ps[i][0];
 				ty = ps[ps.length-1][1] - ps[i][1];
 				td = ps[ps.length-1][2] - ps[i][2];
-				System.out.println(Arrays.toString(dxdy[(bd + 1)%4]));
-				fx = bx + tx + dxdy[(bd + 3) % 4][0];
-				fy = by + ty + dxdy[(bd + 3) % 4][1];
+				//System.out.println(Arrays.toString(dxdy[(bd + 1)%4]));
+				fx = bx + ty + dxdy[bd][0];
+				fy = by - tx + dxdy[bd][1];
 				fd = (bd + td + 3) % 4;
-				System.out.println(fx+" "+fy);
+				//System.out.println(fx+" "+fy);
 				fails.add(new Pos2D(fx,fy));
-				fx = bx - ty;
-				fy = by + tx;
-				System.out.println(fx+" "+fy);
+				fx = bx - tx;
+				fy = by - ty;
+				//System.out.println(fx+" "+fy);
 				fails.add(new Pos2D(fx,fy));
 			}
 		}
 		pw.println(fails.size());
-		System.out.println(fails.size()+" "+fails);
+		//System.out.println(fails.size()+" "+fails);
 		pw.close();
 		f.close();
 	}
