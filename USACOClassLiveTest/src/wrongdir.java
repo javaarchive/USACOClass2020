@@ -45,17 +45,17 @@ public class wrongdir {
 		Set<Pos2D> fails = new HashSet<>();
 		for(int i = 1; i <= data.length(); i ++) {
 			System.out.println(i+"th !!!!");
-			int bx = ps[i][0];
-			int by = ps[i][1];
-			int bd = ps[i][2];
+			int bx = ps[i-1][0];
+			int by = ps[i-1][1];
+			int bd = ps[i-1][2];
 			// fx,fy,fd f = final
 			// 
 			if(data.charAt(i-1) == 'F') {
 				int fx, fy, fd;
 				int tx, ty, td;
-				tx = ps[ps.length-1][0] - ps[i-1][0];
-				ty = ps[ps.length-1][1] - ps[i-1][1];
-				td = ps[ps.length-1][2] - ps[i-1][2];
+				tx = ps[ps.length-1][0] - ps[i][0];
+				ty = ps[ps.length-1][1] - ps[i][1];
+				td = ps[ps.length-1][2] - ps[i][2];
 				fx = bx - ty;
 				fy = by + tx;
 				fd = (bd + td + 3) % 4;
@@ -68,9 +68,9 @@ public class wrongdir {
 			}else if(data.charAt(i-1) == 'R') {
 				int fx, fy, fd;
 				int tx, ty, td;
-				tx = ps[ps.length-1][0] - ps[i][0];
-				ty = ps[ps.length-1][1] - ps[i][1];
-				td = ps[ps.length-1][2] - ps[i][2];
+				tx = ps[ps.length-1][0] - ps[i-1][0];
+				ty = ps[ps.length-1][1] - ps[i-1][1];
+				td = ps[ps.length-1][2] - ps[i-1][2];
 				fx = bx + tx + dxdy[bd][0];
 				fy = by + ty + dxdy[bd][1];
 				fd = (bd + td + 3) % 4;
@@ -83,8 +83,8 @@ public class wrongdir {
 			}else if(data.charAt(i-1) == 'L') {
 				int fx, fy, fd;
 				int tx, ty, td;
-				tx = ps[ps.length-1][0] - ps[i][0];
-				ty = ps[ps.length-1][1] - ps[i][1];
+				tx = ps[ps.length-1][0] - ps[i-1][0];
+				ty = ps[ps.length-1][1] - ps[i-1][1];
 				td = ps[ps.length-1][2] - ps[i-1][2];
 				fx = bx + tx + dxdy[bd][0];
 				fy = by + ty + dxdy[bd][1];
