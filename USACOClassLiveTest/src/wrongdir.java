@@ -53,8 +53,8 @@ public class wrongdir {
 			if(data.charAt(i-1) == 'F') {
 				int fx, fy, fd;
 				int tx, ty, td;
-				tx = ps[ps.length-1][0] - ps[i-1][0];
-				ty = ps[ps.length-1][1] - ps[i-1][1];
+				tx = ps[ps.length-1][0] - ps[i][0];
+				ty = ps[ps.length-1][1] - ps[i][1];
 				td = ps[ps.length-1][2] - ps[i-1][2];
 				fx = bx - ty;
 				fy = by + tx;
@@ -68,8 +68,8 @@ public class wrongdir {
 			}else if(data.charAt(i-1) == 'R') {
 				int fx, fy, fd;
 				int tx, ty, td;
-				tx = ps[ps.length-1][0] - ps[i-1][0];
-				ty = ps[ps.length-1][1] - ps[i-1][1];
+				tx = ps[ps.length-1][0] - ps[i][0];
+				ty = ps[ps.length-1][1] - ps[i][1];
 				td = ps[ps.length-1][2] - ps[i-1][2];
 				fx = bx + tx + dxdy[bd][0];
 				fy = by + ty + dxdy[bd][1];
@@ -83,8 +83,8 @@ public class wrongdir {
 			}else if(data.charAt(i-1) == 'L') {
 				int fx, fy, fd;
 				int tx, ty, td;
-				tx = ps[ps.length-1][0] - ps[i-1][0];
-				ty = ps[ps.length-1][1] - ps[i-1][1];
+				tx = ps[ps.length-1][0] - ps[i][0];
+				ty = ps[ps.length-1][1] - ps[i][1];
 				td = ps[ps.length-1][2] - ps[i-1][2];
 				fx = bx + tx + dxdy[bd][0];
 				fy = by + ty + dxdy[bd][1];
