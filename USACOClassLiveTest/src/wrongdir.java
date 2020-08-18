@@ -76,8 +76,8 @@ public class wrongdir {
 				fd = (bd + td + 1) % 4;
 				System.out.println(fx+" "+fy);
 				fails.add(new Pos2D(fx,fy));
-				fx = bx + ty;
-				fy = by - tx;
+				fx = bx - ty;
+				fy = by + tx;
 				System.out.println(fx+" "+fy);
 				fails.add(new Pos2D(fx,fy));
 			}else if(data.charAt(i-1) == 'L') {
@@ -91,8 +91,8 @@ public class wrongdir {
 				fd = (bd + td + 3) % 4;
 				System.out.println(fx+" "+fy);
 				fails.add(new Pos2D(fx,fy));
-				fx = bx - ty;
-				fy = by + tx;
+				fx = bx + ty;
+				fy = by - tx;
 				System.out.println(fx+" "+fy);
 				fails.add(new Pos2D(fx,fy));
 			}
