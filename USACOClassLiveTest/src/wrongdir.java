@@ -41,7 +41,7 @@ public class wrongdir {
 			ps[i+1][2] = dir;
 			//System.out.println(Arrays.toString(ps[i+1]));
 		}
-		System.out.println(Arrays.deepToString(ps).replaceAll("]", "]\n"));
+		//System.out.println(Arrays.deepToString(ps).replaceAll("]", "]\n"));
 		Set<Pos2D> fails = new HashSet<>();
 		for(int i = 1; i <= data.length(); i ++) {
 			System.out.println(i+"th !!!!");
@@ -58,7 +58,7 @@ public class wrongdir {
 				td = ps[ps.length-1][2] - ps[i][2];
 				fx = bx - ty;
 				fy = by + tx;
-				fd = (bd + td + 3) % 4;
+				//fd = (bd + td + 3) % 4;
 				System.out.println(fx+" "+fy);
 				fails.add(new Pos2D(fx,fy));
 				fx = bx + ty;
@@ -71,13 +71,13 @@ public class wrongdir {
 				tx = ps[ps.length-1][0] - ps[i][0];
 				ty = ps[ps.length-1][1] - ps[i][1];
 				td = ps[ps.length-1][2] - ps[i][2];
-				fx = bx + tx + dxdy[bd][0];
-				fy = by + ty + dxdy[bd][1];
-				fd = (bd + td + 3) % 4;
+				fx = bx + tx + dxdy[(bd + 1)%4][0];
+				fy = by + ty + dxdy[(bd + 1)%4][1];
+				fd = (bd + td + 1) % 4;
 				System.out.println(fx+" "+fy);
 				fails.add(new Pos2D(fx,fy));
-				fx = bx - ty;
-				fy = by + tx;
+				fx = bx + ty;
+				fy = by - tx;
 				System.out.println(fx+" "+fy);
 				fails.add(new Pos2D(fx,fy));
 			}else if(data.charAt(i-1) == 'L') {
@@ -86,14 +86,14 @@ public class wrongdir {
 				tx = ps[ps.length-1][0] - ps[i][0];
 				ty = ps[ps.length-1][1] - ps[i][1];
 				td = ps[ps.length-1][2] - ps[i][2];
-				fx = bx + tx + dxdy[bd][0];
-				fy = by + ty + dxdy[bd][1];
+				fx = bx + tx + dxdy[(bd + 3) % 4][0];
+				fy = by + ty + dxdy[(bd + 3) % 4][1];
 				fd = (bd + td + 3) % 4;
-				//System.out.println(fx+" "+fy);
+				System.out.println(fx+" "+fy);
 				fails.add(new Pos2D(fx,fy));
-				fx = bx + ty;
-				fy = by - tx;
-				//System.out.println(fx+" "+fy);
+				fx = bx - ty;
+				fy = by + tx;
+				System.out.println(fx+" "+fy);
 				fails.add(new Pos2D(fx,fy));
 			}
 		}
