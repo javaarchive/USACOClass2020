@@ -85,6 +85,11 @@ public class mirrors {
             Mirror curMirror = first;
             boolean seen[] = new boolean[N];
             boolean works = false;
+            if(curMirror.type == 1){
+                dir = t1[dir-1];
+            }else{
+                dir = t2[dir-1];
+            }
             while(true){
                 System.out.println(curMirror+" direction "+dir);
                 if(seen[curMirror.index]){
@@ -94,6 +99,19 @@ public class mirrors {
                 seen[curMirror.index] = true;
                 //break;
                 if(dir % 2 == 0){
+                    pos = Collections.binarySearch(mapy.get(curMirror.y), curMirror, new Comparator<Mirror>(){
+                        @Override
+                        public int compare(Mirror o1, Mirror o2) {
+                            // TODO Auto-generated method stub
+                            int ycompare = Integer.compare(o1.y, o2.y);
+                            if(ycompare == 0){
+                                return Integer.compare(o1.x, o2.x);
+                            }
+                            return ycompare;
+                        }
+                    });
+
+                }else if(dir % 2 == 1){
                     pos = Collections.binarySearch(mapx.get(curMirror.x), curMirror, new Comparator<Mirror>(){
                         @Override
                         public int compare(Mirror o1, Mirror o2) {
@@ -105,19 +123,6 @@ public class mirrors {
                             return xcompare;
                         }
                     });
-
-                }else if(dir % 2 == 1){
-                pos = Collections.binarySearch(mapy.get(curMirror.y), curMirror, new Comparator<Mirror>(){
-                        @Override
-                        public int compare(Mirror o1, Mirror o2) {
-                            // TODO Auto-generated method stub
-                            int ycompare = Integer.compare(o1.y, o2.y);
-                            if(ycompare == 0){
-                                return Integer.compare(o1.x, o2.x);
-                            }
-                            return ycompare;
-                        }
-                    });
                 }
                 int inc = 0;
                 if(dir <= 2){
@@ -125,7 +130,7 @@ public class mirrors {
                 }else{ 
                     inc = -1;
                 }
-                boolean useX = (dir % 2 == 0);
+                boolean useX = !(dir % 2 == 0);
                 Mirror nm; // Filler value so compiler doesn't get mad
                 //System.out.println(curMirror+ " " + ((dir % 2 == 0) ? mapx.get(curMirror.x).size():mapy.get(curMirror.y).size()));
                // System.out.println(inc);
@@ -164,16 +169,34 @@ public class mirrors {
                     works = true;
                     break;
                 }
-                if(nm.type != 1){
+                //System.out.println("curm type: "+cm.type);
+                if(nm.type == 1){
+                    System.out.println("Mapping 1: "+dir+" to "+t1[dir-1] + " new mirror: "+nm);
                     dir = t1[dir - 1];
                 }else{
+                    System.out.println("Mapping 2: "+dir+" to "+t2[dir-1] + " new mirror: "+nm);
                     dir = t2[dir - 1];
                 }
                 curMirror = nm;
                 //System.out.println("New Mirror "+nm+" "+inc);
             }
+            if(curMirror.x >= a && dir == 2){
+                works = true;
+            }
+            if(curMirror.x >= a && dir == 4){
+                works = true;
+            }
+            if(curMirror.y <= b  && dir == 1){
+                works = true;
+            }
+            if(curMirror.y >= b  && dir == 3){
+                works = true;
+            }
             System.out.println(works);
             cm.type = 3 - cm.type;
+        }
+        for(int i = 0; i < N; i ++){
+            System.out.println("M "+i+" : "+mirrors.get(i));
         }
     }
 }
