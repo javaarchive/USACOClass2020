@@ -97,12 +97,12 @@ public class mirrors {
         boolean foundAns = false;
         for(int i = 0; i < N; i ++){
             Mirror cm = mirrors.get(i);
-            System.out.println("Changed mirror "+i+" from "+cm.type+" to "+(3 - cm.type));
+            //System.out.println("Changed mirror "+i+" from "+cm.type+" to "+(3 - cm.type));
             cm.type = 3 - cm.type;
             int dir = 2;
             int pos = -1; 
             Mirror curMirror = first;
-            boolean seen[] = new boolean[N];
+            int seenC[] = new int[N + 1];
             boolean works = false;
             if(curMirror.type == 1){
                 dir = t1[dir-1];
@@ -111,12 +111,12 @@ public class mirrors {
             }
 
             while(true){
-                System.out.println(curMirror+" direction "+dir);
-                if(seen[curMirror.index]){
+                //System.out.println(curMirror+" direction "+dir);
+                if(seenC[curMirror.index] > 10){
                     //System.out.println("Already Seen");
                     break;
                 }
-                seen[curMirror.index] = true;
+                seenC[curMirror.index] ++;
                 //break;
                 if(dir % 2 == 0){
                     pos = Collections.binarySearch(mapy.get(curMirror.y), curMirror, new Comparator<Mirror>(){
@@ -173,28 +173,28 @@ public class mirrors {
                     nm = mapy.get(curMirror.y).get(pos + inc);
                 }
                 //System.out.println("Posinc: "+(pos+inc));
-                if(curMirror.x <= a && nm.x > a && dir == 2){
+                if(curMirror.x <= a && curMirror.y == b && nm.x > a && dir == 2){
                     works = true;
                     break;
                 }
-                if(curMirror.x >= a && a > nm.x  && dir == 4){
+                if(curMirror.x >= a && curMirror.y == b && a > nm.x  && dir == 4){
                     works = true;
                     break;
                 }
-                if(curMirror.y <= b && nm.y > b && dir == 1){
+                if(curMirror.y <= b && curMirror.x == a && nm.y > b && dir == 1){
                     works = true;
                     break;
                 }
-                if(curMirror.y >= b && b > nm.y && dir == 3){
+                if(curMirror.y >= b && curMirror.x == a && b > nm.y && dir == 3){
                     works = true;
                     break;
                 }
                 //System.out.println("curm type: "+cm.type);
                 if(nm.type == 1){
-                    System.out.println("Mapping 1: "+dir+" to "+t1[dir-1] + " new mirror: "+nm);
+                    //System.out.println("Mapping 1: "+dir+" to "+t1[dir-1] + " new mirror: "+nm);
                     dir = t1[dir - 1];
                 }else{
-                    System.out.println("Mapping 2: "+dir+" to "+t2[dir-1] + " new mirror: "+nm);
+                    //System.out.println("Mapping 2: "+dir+" to "+t2[dir-1] + " new mirror: "+nm);
                     dir = t2[dir - 1];
                 }
                 curMirror = nm;
