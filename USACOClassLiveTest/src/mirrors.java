@@ -20,7 +20,7 @@ public class mirrors {
             st = new StringTokenizer(f.readLine());
             int x = Integer.parseInt(st.nextToken()), y = Integer.parseInt(st.nextToken());
             int type = (st.nextToken().charAt(0) == '/') ? 1 : 2;
-            Mirror m = new Mirror(x, y, type, i);
+            Mirror m = new Mirror(x, y, type, i + 1);
             mirrors.add(m);
             if (!mapx.keySet().contains(x)) {
                 mapx.put(x, new ArrayList<>());
@@ -160,7 +160,7 @@ public class mirrors {
                         break;
                     }
                 }else{
-                    if(pos >= 0){
+                    if(pos <= 0){
                         break;
                     }
                 }
@@ -191,26 +191,26 @@ public class mirrors {
                 }
                 //System.out.println("curm type: "+cm.type);
                 if(nm.type == 1){
-                    //System.out.println("Mapping 1: "+dir+" to "+t1[dir-1] + " new mirror: "+nm);
+                    System.out.println("Mapping 1: "+dir+" to "+t1[dir-1] + " new mirror: "+nm);
                     dir = t1[dir - 1];
                 }else{
-                    //System.out.println("Mapping 2: "+dir+" to "+t2[dir-1] + " new mirror: "+nm);
+                    System.out.println("Mapping 2: "+dir+" to "+t2[dir-1] + " new mirror: "+nm);
                     dir = t2[dir - 1];
                 }
                 curMirror = nm;
                 //System.out.println("New Mirror "+nm+" "+inc);
             }
             //System.out.println("Before works "+works);
-            if(curMirror.x <= a && dir == 2){
+            if(curMirror.x <= a && curMirror.y == b && dir == 2){
                 works = true;
             }
-            if(curMirror.x >= a && dir == 4){
+            if(curMirror.x >= a && curMirror.y == b && dir == 4){
                 works = true;
             }
-            if(curMirror.y <= b  && dir == 1){
+            if(curMirror.y <= b && curMirror.x == a  && dir == 1){
                 works = true;
             }
-            if(curMirror.y >= b  && dir == 3){
+            if(curMirror.y >= b && curMirror.x == a && dir == 3){
                 works = true;
             }
            // System.out.println(works);
