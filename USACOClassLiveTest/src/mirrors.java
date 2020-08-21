@@ -201,16 +201,16 @@ public class mirrors {
                 //System.out.println("New Mirror "+nm+" "+inc);
             }
             //System.out.println("Before works "+works);
-            if(curMirror.x <= a && dir == 2){
+            if(curMirror.x <= a && curMirror.y == b && dir == 2){
                 works = true;
             }
-            if(curMirror.x >= a && dir == 4){
+            if(curMirror.x >= a && curMirror.y == b && dir == 4){
                 works = true;
             }
-            if(curMirror.y <= b  && dir == 1){
+            if(curMirror.y <= b  && curMirror.x == a && dir == 1){
                 works = true;
             }
-            if(curMirror.y >= b  && dir == 3){
+            if(curMirror.y >= b  && curMirror.x == a && dir == 3){
                 works = true;
             }
            // System.out.println(works);
