@@ -173,19 +173,19 @@ public class mirrors {
                     nm = mapy.get(curMirror.y).get(pos + inc);
                 }
                 //System.out.println("Posinc: "+(pos+inc));
-                if(curMirror.x <= a && nm.x > a && nm.y == b && dir == 2){
+                if(curMirror.x <= a && nm.x > a && curMirror.y == b && dir == 2){
                     works = true;
                     break;
                 }
-                if(curMirror.x >= a && a > nm.x && nm.y == b && dir == 4){
+                if(curMirror.x >= a && a > nm.x && curMirror.y == b && dir == 4){
                     works = true;
                     break;
                 }
-                if(curMirror.y <= b && nm.y > b && nm.x == a && dir == 1){
+                if(curMirror.y <= b && nm.y > b && curMirror.x == a && dir == 1){
                     works = true;
                     break;
                 }
-                if(curMirror.y >= b && b > nm.y && nm.x == a && dir == 3){
+                if(curMirror.y >= b && b > nm.y && curMirror.x == a && dir == 3){
                     works = true;
                     break;
                 }
