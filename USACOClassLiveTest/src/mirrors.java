@@ -97,7 +97,7 @@ public class mirrors {
         boolean foundAns = false;
         for(int i = 0; i < N; i ++){
             Mirror cm = mirrors.get(i);
-            //System.out.println("Changed mirror "+i+" from "+cm.type+" to "+(3 - cm.type));
+            System.out.println("Changed mirror "+i+" from "+cm.type+" to "+(3 - cm.type));
             cm.type = 3 - cm.type;
             int dir = 2;
             int pos = -1; 
@@ -111,7 +111,7 @@ public class mirrors {
             }
 
             while(true){
-                //System.out.println(curMirror+" direction "+dir);
+                System.out.println(curMirror+" direction "+dir);
                 if(seen[curMirror.index]){
                     //System.out.println("Already Seen");
                     break;
@@ -173,19 +173,19 @@ public class mirrors {
                     nm = mapy.get(curMirror.y).get(pos + inc);
                 }
                 //System.out.println("Posinc: "+(pos+inc));
-                if(curMirror.x <= a && nm.x > a && curMirror.y == b && dir == 2){
+                if(curMirror.x <= a && nm.x > a && dir == 2){
                     works = true;
                     break;
                 }
-                if(curMirror.x >= a && a > nm.x && curMirror.y == b && dir == 4){
+                if(curMirror.x >= a && a > nm.x  && dir == 4){
                     works = true;
                     break;
                 }
-                if(curMirror.y <= b && nm.y > b && curMirror.x == a && dir == 1){
+                if(curMirror.y <= b && nm.y > b && dir == 1){
                     works = true;
                     break;
                 }
-                if(curMirror.y >= b && b > nm.y && curMirror.x == a && dir == 3){
+                if(curMirror.y >= b && b > nm.y && dir == 3){
                     works = true;
                     break;
                 }
@@ -201,16 +201,16 @@ public class mirrors {
                 //System.out.println("New Mirror "+nm+" "+inc);
             }
             //System.out.println("Before works "+works);
-            if(curMirror.x <= a && curMirror.y == b && dir == 2){
+            if(curMirror.x <= a && dir == 2){
                 works = true;
             }
-            if(curMirror.x >= a && curMirror.y == b && dir == 4){
+            if(curMirror.x >= a && dir == 4){
                 works = true;
             }
-            if(curMirror.y <= b  && curMirror.x == a && dir == 1){
+            if(curMirror.y <= b  && dir == 1){
                 works = true;
             }
-            if(curMirror.y >= b  && curMirror.x == a && dir == 3){
+            if(curMirror.y >= b  && dir == 3){
                 works = true;
             }
            // System.out.println(works);
