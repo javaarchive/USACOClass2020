@@ -97,7 +97,7 @@ public class mirrors {
         boolean foundAns = false;
         for(int i = 0; i < N; i ++){
             Mirror cm = mirrors.get(i);
-            System.out.println("Changed mirror "+i+" from "+cm.type+" to "+(3 - cm.type));
+            //System.out.println("Changed mirror "+i+" from "+cm.type+" to "+(3 - cm.type));
             cm.type = 3 - cm.type;
             int dir = 2;
             int pos = -1; 
@@ -111,7 +111,7 @@ public class mirrors {
             }
 
             while(true){
-                System.out.println(curMirror+" direction "+dir);
+                //System.out.println(curMirror+" direction "+dir);
                 if(seen[curMirror.index]){
                     //System.out.println("Already Seen");
                     break;
@@ -191,10 +191,10 @@ public class mirrors {
                 }
                 //System.out.println("curm type: "+cm.type);
                 if(nm.type == 1){
-                    System.out.println("Mapping 1: "+dir+" to "+t1[dir-1] + " new mirror: "+nm);
+                    //System.out.println("Mapping 1: "+dir+" to "+t1[dir-1] + " new mirror: "+nm);
                     dir = t1[dir - 1];
                 }else{
-                    System.out.println("Mapping 2: "+dir+" to "+t2[dir-1] + " new mirror: "+nm);
+                    //System.out.println("Mapping 2: "+dir+" to "+t2[dir-1] + " new mirror: "+nm);
                     dir = t2[dir - 1];
                 }
                 curMirror = nm;
