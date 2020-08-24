@@ -63,6 +63,10 @@ public class cereal {
     public static final String PURPLE_BOLD_BRIGHT = "\033[1;95m";// PURPLE
     public static final String CYAN_BOLD_BRIGHT = "\033[1;96m";  // CYAN
     public static final String WHITE_BOLD_BRIGHT = "\033[1;97m"; // WHITE    
+
+    public static boolean isEmpty(int val){
+        return (val < 0);
+    }
     public static void main(String[] args) throws IOException {
         // IO
         String inputfile = "cereal.in";
@@ -97,10 +101,27 @@ public class cereal {
             CerealCow cc = cows.get(i);
             //happyCows++;
             cc.taken = 1;
-            int kickCow = cerealTakeId[cc.first] - 1;
+            //int kickCow = cerealTakeId[cc.first] - 1;
             happyCows++;
             //int overridedCow = cerealTakeId[cc.first];
             //cerealTakeId[cc.first] = i + 1;
+            int kickCow = cerealTakeId[cc.first];
+            cerealTakeId[cc.first] = i;
+            while(true){
+                // Keep finding new places for cows
+                if(kickCow < 0){
+                    break;
+                }
+                int cowToWrite = kickCow;
+                CerealCow ccow = cows.get(kickCow);
+                if(isEmpty(cerealTakeId[ccow.second])){
+                    cerealTakeId[ccow.second] = kickCow;
+                    break;
+                }else{
+                    kickCow = 
+                    cerealTakeId[ccow.second] = cowToWrite;
+                }
+            }
         }
         pw.close();
     }
