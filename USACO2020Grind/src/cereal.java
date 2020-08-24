@@ -124,6 +124,7 @@ public class cereal {
                         System.out.println("Set the kicked cow to "+kickCow);
                         boolean otherCowLostSpot = true;
                         if(kickCow > cowToWrite){
+                            happyCows --;
                             //happyCows --; System.out.println("121");
                             break;
                         }
