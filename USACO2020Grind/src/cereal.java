@@ -121,10 +121,10 @@ public class cereal {
                         //System.out.println(GREEN+"Moving from "+nextCow.first+" to "+nextCow.second+RESET);
                         nextCow.taken = 2; // Switched to second cow
                         kickCow = cerealTakeId[nextCow.second] - 1;
-                        System.out.println("Set the kicked cow to "+kickCow);
+                        //System.out.println("Set the kicked cow to "+kickCow);
                         boolean otherCowLostSpot = true;
                         if(kickCow > cowToWrite){
-                            happyCows --;
+                            //happyCows --;
                             //happyCows --; System.out.println("121");
                             break;
                         }
@@ -153,7 +153,7 @@ public class cereal {
             }else{
                 //happyCows ++;
             }
-            System.out.println(CYAN_BOLD_BRIGHT+"Final state for "+i+" "+Arrays.toString(cerealTakeId)+" Happy Cows: "+happyCows+RESET);
+            //System.out.println(CYAN_BOLD_BRIGHT+"Final state for "+i+" "+Arrays.toString(cerealTakeId)+" Happy Cows: "+happyCows+RESET);
             answers.add(happyCows);
             
         }
