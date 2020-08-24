@@ -99,6 +99,9 @@ public class cereal {
             int kickCow = cerealTakeId[cc.first] - 1;
             //happyCows++;
             //int overridedCow = cerealTakeId[cc.first];
+            if(cerealTakeId[cc.first] == 0){
+                happyCows ++;
+            }
             cerealTakeId[cc.first] = i + 1;
             if (kickCow > -1) {
                 while (true) {
@@ -106,10 +109,11 @@ public class cereal {
                     CerealCow nextCow = cows.get(kickCow);
                     int cowToWrite = kickCow;
                     if(cerealTakeId[nextCow.second] == 0){
-                        happyCows ++;
+                        //happyCows ++;
                     }
                     if (cerealTakeId[nextCow.second] == 0 && nextCow.taken == 1) {
                         cerealTakeId[nextCow.second] = kickCow + 1;
+                        happyCows ++;
                         break;
                     }
                    // System.out.println(PURPLE+"kickCow: "+kickCow+" "+nextCow+RESET);
@@ -119,7 +123,7 @@ public class cereal {
                         kickCow = cerealTakeId[nextCow.second] - 1;
                         System.out.println("Set the kicked cow to "+kickCow);
                         boolean otherCowLostSpot = true;
-                        if(kickCow > cowToWrite){
+                        if(kickCow >= cowToWrite){
                             //happyCows --; System.out.println("121");
                             break;
                         }
