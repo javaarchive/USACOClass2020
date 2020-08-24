@@ -33,7 +33,8 @@ public class cereal {
             cc.taken = 1;
             int kickCow = cerealTakeId[cc.first] - 1;
             happyCows++;
-            
+            cerealTakeId[cc.first] = i + 1;
+            cc.taken = 1;            
             if (kickCow > -1) {
                 while (true) {
                     System.out.println(kickCow + " Kicked "+Arrays.toString(cerealTakeId) );
@@ -69,8 +70,7 @@ public class cereal {
                     }
                 }
             }
-            cerealTakeId[cc.first] = i + 1;
-            cc.taken = 1;
+            System.out.println("Final state for "+i+" "+Arrays.toString(cerealTakeId));
             answers.add(happyCows);
         }
         Collections.reverse(answers);
