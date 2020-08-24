@@ -88,3 +88,6 @@ local.properties
 *.xmi
 *.index
 *.snap
+
+node_modules
+node_modules/*
