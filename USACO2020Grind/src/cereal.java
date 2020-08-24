@@ -90,40 +90,41 @@ public class cereal {
         // int satsified = 0;
         List<Integer> answers = new ArrayList<>();
         // Arrays.fill(cre, val);
-        int happyCows = 0;
+        int happyCowsCount = 0;
         for (int i = N - 1; i >= 0; i--) {
             //System.out.println(BLUE+"Add "+i+RESET);
             CerealCow cc = cows.get(i);
             //happyCows++;
             cc.taken = 1;
-            int kickCow = cerealTakeId[cc.first] - 1;
+            int kickCowId = cerealTakeId[cc.first] - 1;
             //happyCows++;
             //int overridedCow = cerealTakeId[cc.first];
             if(cerealTakeId[cc.first] == 0){
-                happyCows ++;
+                happyCowsCount ++;
             }
             cerealTakeId[cc.first] = i + 1;
-            if (kickCow > -1) {
+            if (kickCowId > -1) {
                 while (true) {
                     //System.out.println(GREEN_BRIGHT+ kickCow+" Kicked "+Arrays.toString(cerealTakeId) +RESET);
-                    CerealCow nextCow = cows.get(kickCow);
-                    int cowToWrite = kickCow;
+                    CerealCow nextCow = cows.get(kickCowId);
+                    int cowToWrite = kickCowId;
                     if(cerealTakeId[nextCow.second] == 0){
                         //happyCows ++;
                     }
-                    if (cerealTakeId[nextCow.second] == 0 && nextCow.taken == 1) {
-                        cerealTakeId[nextCow.second] = kickCow + 1;
-                        happyCows ++;
-                        break;
-                    }
+                    
                    // System.out.println(PURPLE+"kickCow: "+kickCow+" "+nextCow+RESET);
                     if (nextCow.taken == 1) {
+                        if (cerealTakeId[nextCow.second] == 0) {
+                            cerealTakeId[nextCow.second] = kickCowId + 1;
+                            happyCowsCount ++;
+                            break;
+                        }
                         //System.out.println(GREEN+"Moving from "+nextCow.first+" to "+nextCow.second+RESET);
                         nextCow.taken = 2; // Switched to second cow
-                        kickCow = cerealTakeId[nextCow.second] - 1;
+                        kickCowId = cerealTakeId[nextCow.second] - 1;
                         //System.out.println("Set the kicked cow to "+kickCow);
                         boolean otherCowLostSpot = true;
-                        if(kickCow > cowToWrite){
+                        if(kickCowId < cowToWrite){
                             //happyCows --;
                             //happyCows --; System.out.println("121");
                             break;
@@ -131,7 +132,7 @@ public class cereal {
                         if(cerealTakeId[nextCow.second] == 0){
                             otherCowLostSpot = false;
                         }else{
-                            cows.get(kickCow).taken = 0;
+                            cows.get(kickCowId).taken = 0;
                             //happyCows --; System.out.println("128");
                         }
                         cerealTakeId[nextCow.second] = cowToWrite + 1;
@@ -145,7 +146,7 @@ public class cereal {
                         //cerealTakeId[nextCo]
                         break; // Yay! End of the kicking chain
                     }
-                    if(cowToWrite == kickCow){
+                    if(cowToWrite == kickCowId){
                         //System.out.println(RED+"Self kick "+kickCow+RESET);
                         break; // No self kicking
                     }
@@ -154,11 +155,11 @@ public class cereal {
                 //happyCows ++;
             }
             //System.out.println(CYAN_BOLD_BRIGHT+"Final state for "+i+" "+Arrays.toString(cerealTakeId)+" Happy Cows: "+happyCows+RESET);
-            answers.add(happyCows);
+            answers.add(happyCowsCount);
             
         }
         Collections.reverse(answers);
-        System.out.println(happyCows+" "+answers);
+        System.out.println(happyCowsCount+" "+answers);
         for(int i = 0; i < answers.size(); i ++){
             pw.println(answers.get(i));
         }
