@@ -123,7 +123,7 @@ public class cereal {
                         kickCow = cerealTakeId[nextCow.second] - 1;
                         System.out.println("Set the kicked cow to "+kickCow);
                         boolean otherCowLostSpot = true;
-                        if(kickCow >= cowToWrite){
+                        if(kickCow > cowToWrite){
                             //happyCows --; System.out.println("121");
                             break;
                         }
