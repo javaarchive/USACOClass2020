@@ -33,8 +33,7 @@ public class cereal {
             cc.taken = 1;
             int kickCow = cerealTakeId[cc.first] - 1;
             happyCows++;
-            cerealTakeId[cc.first] = i + 1;
-            cc.taken = 1;
+            
             if (kickCow > -1) {
                 while (true) {
                     System.out.println(kickCow + " Kicked "+Arrays.toString(cerealTakeId) );
@@ -45,10 +44,20 @@ public class cereal {
                         break;
                     }
                     if (nextCow.taken == 1) {
+                        System.out.println("Moving from "+nextCow.first+" to "+nextCow.second);
                         nextCow.taken = 2; // Switched to second cow
                         kickCow = cerealTakeId[nextCow.second] - 1;
+                        System.out.println("Set the kicked cow to "+kickCow);
+                        boolean otherCowLostSpot = true;
+                        if(cerealTakeId[nextCow.second] == 0){
+                            otherCowLostSpot = false;
+                        }
                         cerealTakeId[nextCow.second] = cowToWrite + 1;
+                        if(!otherCowLostSpot){
+                            break;
+                        }
                     } else if (nextCow.taken == 2) {
+                        System.out.println("Last resort, cow leaving "+nextCow.second);
                         happyCows--;
                         nextCow.taken = 0;
                         //cerealTakeId[nextCo]
@@ -60,6 +69,8 @@ public class cereal {
                     }
                 }
             }
+            cerealTakeId[cc.first] = i + 1;
+            cc.taken = 1;
             answers.add(happyCows);
         }
         Collections.reverse(answers);
