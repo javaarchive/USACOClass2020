@@ -97,60 +97,53 @@ public class cereal {
             //happyCows++;
             cc.taken = 1;
             int kickCowId = cerealTakeId[cc.first] - 1;
-            //happyCows++;
+            happyCowsCount ++;
             //int overridedCow = cerealTakeId[cc.first];
-            if(cerealTakeId[cc.first] == 0){
-                happyCowsCount ++;
-            }
+            //if(cerealTakeId[cc.first] == 0){
+            //    happyCowsCount ++;
+            //}
             cerealTakeId[cc.first] = i + 1;
+            int nextKickCowId=0;
             if (kickCowId > -1) {
                 while (true) {
                     //System.out.println(GREEN_BRIGHT+ kickCow+" Kicked "+Arrays.toString(cerealTakeId) +RESET);
-                    CerealCow nextCow = cows.get(kickCowId);
-                    int cowToWrite = kickCowId;
-                    if(cerealTakeId[nextCow.second] == 0){
-                        //happyCows ++;
-                    }
+                    CerealCow curCow = cows.get(kickCowId);
+                    
+                    //happyCowsCount ++;
+                    //if(cerealTakeId[nextCow.second] == 0){
+                    //    happyCowsCount ++;
+                    //}
                     
                    // System.out.println(PURPLE+"kickCow: "+kickCow+" "+nextCow+RESET);
-                    if (nextCow.taken == 1) {
-                        if (cerealTakeId[nextCow.second] == 0) {
-                            cerealTakeId[nextCow.second] = kickCowId + 1;
-                            happyCowsCount ++;
+                    if (curCow.taken == 1) {
+                        if (cerealTakeId[curCow.second] == 0) {
+                            cerealTakeId[curCow.second] = kickCowId + 1;
+                            //happyCowsCount ++;
                             break;
                         }
-                        //System.out.println(GREEN+"Moving from "+nextCow.first+" to "+nextCow.second+RESET);
-                        nextCow.taken = 2; // Switched to second cow
-                        kickCowId = cerealTakeId[nextCow.second] - 1;
-                        //System.out.println("Set the kicked cow to "+kickCow);
-                        boolean otherCowLostSpot = true;
-                        if(kickCowId < cowToWrite){
-                            //happyCows --;
+                        nextKickCowId = cerealTakeId[curCow.second] - 1;
+                        if(nextKickCowId < kickCowId){
+                            happyCowsCount --;
+                            curCow.taken = 0;
                             //happyCows --; System.out.println("121");
                             break;
                         }
-                        if(cerealTakeId[nextCow.second] == 0){
-                            otherCowLostSpot = false;
-                        }else{
-                            cows.get(kickCowId).taken = 0;
-                            //happyCows --; System.out.println("128");
-                        }
-                        cerealTakeId[nextCow.second] = cowToWrite + 1;
-                        if(!otherCowLostSpot){
-                            break;
-                        }
-                    } else if (nextCow.taken == 2) {
+                        //System.out.println(GREEN+"Moving from "+nextCow.first+" to "+nextCow.second+RESET);
+                        curCow.taken = 2; // Switched to second cow
+                        
+                        //System.out.println("Set the kicked cow to "+kickCow);
+                        
+                        cerealTakeId[curCow.second] = kickCowId + 1;
+                    } else if (curCow.taken == 2) {
                         //System.out.println(YELLOW+"Last resort, cow leaving "+nextCow.second+RESET);
-                        //happyCows--;
-                        nextCow.taken = 0; System.out.println("136");
+                        happyCowsCount--;
+                        curCow.taken = 0; //System.out.println("136");
                         //cerealTakeId[nextCo]
                         break; // Yay! End of the kicking chain
                     }
-                    if(cowToWrite == kickCowId){
-                        //System.out.println(RED+"Self kick "+kickCow+RESET);
-                        break; // No self kicking
-                    }
+                    
                 }
+                kickCowId = nextKickCowId;
             }else{
                 //happyCows ++;
             }
