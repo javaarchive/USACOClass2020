@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class triangles {
+    static final int MOD = 1000000000+9;
     public static void main(String[] args) throws IOException{
         String inputfile = "triangles.in";
         if(args.length > 0){
@@ -10,7 +11,7 @@ public class triangles {
         }
         BufferedReader f = new BufferedReader(new FileReader(inputfile));
         int N = Integer.parseInt(f.readLine());
-        PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("cereal.out")));
+        PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("triangles.out")));
         TreeMap<Integer, List<Point>> mapx = new TreeMap<>();
         TreeMap<Integer, List<Point>> mapy = new TreeMap<>();
         for(int i = 0; i < N; i ++){
@@ -58,6 +59,7 @@ public class triangles {
         for(int i = 1; i < xvals.length; i ++){
             bsum += xvals[i] - firstx;
         }
+        long ans = 0;
         for(int xval: xvals){
             //System.out.println(xval);
             
@@ -66,10 +68,15 @@ public class triangles {
             for(Point yp: mapx.get(xval)){
                 yaxissum += yp.y - firsty;
             }
-            System.out.println(yaxissum + " "+ bsum);
+            ans += (yaxissum % MOD) * (bsum % MOD);
+        //System.out.println(yaxissum + " "+ bsum);
             count ++;
             bsum -= xval - firstx;
+            ans = ans % MOD;
         }
+        System.out.println(ans);
+        pw.println(ans);
+        pw.close();
     }
 }
 class Point{
