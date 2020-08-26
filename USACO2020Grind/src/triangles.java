@@ -37,7 +37,11 @@ public class triangles {
                 @Override
                 public int compare(Point o1, Point o2) {
                     // TODO Auto-generated method stub
-                    return Integer.compare(o1.y, o2.y);
+                    int ycompare = Integer.compare(o1.y, o2.y);
+                    if(ycompare == 0){
+                        return Integer.compare(o1.x, o2.x);
+                    }
+                    return ycompare;
                 }
 
             });
@@ -56,6 +60,7 @@ public class triangles {
 
             });
         }
+        int ans = 0;
         for(int i = 0; i < N; i ++){
             Point p = points.get(i);
             int xdist = 0;
@@ -71,26 +76,39 @@ public class triangles {
                     }
                     return ycompare;
                 }
-
             });
             int ypos = Collections.binarySearch(mapy.get(p.y), p, new Comparator<Point>(){
                 @Override
                 public int compare(Point o1, Point o2) {
                     // TODO Auto-generated method stub
-                    return Integer.compare(o1.x, o2.x);
+                    int xcompare = Integer.compare(o1.x, o2.x);
+                    if(xcompare == 0){
+                        return Integer.compare(o1.y, o2.y);
+                    }
+                    return xcompare;
                 }
 
             });
-            List<Point> xpoints = mapx.get(xpos);
-            List<Point> ypoints = mapy.get(ypos);
+            List<Point> xpoints = mapx.get(p.x);
+            List<Point> ypoints = mapy.get(p.y);
+            System.out.println(xpos + " " + xpoints);
+            System.out.println(ypos + " " + ypoints);
             for(int j = xpos; j < xpoints.size(); j ++){
                 ydist += xpoints.get(j).y - p.y;
             }
             for(int j = ypos; j < ypoints.size(); j ++){
                 xdist += ypoints.get(j).x - p.x;
             }
+            for(int j = xpos; j >= 0; j --){
+                ydist += p.y - xpoints.get(j).y;
+            }
+            for(int j = ypos; j >= 0; j --){
+                xdist += p.x - ypoints.get(j).x;
+            }
             System.out.println(xdist + " "+ ydist);
+            ans += (ydist%MOD * xdist%MOD)%MOD;
         }
+        pw.println(ans);
             pw.close();
     }
 }
@@ -110,6 +128,11 @@ class Point implements Comparable<Point>{
             return Integer.compare(this.y ,o.y);
         }
         return xcompare;
+    }
+
+    @Override
+    public String toString() {
+        return "Point [ x=" + x + ", y=" + y + "]";
     }
 
 }
