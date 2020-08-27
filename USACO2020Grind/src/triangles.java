@@ -14,7 +14,6 @@ public class triangles {
         PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("triangles.out")));
         TreeMap<Integer, List<Point>> mapx = new TreeMap<>();
         TreeMap<Integer, List<Point>> mapy = new TreeMap<>();
-        List<Point> points = new ArrayList<>();
         for(int i = 0; i < N; i ++){
             StringTokenizer st = new StringTokenizer(f.readLine());
             int x = Integer.parseInt(st.nextToken());
@@ -28,20 +27,14 @@ public class triangles {
             Point p = new Point(x,y);
             mapx.get(x).add(p);
             mapy.get(y).add(p);
-            points.add(p);
         }
         // Sort all
         for(Integer key: mapx.keySet()){
             mapx.get(key).sort(new Comparator<Point>(){
-
                 @Override
                 public int compare(Point o1, Point o2) {
                     // TODO Auto-generated method stub
-                    int ycompare = Integer.compare(o1.y, o2.y);
-                    if(ycompare == 0){
-                        return Integer.compare(o1.x, o2.x);
-                    }
-                    return ycompare;
+                    return Integer.compare(o1.y, o2.y);
                 }
 
             });
@@ -51,88 +44,44 @@ public class triangles {
                 @Override
                 public int compare(Point o1, Point o2) {
                     // TODO Auto-generated method stub
-                    int xcompare = Integer.compare(o1.x, o2.x);
-                    if(xcompare == 0){
-                        return Integer.compare(o1.y, o2.y);
-                    }
-                    return xcompare;
+                    return Integer.compare(o1.x, o2.x);
                 }
 
             });
         }
-        int ans = 0;
-        for(int i = 0; i < N; i ++){
-            Point p = points.get(i);
-            int xdist = 0;
-            int ydist = 0;
-            int xpos = Collections.binarySearch(mapx.get(p.x), p,new Comparator<Point>(){
-
-                @Override
-                public int compare(Point o1, Point o2) {
-                    // TODO Auto-generated method stub
-                    int ycompare = Integer.compare(o1.y, o2.y);
-                    if(ycompare == 0){
-                        return Integer.compare(o1.x, o2.x);
-                    }
-                    return ycompare;
-                }
-            });
-            int ypos = Collections.binarySearch(mapy.get(p.y), p, new Comparator<Point>(){
-                @Override
-                public int compare(Point o1, Point o2) {
-                    // TODO Auto-generated method stub
-                    int xcompare = Integer.compare(o1.x, o2.x);
-                    if(xcompare == 0){
-                        return Integer.compare(o1.y, o2.y);
-                    }
-                    return xcompare;
-                }
-
-            });
-            List<Point> xpoints = mapx.get(p.x);
-            List<Point> ypoints = mapy.get(p.y);
-            System.out.println(xpos + " " + xpoints);
-            System.out.println(ypos + " " + ypoints);
-            for(int j = xpos; j < xpoints.size(); j ++){
-                ydist += xpoints.get(j).y - p.y;
-            }
-            for(int j = ypos; j < ypoints.size(); j ++){
-                xdist += ypoints.get(j).x - p.x;
-            }
-            for(int j = xpos; j >= 0; j --){
-                ydist += p.y - xpoints.get(j).y;
-            }
-            for(int j = ypos; j >= 0; j --){
-                xdist += p.x - ypoints.get(j).x;
-            }
-            System.out.println(xdist + " "+ ydist);
-            ans += (ydist%MOD * xdist%MOD)%MOD;
+        //int range = Integer.min(mapx.keySet().size(), mapy.keySet().size());
+        Integer[] xvals = mapx.keySet().toArray(new Integer[mapx.keySet().size()]);
+        int count = 0;
+        int firstx = xvals[0];
+        int bsum = 0;
+        for(int i = 1; i < xvals.length; i ++){
+            bsum += xvals[i] - firstx;
         }
+        long ans = 0;
+        for(int xval: xvals){
+            //System.out.println(xval);
+            
+            int yaxissum = 0;
+            int firsty = mapx.get(xval).get(0).y;
+            for(Point yp: mapx.get(xval)){
+                yaxissum += yp.y - firsty;
+            }
+            ans += (yaxissum % MOD) * (bsum % MOD);
+        //System.out.println(yaxissum + " "+ bsum);
+            count ++;
+            bsum -= xval - firstx;
+            ans = ans % MOD;
+        }
+        System.out.println(ans);
         pw.println(ans);
-            pw.close();
+        pw.close();
     }
 }
-class Point implements Comparable<Point>{
+class Point{
     int x, y;
     boolean disabled = false;
     public Point(int x, int y){
         this.x = x;
         this.y = y;
     }
-
-    @Override
-    public int compareTo(Point o) {
-        // TODO Auto-generated method stub
-        int xcompare = Integer.compare(this.x, o.x);
-        if(xcompare == 0){
-            return Integer.compare(this.y ,o.y);
-        }
-        return xcompare;
-    }
-
-    @Override
-    public String toString() {
-        return "Point [ x=" + x + ", y=" + y + "]";
-    }
-
 }
