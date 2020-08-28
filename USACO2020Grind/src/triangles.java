@@ -52,8 +52,9 @@ public class triangles {
 
             });
         }
+        Answer curLenY = new Answer(0);
         for(Integer x: mapx.keySet()){
-            Answer curLenY = new Answer(0);
+            
             List<TrianglePoint> tpx = mapx.get(x);
             TrianglePoint fp = tpx.get(0);
             //System.out.println(tpx);
@@ -67,9 +68,10 @@ public class triangles {
             }
             System.out.println(curLenY.getValue());
         }
+        Answer curLenX = new Answer(0);
         System.out.println("SEP");
         for(Integer y: mapy.keySet()){
-            Answer curLenX = new Answer(0);
+            
             List<TrianglePoint> tpy = mapy.get(y);
             TrianglePoint fp = tpy.get(0);
             for(int i = 0; i < tpy.size(); i ++){
