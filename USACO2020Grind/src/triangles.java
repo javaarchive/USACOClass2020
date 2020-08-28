@@ -94,9 +94,10 @@ public class triangles {
                 }
             }
             System.out.println(curLenX.getValue());
-            side1.addValue(curLenX);
+            side2.addValue(curLenX);
         }
-        pw.println(Answer.fromMultiply(side1.value, side2.value));
+        pw.println(Answer.fromMultiply(side1.value, side2.value).value);
+        pw.close();
         //Answer[] xLenSum, yLenSum;
 
     }
