@@ -53,20 +53,62 @@ public class triangles {
         List<Integer> xvals = new ArrayList<>(mapx.keySet());
         List<Integer> yvals = new ArrayList<>(mapy.keySet());
         // Layers of PS
-        List<int[]> ps1x = new ArrayList<>();
-        List<int[]> ps1y = new ArrayList<>();
-        List<int[]> ps2x = new ArrayList<>();
-        List<int[]> ps2y = new ArrayList<>();
+        List<int[]> ps1xf = new ArrayList<>();
+        List<int[]> ps1yf = new ArrayList<>();
+        List<int[]> ps2xf = new ArrayList<>();
+        List<int[]> ps2yf = new ArrayList<>();
+        List<int[]> ps1xb = new ArrayList<>();
+        List<int[]> ps1yb = new ArrayList<>();
+        List<int[]> ps2xb = new ArrayList<>();
+        List<int[]> ps2yb = new ArrayList<>();
         int sum = 0;
         for(int i = 0; i < xvals.size(); i ++){
             int xval = xvals.get(i);
             List<Point> ylist = mapx.get(xval);
-            int[] ps = new int[N];
+            int[] ps = new int[ylist.size()];
             sum = 0;
             int initialY = ylist.get(0).y;
             for(int j = 0 ; j < ylist.size(); j ++){
-                sum += ylist.get(j).y;
+                sum += ylist.get(j).y - initialY;
+                ps[j] = sum;
             }
+            ps1xf.add(ps);
+        }
+        for(int i = 0; i < xvals.size(); i ++){
+            int xval = xvals.get(i);
+            List<Point> ylist = mapx.get(xval);
+            int[] ps = new int[ylist.size()];
+            sum = 0;
+            int initialY = ylist.get(ylist.size() - 1).y;
+            for(int j = ylist.size() - 1 ; j >= 0; j --){
+                sum += initialY - ylist.get(j).y;
+                ps[ylist.size() - j - 1] = sum;
+            }
+            ps1xb.add(ps);
+        }
+        for(int i = 0; i < xvals.size(); i ++){
+            int xval = xvals.get(i);
+            List<Point> ylist = mapx.get(xval);
+            int[] ps = new int[ylist.size()];
+            sum = 0;
+            int initialY = ylist.get(0).y;
+            for(int j = 0 ; j < ylist.size(); j ++){
+                sum += ylist.get(j).y - initialY;
+                ps[j] = sum;
+            }
+            ps1xf.add(ps);
+        }
+        for(int i = 0; i < xvals.size(); i ++){
+            int xval = xvals.get(i);
+            List<Point> ylist = mapx.get(xval);
+            int[] ps = new int[ylist.size()];
+            sum = 0;
+            int initialY = ylist.get(ylist.size() - 1).y;
+            for(int j = ylist.size() - 1 ; j >= 0; j --){
+                sum += initialY - ylist.get(j).y;
+                ps[ylist.size() - j - 1] = sum;
+            }
+            ps1xb.add(ps);
         }
         pw.println(ans);
         pw.close();
