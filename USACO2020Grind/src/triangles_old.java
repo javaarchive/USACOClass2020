@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class triangles {
+public class triangles_old {
     static final int MOD = 1000000000+9;
     public static void main(String[] args) throws IOException{
         String inputfile = "triangles.in";
