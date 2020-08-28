@@ -49,37 +49,31 @@ public class triangles {
 
             });
         }
-        //int range = Integer.min(mapx.keySet().size(), mapy.keySet().size());
-        Integer[] xvals = mapx.keySet().toArray(new Integer[mapx.keySet().size()]);
-        int count = 0;
-        int firstx = xvals[0];
-        int bsum = 0;
-        for(int i = 1; i < xvals.length; i ++){
-            bsum += xvals[i] - firstx;
-        }
-        long ans = 0;
-        for(int xval: xvals){
-            //System.out.println(xval);
-            
-            int yaxissum = 0;
-            int firsty = mapx.get(xval).get(0).y;
-            for(Point yp: mapx.get(xval)){
-                yaxissum += yp.y - firsty;
+        int ans = 0;
+        List<Integer> xvals = new ArrayList<>(mapx.keySet());
+        List<Integer> yvals = new ArrayList<>(mapy.keySet());
+        // Layers of PS
+        List<int[]> ps1x = new ArrayList<>();
+        List<int[]> ps1y = new ArrayList<>();
+        List<int[]> ps2x = new ArrayList<>();
+        List<int[]> ps2y = new ArrayList<>();
+        int sum = 0;
+        for(int i = 0; i < xvals.size(); i ++){
+            int xval = xvals.get(i);
+            List<Point> ylist = mapx.get(xval);
+            int[] ps = new int[N];
+            sum = 0;
+            int initialY = ylist.get(0).y;
+            for(int j = 0 ; j < ylist.size(); j ++){
+                sum += ylist.get(j).y;
             }
-            ans += (yaxissum % MOD) * (bsum % MOD);
-        //System.out.println(yaxissum + " "+ bsum);
-            count ++;
-            bsum -= xval - firstx;
-            ans = ans % MOD;
         }
-        System.out.println(ans);
         pw.println(ans);
         pw.close();
     }
 }
 class Point{
     int x, y;
-    boolean disabled = false;
     public Point(int x, int y){
         this.x = x;
         this.y = y;
