@@ -100,27 +100,12 @@ public class triangles {
             System.out.println(curLenX.getValue());
         }
         
-        for(Integer x: mapx.keySet()){
-            List<TrianglePoint> tpX = mapx.get(x);
-            TrianglePoint firstPoint = tpX.get(0);
-            for(int i = 0; i < tpX.size(); i ++){
-                TrianglePoint tp1 = tpX.get(i);
-                System.out.println(x+" "+tp1.y+" "+(Answer.fromMultiply(tp1.x - firstPoint.x, Yans.get(tp1.y).value)));
-                ans.addValue((Answer.fromMultiply(tp1.x - firstPoint.x, Yans.get(tp1.y).value)));
-            }
+        for(TrianglePoint p: points){
+            ans.addValue(Answer.fromMultiply(Xans.get(p.x).value, Yans.get(p.y).value));
         }
-        for(Integer y: mapy.keySet()){
-            List<TrianglePoint> tpY = mapy.get(y);
-            TrianglePoint firstPoint = tpY.get(0);
-            for(int i = 0; i < tpY.size(); i ++){
-                TrianglePoint tp1 = tpY.get(i);
-                System.out.println(tp1.x+" "+y+" "+(Answer.fromMultiply(tp1.y - firstPoint.y, Xans.get(tp1.x).value)));
-                ans.addValue((Answer.fromMultiply(tp1.y - firstPoint.y, Xans.get(tp1.x).value)));
-            }
-        }
-        System.out.println("yans: "+Yans);
-        System.out.println("xans: "+Xans);
-        System.out.println(ans.value);
+       // System.out.println("yans: "+Yans);
+        //System.out.println("xans: "+Xans);
+        pw.println(ans.value);
         pw.close();
         //Answer[] xLenSum, yLenSum;
 
