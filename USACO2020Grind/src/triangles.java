@@ -14,12 +14,8 @@ public class triangles {
         // PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
         int N = Integer.parseInt(f.readLine());
         List<TrianglePoint> points = new ArrayList<>(N);
-        Set<TrianglePoint> allPoints = new TreeSet<TrianglePoint>();
         TreeMap<Integer, List<TrianglePoint>> mapx = new TreeMap<>();
         TreeMap<Integer, List<TrianglePoint>> mapy = new TreeMap<>();
-        Map<Integer, Answer> Xans = new TreeMap<>();
-        Map<Integer, Answer> Yans = new TreeMap<>();
-        Answer ans = new Answer(0);
         for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(f.readLine());
             int x = Integer.parseInt(st.nextToken());
@@ -32,7 +28,6 @@ public class triangles {
             }
             TrianglePoint p = new TrianglePoint(x, y);
             points.add(p);
-            allPoints.add(p);
             mapx.get(x).add(p);
             mapy.get(y).add(p);
         }
@@ -57,21 +52,9 @@ public class triangles {
 
             });
         }
-        points.sort(new Comparator<TrianglePoint>(){
-
-            @Override
-            public int compare(TrianglePoint o1, TrianglePoint o2) {
-                // TODO Auto-generated method stub
-                int xcompare = Integer.compare(o1.x, o2.x);
-                if(xcompare == 0){
-                    return Integer.compare(o1.y, o2.y);
-                }
-                return 0;
-            }
-
-        });
-        for (TrianglePoint p2: points) {
-            int x = p2.x;
+        Answer side1 = new Answer(0);
+        Answer side2 = new Answer(0);
+        for (Integer x : mapx.keySet()) {
             Answer curLenY = new Answer(0);
             List<TrianglePoint> tpx = mapx.get(x);
             TrianglePoint fp = tpx.get(0);
@@ -89,27 +72,12 @@ public class triangles {
                 // System.out.println("C: "+curLenY.getValue()+" "+(tp.y - fp.y)+" "+(2 * i -
                 // tpx.size()));
             }
-            if(!Xans.keySet().contains(x)){
-                Xans.put(x, new Answer(0));
-            }
-            Xans.get(x).addValue(curLenY);
             System.out.println(curLenY.getValue());
+            side1.addValue(curLenY);
         }
         System.out.println("SEP");
-        points.sort(new Comparator<TrianglePoint>(){
-            @Override
-            public int compare(TrianglePoint o1, TrianglePoint o2) {
-                // TODO Auto-generated method stub
-                int ycompare = Integer.compare(o1.y, o2.y);
-                if(ycompare == 0){
-                    return Integer.compare(o1.x, o2.x);
-                }
-                return 0;
-            }
-
-        });
-        for (TrianglePoint p2: points) {
-            int y = p2.y;
+        
+        for (Integer y : mapy.keySet()) {
             Answer curLenX = new Answer(0);
             List<TrianglePoint> tpy = mapy.get(y);
             TrianglePoint fp = tpy.get(0);
@@ -125,22 +93,10 @@ public class triangles {
                     //System.out.println((tp.x - tp2.x)+" "+(2 * i - tpy.size()));
                 }
             }
-            if(!Yans.keySet().contains(y)){
-                Yans.put(y, new Answer(0));
-            }
-            Yans.get(y).addValue(curLenX);
             System.out.println(curLenX.getValue());
+            side2.addValue(curLenX);
         }
-        
-        for(TrianglePoint p: points){
-            System.out.println(p.x+" "+p.y+" + "+Answer.fromMultiply(Xans.get(p.x).value, Yans.get(p.y).value).value);
-            ans.addValue(Answer.fromMultiply(Xans.get(p.x).value, Yans.get(p.y).value));
-            //System.out.println("Ans so far: "+ans);
-        }
-        System.out.println("yans: "+Yans);
-        System.out.println("xans: "+Xans);
-        System.out.println(ans.value);
-        pw.println(ans.value);
+        pw.println(Answer.fromMultiply(side1.value, side2.value).value);
         pw.close();
         //Answer[] xLenSum, yLenSum;
 
@@ -174,14 +130,9 @@ class Answer {
     static Answer fromMultiply(int a, int b) {
         return fromMultiply((long) a, (long) b);
     }
-
-    @Override
-    public String toString() {
-        return "Answer [value=" + value + "]";
-    }
 }
 
-class TrianglePoint implements Comparable<TrianglePoint>{
+class TrianglePoint {
     int x, y;
 
     public TrianglePoint(int x, int y) {
@@ -193,39 +144,4 @@ class TrianglePoint implements Comparable<TrianglePoint>{
     public String toString() {
         return "(" + x + "," + y + ")";
     }
-
-    @Override
-    public int compareTo(TrianglePoint o) {
-        // TODO Auto-generated method stub
-        int comparex = Integer.compare(this.x, o.x);
-        if(comparex == 0){
-            return Integer.compare(this.y, o.y);
-        }
-        return comparex;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + x;
-        result = prime * result + y;
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (!(obj instanceof TrianglePoint))
-            return false;
-        TrianglePoint other = (TrianglePoint) obj;
-        if (x != other.x)
-            return false;
-        if (y != other.y)
-            return false;
-        return true;
-    }
-
-    
 }
