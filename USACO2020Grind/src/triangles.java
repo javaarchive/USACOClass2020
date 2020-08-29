@@ -104,7 +104,7 @@ public class triangles {
 }
 
 class Answer {
-    static long MOD = 1000000000 + 9;
+    static long MOD = 1000000000 + 7;
     long value;
 
     public Answer(long value) {
