@@ -57,7 +57,21 @@ public class triangles {
 
             });
         }
-        for (Integer x : mapx.keySet()) {
+        points.sort(new Comparator<TrianglePoint>(){
+
+            @Override
+            public int compare(TrianglePoint o1, TrianglePoint o2) {
+                // TODO Auto-generated method stub
+                int xcompare = Integer.compare(o1.x, o2.x);
+                if(xcompare == 0){
+                    return Integer.compare(o1.y, o2.y);
+                }
+                return 0;
+            }
+
+        });
+        for (TrianglePoint p2: points) {
+            int x = p2.x;
             Answer curLenY = new Answer(0);
             List<TrianglePoint> tpx = mapx.get(x);
             TrianglePoint fp = tpx.get(0);
@@ -75,12 +89,27 @@ public class triangles {
                 // System.out.println("C: "+curLenY.getValue()+" "+(tp.y - fp.y)+" "+(2 * i -
                 // tpx.size()));
             }
-            Xans.put(x, curLenY);
+            if(!Xans.keySet().contains(x)){
+                Xans.put(x, new Answer(0));
+            }
+            Xans.get(x).addValue(curLenY);
             System.out.println(curLenY.getValue());
         }
         System.out.println("SEP");
-        
-        for (Integer y : mapy.keySet()) {
+        points.sort(new Comparator<TrianglePoint>(){
+            @Override
+            public int compare(TrianglePoint o1, TrianglePoint o2) {
+                // TODO Auto-generated method stub
+                int ycompare = Integer.compare(o1.y, o2.y);
+                if(ycompare == 0){
+                    return Integer.compare(o1.x, o2.x);
+                }
+                return 0;
+            }
+
+        });
+        for (TrianglePoint p2: points) {
+            int y = p2.y;
             Answer curLenX = new Answer(0);
             List<TrianglePoint> tpy = mapy.get(y);
             TrianglePoint fp = tpy.get(0);
@@ -96,15 +125,21 @@ public class triangles {
                     //System.out.println((tp.x - tp2.x)+" "+(2 * i - tpy.size()));
                 }
             }
-            Yans.put(y, curLenX);
+            if(!Yans.keySet().contains(y)){
+                Yans.put(y, new Answer(0));
+            }
+            Yans.get(y).addValue(curLenX);
             System.out.println(curLenX.getValue());
         }
         
         for(TrianglePoint p: points){
+            System.out.println(p.x+" "+p.y+" + "+Answer.fromMultiply(Xans.get(p.x).value, Yans.get(p.y).value).value);
             ans.addValue(Answer.fromMultiply(Xans.get(p.x).value, Yans.get(p.y).value));
+            //System.out.println("Ans so far: "+ans);
         }
-       // System.out.println("yans: "+Yans);
-        //System.out.println("xans: "+Xans);
+        System.out.println("yans: "+Yans);
+        System.out.println("xans: "+Xans);
+        System.out.println(ans.value);
         pw.println(ans.value);
         pw.close();
         //Answer[] xLenSum, yLenSum;
