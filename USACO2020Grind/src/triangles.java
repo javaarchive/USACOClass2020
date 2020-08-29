@@ -14,8 +14,12 @@ public class triangles {
         // PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
         int N = Integer.parseInt(f.readLine());
         List<TrianglePoint> points = new ArrayList<>(N);
+        Set<TrianglePoint> allPoints = new TreeSet<TrianglePoint>();
         TreeMap<Integer, List<TrianglePoint>> mapx = new TreeMap<>();
         TreeMap<Integer, List<TrianglePoint>> mapy = new TreeMap<>();
+        Map<Integer, Answer> Xans = new TreeMap<>();
+        Map<Integer, Answer> Yans = new TreeMap<>();
+        Answer ans = new Answer(0);
         for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(f.readLine());
             int x = Integer.parseInt(st.nextToken());
@@ -28,6 +32,7 @@ public class triangles {
             }
             TrianglePoint p = new TrianglePoint(x, y);
             points.add(p);
+            allPoints.add(p);
             mapx.get(x).add(p);
             mapy.get(y).add(p);
         }
@@ -52,8 +57,6 @@ public class triangles {
 
             });
         }
-        Answer side1 = new Answer(0);
-        Answer side2 = new Answer(0);
         for (Integer x : mapx.keySet()) {
             Answer curLenY = new Answer(0);
             List<TrianglePoint> tpx = mapx.get(x);
@@ -72,8 +75,8 @@ public class triangles {
                 // System.out.println("C: "+curLenY.getValue()+" "+(tp.y - fp.y)+" "+(2 * i -
                 // tpx.size()));
             }
+            Xans.put(x, curLenY);
             System.out.println(curLenY.getValue());
-            side1.addValue(curLenY);
         }
         System.out.println("SEP");
         
@@ -93,10 +96,31 @@ public class triangles {
                     //System.out.println((tp.x - tp2.x)+" "+(2 * i - tpy.size()));
                 }
             }
+            Yans.put(y, curLenX);
             System.out.println(curLenX.getValue());
-            side2.addValue(curLenX);
         }
-        pw.println(Answer.fromMultiply(side1.value, side2.value).value);
+        
+        for(Integer x: mapx.keySet()){
+            List<TrianglePoint> tpX = mapx.get(x);
+            TrianglePoint firstPoint = tpX.get(0);
+            for(int i = 0; i < tpX.size(); i ++){
+                TrianglePoint tp1 = tpX.get(i);
+                System.out.println(x+" "+tp1.y+" "+(Answer.fromMultiply(tp1.x - firstPoint.x, Yans.get(tp1.y).value)));
+                ans.addValue((Answer.fromMultiply(tp1.x - firstPoint.x, Yans.get(tp1.y).value)));
+            }
+        }
+        for(Integer y: mapy.keySet()){
+            List<TrianglePoint> tpY = mapy.get(y);
+            TrianglePoint firstPoint = tpY.get(0);
+            for(int i = 0; i < tpY.size(); i ++){
+                TrianglePoint tp1 = tpY.get(i);
+                System.out.println(tp1.x+" "+y+" "+(Answer.fromMultiply(tp1.y - firstPoint.y, Xans.get(tp1.x).value)));
+                ans.addValue((Answer.fromMultiply(tp1.y - firstPoint.y, Xans.get(tp1.x).value)));
+            }
+        }
+        System.out.println("yans: "+Yans);
+        System.out.println("xans: "+Xans);
+        System.out.println(ans.value);
         pw.close();
         //Answer[] xLenSum, yLenSum;
 
@@ -130,9 +154,14 @@ class Answer {
     static Answer fromMultiply(int a, int b) {
         return fromMultiply((long) a, (long) b);
     }
+
+    @Override
+    public String toString() {
+        return "Answer [value=" + value + "]";
+    }
 }
 
-class TrianglePoint {
+class TrianglePoint implements Comparable<TrianglePoint>{
     int x, y;
 
     public TrianglePoint(int x, int y) {
@@ -144,4 +173,39 @@ class TrianglePoint {
     public String toString() {
         return "(" + x + "," + y + ")";
     }
+
+    @Override
+    public int compareTo(TrianglePoint o) {
+        // TODO Auto-generated method stub
+        int comparex = Integer.compare(this.x, o.x);
+        if(comparex == 0){
+            return Integer.compare(this.y, o.y);
+        }
+        return comparex;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + x;
+        result = prime * result + y;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!(obj instanceof TrianglePoint))
+            return false;
+        TrianglePoint other = (TrianglePoint) obj;
+        if (x != other.x)
+            return false;
+        if (y != other.y)
+            return false;
+        return true;
+    }
+
+    
 }
