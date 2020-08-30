@@ -73,13 +73,13 @@ public class triangles {
                     curLenY.addValue(Answer.fromMultiply(tp.y - tp2.y, 2 * (i) - tpx.size()));
                 }
                 Xans[tp.idx] = curLenY.clone();
-                System.out.println("C: "+curLenY.getValue()+" "+(tp.y - fp.y)+" "+(2 * i - tpx.size()));
+                //System.out.println("C: "+curLenY.getValue()+" "+(tp.y - fp.y)+" "+(2 * i - tpx.size()));
             }
                     
-            System.out.println(curLenY.getValue());
+            //System.out.println(curLenY.getValue());
             //side1.addValue(curLenY);
         }
-        System.out.println("SEP");
+        //System.out.println("SEP");
         
         for (Integer y : mapy.keySet()) {
             Answer curLenX = new Answer(0);
@@ -94,21 +94,19 @@ public class triangles {
                 if (i > 0) {
                     TrianglePoint tp2 = tpy.get(i - 1);
                     curLenX.addValue(Answer.fromMultiply(tp.x - tp2.x, 2 * (i) - tpy.size()));
-                    System.out.println((tp.x - tp2.x)+" "+(2 * i - tpy.size()));
+                    //System.out.println((tp.x - tp2.x)+" "+(2 * i - tpy.size()));
                 }
                 Yans[tp.idx] = curLenX.clone();
             }
 
-            System.out.println(curLenX.getValue());
+            //System.out.println(curLenX.getValue());
             //side2.addValue(curLenX);
         }
         //pw.println(Answer.fromMultiply(side1.value, side2.value).value);
-        System.out.println("yans: "+Arrays.toString(Yans));
-        System.out.println("xans: "+Arrays.toString(Xans));
-        for(TrianglePoint p: points){
-            //System.out.println(p.x+" "+p.y+" + "+Answer.fromMultiply(Xans.get(p.x).value, Yans.get(p.y).value).value);
-            //ans.addValue(Answer.fromMultiply(Xans.get(p.x).value, Yans.get(p.y).value));
-            //System.out.println("Ans so far: "+ans);
+        //System.out.println("yans: "+Arrays.toString(Yans));
+        //System.out.println("xans: "+Arrays.toString(Xans));
+        for(int i = 0; i < N; i ++){
+            ans.addValue(Answer.fromMultiply(Xans[i].value, Yans[i].value));    
         }
         pw.println(ans.value);
         pw.close();
