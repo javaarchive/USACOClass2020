@@ -16,6 +16,9 @@ public class triangles {
         List<TrianglePoint> points = new ArrayList<>(N);
         TreeMap<Integer, List<TrianglePoint>> mapx = new TreeMap<>();
         TreeMap<Integer, List<TrianglePoint>> mapy = new TreeMap<>();
+        Map<Integer, Answer> Xans = new TreeMap<>();
+        Map<Integer, Answer> Yans = new TreeMap<>();
+        Answer ans = new Answer(0);
         for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(f.readLine());
             int x = Integer.parseInt(st.nextToken());
@@ -52,8 +55,8 @@ public class triangles {
 
             });
         }
-        Answer side1 = new Answer(0);
-        Answer side2 = new Answer(0);
+        //Answer side1 = new Answer(0);
+        //Answer side2 = new Answer(0);
         for (Integer x : mapx.keySet()) {
             Answer curLenY = new Answer(0);
             List<TrianglePoint> tpx = mapx.get(x);
@@ -72,8 +75,12 @@ public class triangles {
                 // System.out.println("C: "+curLenY.getValue()+" "+(tp.y - fp.y)+" "+(2 * i -
                 // tpx.size()));
             }
+            if(!Xans.keySet().contains(x)){
+                Xans.put(x, new Answer(0));
+            }
+            Xans.get(x).addValue(curLenY);
             System.out.println(curLenY.getValue());
-            side1.addValue(curLenY);
+            //side1.addValue(curLenY);
         }
         System.out.println("SEP");
         
@@ -93,10 +100,20 @@ public class triangles {
                     //System.out.println((tp.x - tp2.x)+" "+(2 * i - tpy.size()));
                 }
             }
+            if(!Yans.keySet().contains(y)){
+                Yans.put(y, new Answer(0));
+            }
+            Yans.get(y).addValue(curLenX);
             System.out.println(curLenX.getValue());
-            side2.addValue(curLenX);
+            //side2.addValue(curLenX);
         }
-        pw.println(Answer.fromMultiply(side1.value, side2.value).value);
+        //pw.println(Answer.fromMultiply(side1.value, side2.value).value);
+        for(TrianglePoint p: points){
+            System.out.println(p.x+" "+p.y+" + "+Answer.fromMultiply(Xans.get(p.x).value, Yans.get(p.y).value).value);
+            ans.addValue(Answer.fromMultiply(Xans.get(p.x).value, Yans.get(p.y).value));
+            //System.out.println("Ans so far: "+ans);
+        }
+        pw.println(ans.value);
         pw.close();
         //Answer[] xLenSum, yLenSum;
 
@@ -124,7 +141,7 @@ class Answer {
     }
 
     static Answer fromMultiply(long a, long b) {
-        return new Answer((a % MOD) * (b % MOD));
+        return new Answer(a * b);
     }
 
     static Answer fromMultiply(int a, int b) {
