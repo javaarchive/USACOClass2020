@@ -16,8 +16,8 @@ public class triangles {
         List<TrianglePoint> points = new ArrayList<>(N);
         TreeMap<Integer, List<TrianglePoint>> mapx = new TreeMap<>();
         TreeMap<Integer, List<TrianglePoint>> mapy = new TreeMap<>();
-        Map<Integer, Answer> Xans = new TreeMap<>();
-        Map<Integer, Answer> Yans = new TreeMap<>();
+        Answer[] Xans = new Answer[N];
+        Answer[] Yans = new Answer[N];
         Answer ans = new Answer(0);
         for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(f.readLine());
@@ -29,7 +29,7 @@ public class triangles {
             if (!mapy.keySet().contains(y)) {
                 mapy.put(y, new ArrayList<>());
             }
-            TrianglePoint p = new TrianglePoint(x, y);
+            TrianglePoint p = new TrianglePoint(x, y, i);
             points.add(p);
             mapx.get(x).add(p);
             mapy.get(y).add(p);
@@ -72,13 +72,10 @@ public class triangles {
                     //System.out.println("")
                     curLenY.addValue(Answer.fromMultiply(tp.y - tp2.y, 2 * (i) - tpx.size()));
                 }
-                // System.out.println("C: "+curLenY.getValue()+" "+(tp.y - fp.y)+" "+(2 * i -
-                // tpx.size()));
+                Xans[tp.idx] = curLenY.clone();
+                System.out.println("C: "+curLenY.getValue()+" "+(tp.y - fp.y)+" "+(2 * i - tpx.size()));
             }
-            if(!Xans.keySet().contains(x)){
-                Xans.put(x, new Answer(0));
-            }
-            Xans.get(x).addValue(curLenY);
+                    
             System.out.println(curLenY.getValue());
             //side1.addValue(curLenY);
         }
@@ -91,26 +88,26 @@ public class triangles {
             for (int i = 0; i < tpy.size(); i++) {
                 curLenX.addValue(tpy.get(i).x - fp.x);
             }
-            System.out.println("Initial value for y = "+y+" is "+curLenX.getValue());
+            // System.out.println("Initial value for y = "+y+" is "+curLenX.getValue());
             for (int i = 0; i < tpy.size(); i++) {
                 TrianglePoint tp = tpy.get(i);
                 if (i > 0) {
                     TrianglePoint tp2 = tpy.get(i - 1);
                     curLenX.addValue(Answer.fromMultiply(tp.x - tp2.x, 2 * (i) - tpy.size()));
-                    //System.out.println((tp.x - tp2.x)+" "+(2 * i - tpy.size()));
+                    System.out.println((tp.x - tp2.x)+" "+(2 * i - tpy.size()));
                 }
+                Yans[tp.idx] = curLenX.clone();
             }
-            if(!Yans.keySet().contains(y)){
-                Yans.put(y, new Answer(0));
-            }
-            Yans.get(y).addValue(curLenX);
+
             System.out.println(curLenX.getValue());
             //side2.addValue(curLenX);
         }
         //pw.println(Answer.fromMultiply(side1.value, side2.value).value);
+        System.out.println("yans: "+Arrays.toString(Yans));
+        System.out.println("xans: "+Arrays.toString(Xans));
         for(TrianglePoint p: points){
-            System.out.println(p.x+" "+p.y+" + "+Answer.fromMultiply(Xans.get(p.x).value, Yans.get(p.y).value).value);
-            ans.addValue(Answer.fromMultiply(Xans.get(p.x).value, Yans.get(p.y).value));
+            //System.out.println(p.x+" "+p.y+" + "+Answer.fromMultiply(Xans.get(p.x).value, Yans.get(p.y).value).value);
+            //ans.addValue(Answer.fromMultiply(Xans.get(p.x).value, Yans.get(p.y).value));
             //System.out.println("Ans so far: "+ans);
         }
         pw.println(ans.value);
@@ -123,7 +120,7 @@ public class triangles {
 class Answer {
     static long MOD = 1000000000 + 7;
     long value;
-
+    
     public Answer(long value) {
         this.value = value % MOD;
     }
@@ -147,14 +144,30 @@ class Answer {
     static Answer fromMultiply(int a, int b) {
         return fromMultiply((long) a, (long) b);
     }
+
+    public Answer clone(){
+        return new Answer(this.value);
+    }
+
+    @Override
+    public String toString() {
+        return "Answer(" + value + ")";
+    }
 }
 
 class TrianglePoint {
-    int x, y;
+    int x, y,idx;
 
     public TrianglePoint(int x, int y) {
         this.x = x;
         this.y = y;
+        this.idx = -1;
+    }
+
+    public TrianglePoint(int x, int y, int idx) {
+        this.x = x;
+        this.y = y;
+        this.idx = idx;
     }
 
     @Override
