@@ -5,20 +5,32 @@ public class loan {
 	private static long N;
 	private static long K;
 	private static long M;
-	public static long test(long X){
+	public static boolean test(long X){
+        System.out.println("test("+X+")");
         int iters = 0;
         long Y = N/X;
         long G = 0;
-        while(Y > M){
-            long L = ((N/Y - X) + 1L; // Magic Formula
+        while(true){
+            long remainingMilk = N - G;
+            if(Y < M){
+                Y = M;
+                break;
+            }
+            long L = (remainingMilk/Y - X) + 1L;
             iters += L;
+            
             G += L * Y;
-            Y = (N - G)/X;
+            if(iters >= K || G >= N){
+                break;
+            }
+            Y = remainingMilk/X;
         }
         //System.out.println("N: "+N+" "+G);
-        iters += (N-G)/M;
+        if(G < N){
+            iters += (N-G)/M;
+        }
         System.out.println("X: "+X+" iters: "+iters);
-        return iters;
+        return (N <= G);
 	}
 	public static void main(String[] args) throws IOException{
 		BufferedReader f = new BufferedReader(new FileReader("loan.in"));
@@ -34,28 +46,20 @@ public class loan {
 		long lower = 0L;
 		long mid = -1L;
 		while(true) {
-			if(upper - lower <= 1) {
-				if(test(lower) > K) {
-					if(test(upper) > K) {
-						pw.println(upper);
-					}else {
-						//pw.println("Unexpected case");
-					}
-				}else {
-					
-					pw.println(lower);
-				}
-				break;
-			}
+			if((upper - lower) <= 1){
+                pw.println(mid);
+                //pw.close();
+                break;
+            }
 			mid = (long) (upper + lower)/2;
-			long total = test(mid);
-			if(total > K) {
+			if(test(mid)) {
 				lower = mid;
 			}else {
 				upper = mid;
-			}
+            }
+            System.out.println(lower + " --- " + mid + " --- "+ upper);
 		}
-		//System.out.println(lower + " --- " + mid + " --- "+ upper);
+		System.out.println(lower + " --- " + mid + " --- "+ upper);
 		pw.close();
 	}
 
