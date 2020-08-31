@@ -39,7 +39,8 @@ public class loan {
     }
 
     public static void main(String[] args) throws IOException {
-        BufferedReader f = new BufferedReader(new FileReader((args.length == 0) ? "loan.in": args[0]));
+        // (args.length == 0) ? "loan.in": args[0]
+        BufferedReader f = new BufferedReader(new FileReader("loan.in"));
         StringTokenizer st = new StringTokenizer(f.readLine());
         N = Long.parseLong(st.nextToken());
         K = Long.parseLong(st.nextToken());
