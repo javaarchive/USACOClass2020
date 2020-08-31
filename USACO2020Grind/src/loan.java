@@ -5,12 +5,12 @@ public class loan {
 	private static long N;
 	private static long K;
 	private static long M;
-	public static long test(long X) {
+	public static long test(long X){
         int iters = 0;
         long Y = N/X;
         long G = 0;
         while(Y > M){
-            long L = ((long) Math.floor((N/Y) - X)) + 1L; // Magic Formula
+            long L = ((N/Y - X) + 1L; // Magic Formula
             iters += L;
             G += L * Y;
             Y = (N - G)/X;
@@ -28,8 +28,9 @@ public class loan {
 		M = Long.parseLong(st.nextToken());
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("loan.out")));
 		f.close();
-		//long upper = N;
-		long upper = 1000000000000L; // Stress test
+        //long upper = N;
+        //            123456789
+		long upper = 1000000000000L; 
 		long lower = 0L;
 		long mid = -1L;
 		while(true) {
@@ -49,9 +50,9 @@ public class loan {
 			mid = (long) (upper + lower)/2;
 			long total = test(mid);
 			if(total > K) {
-				upper = mid;
-			}else {
 				lower = mid;
+			}else {
+				upper = mid;
 			}
 		}
 		//System.out.println(lower + " --- " + mid + " --- "+ upper);
