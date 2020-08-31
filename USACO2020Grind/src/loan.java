@@ -7,19 +7,24 @@ public class loan {
     private static long M;
 
     public static boolean test(long X) {
-        int days = 0;
+        long days = 0;
         long Y = N / X;
         long G = 0;
         while (true) {
             long remainingMilk = N - G;
             if (Y < M) {
                 Y = M;
-                days += Math.ceil((double) (N - G) / M);
-                System.out.println("A: test("+X+") = "+(days <= K));
-                return (days <= K);
+                G += M * (K - days);
+                //days += Math.ceil((double) remainingMilk / M);
+                //System.out.println("A: test("+X+") = "+(days <= K));
+                //return (days <= K);
+                break;
             }
             long L = (remainingMilk / Y - X) + 1L;
             days += L;
+            if(days > K){
+                L = L - (days - K);
+            }
             G += L * Y;
             if (days >= K || G >= N) {
                 break;
@@ -34,7 +39,7 @@ public class loan {
     }
 
     public static void main(String[] args) throws IOException {
-        BufferedReader f = new BufferedReader(new FileReader("loan.in"));
+        BufferedReader f = new BufferedReader(new FileReader((args.length == 0) ? "loan.in": args[0]));
         StringTokenizer st = new StringTokenizer(f.readLine());
         N = Long.parseLong(st.nextToken());
         K = Long.parseLong(st.nextToken());
