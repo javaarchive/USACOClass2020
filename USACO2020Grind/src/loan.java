@@ -2,65 +2,67 @@ import java.io.*;
 import java.util.*;
 
 public class loan {
-	private static long N;
-	private static long K;
-	private static long M;
-	public static boolean test(long X){
-        System.out.println("test("+X+")");
-        int iters = 0;
-        long Y = N/X;
+    private static long N;
+    private static long K;
+    private static long M;
+
+    public static boolean test(long X) {
+        int days = 0;
+        long Y = N / X;
         long G = 0;
-        while(true){
+        while (true) {
             long remainingMilk = N - G;
-            if(Y < M){
+            if (Y < M) {
                 Y = M;
-                break;
+                days += Math.ceil((double) (N - G) / M);
+                System.out.println("A: test("+X+") = "+(days <= K));
+                return (days <= K);
             }
-            long L = (remainingMilk/Y - X) + 1L;
-            iters += L;
-            
+            long L = (remainingMilk / Y - X) + 1L;
+            days += L;
             G += L * Y;
-            if(iters >= K || G >= N){
+            if (days >= K || G >= N) {
                 break;
             }
-            Y = remainingMilk/X;
+            Y = remainingMilk / X;
         }
-        //System.out.println("N: "+N+" "+G);
-        if(G < N){
-            iters += (N-G)/M;
-        }
-        System.out.println("X: "+X+" iters: "+iters);
+        // System.out.println("N: "+N+" "+G);
+
+        System.out.println("X: " + X + " iters: " + days);
+        System.out.println("B: test("+X+") = "+(N <= G));
         return (N <= G);
-	}
-	public static void main(String[] args) throws IOException{
-		BufferedReader f = new BufferedReader(new FileReader("loan.in"));
-		StringTokenizer st = new StringTokenizer(f.readLine());
-		N = Long.parseLong(st.nextToken());
-		K = Long.parseLong(st.nextToken());
-		M = Long.parseLong(st.nextToken());
-		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("loan.out")));
-		f.close();
-        //long upper = N;
-        //            123456789
-		long upper = 1000000000000L; 
-		long lower = 0L;
-		long mid = -1L;
-		while(true) {
-			if((upper - lower) <= 1){
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader f = new BufferedReader(new FileReader("loan.in"));
+        StringTokenizer st = new StringTokenizer(f.readLine());
+        N = Long.parseLong(st.nextToken());
+        K = Long.parseLong(st.nextToken());
+        M = Long.parseLong(st.nextToken());
+        PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("loan.out")));
+        f.close();
+        // long upper = N;
+        // 123456789
+        long upper = N;
+        long lower = 0L;
+        long mid = -1L;
+        while (true) {
+            mid = (long) (upper + lower + 1) / 2;
+            if ((upper - lower) <= 0) {
                 pw.println(mid);
-                //pw.close();
+                // pw.close();
                 break;
             }
-			mid = (long) (upper + lower)/2;
-			if(test(mid)) {
-				lower = mid;
-			}else {
-				upper = mid;
+           
+            if (test(mid)) {
+                lower = mid;
+            } else {
+                upper = mid - 1;
             }
-            System.out.println(lower + " --- " + mid + " --- "+ upper);
-		}
-		System.out.println(lower + " --- " + mid + " --- "+ upper);
-		pw.close();
-	}
+            System.out.println(lower + " --- " + mid + " --- " + upper);
+        }
+        System.out.println(lower + " --- " + mid + " --- " + upper);
+        pw.close();
+    }
 
 }
