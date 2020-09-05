@@ -63,15 +63,16 @@ public class hps {
             int upplace = 0;
             int bestPos = -1;
             bestSum = 0;
-            for(int j = 0; j < N; j ++){
+            for(int j = 1; j < N; j ++){
                 if(upper < j){
                     lower = upper;
                     upper = dividers[++upplace];
                 }
-                //System.out.println(lower+" "+upper);
+                System.out.println(lower+" "+upper+" "+j);
                 //System.out.println("Right part " + best(sub(ps[upper], ps[j])));
                 //System.out.println("Left part " + best(sub(ps[j], ps[lower])));
-                int sum = best(sub(ps[N],ps[upper])) + best(sub(ps[upper + 1], ps[j])) + best(sub(ps[j + 1], ps[lower])) +  best(sub(ps[lower + 1], ps[0]));
+                System.out.println(best(sub(ps[N],ps[upper])) + " " + best(sub(ps[upper], ps[j])) + " " + best(sub(ps[j], ps[lower])) + " " + best(sub(ps[lower], ps[0])));
+                int sum = best(sub(ps[N],ps[upper - 1])) + best(sub(ps[upper], ps[j - 1])) + best(sub(ps[j], ps[lower + 1])) +  best(sub(ps[lower], ps[0]));
                 System.out.println("Sum "+sum);
                 if(sum > bestSum){
                     if(divPlaces.contains(j)){
