@@ -83,7 +83,7 @@ public class hps {
                 }
             }
             System.out.println("Added divider at "+bestPos);
-            divPlaces.add(bestPos);
+            divPlaces.add(bestPos + 1);
          }
          pw.println(bestSum);
          pw.close();
