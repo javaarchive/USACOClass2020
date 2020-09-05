@@ -78,7 +78,7 @@ public class hps {
                 //System.out.println("Sum "+sum);
                 if(sum > bestSum){
                     if(divPlaces.contains(j)){
-                        //continue;
+                        continue;
                     }
                     bestPos = j;
                     bestSum = sum;
