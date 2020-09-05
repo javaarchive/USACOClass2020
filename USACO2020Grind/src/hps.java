@@ -29,9 +29,9 @@ public class hps {
             }
             moves[i] = num;
         }
-        int[][][] states = new int[N][K][3];
-        for(int i = 0; i < N; i ++){
-            for(int j = 0; j < K; j ++){
+        int[][][] states = new int[N + 1][K + 1][3];
+        for(int i = 0; i <= N; i ++){
+            for(int j = 0; j <= K; j ++){
                 for(int k = 0; k < 3; k ++){
                     if(i == 0){
                         states[i][j][k] = 0;
@@ -39,15 +39,15 @@ public class hps {
                         if(j == 0){
                             states[i][j][k] = states[i - 1][j][k] + ((moves[i - 1] == k)?1:0);
                         }else{
-                            int a = (j + 1) % 3;
-                            int b = (j + 2) % 3;
-                            states[i][j][k] = Integer.max(states[i - 1][j - 1][a], states[i - 1][j - 1][b]) + ((moves[i - 1] == k)?1:0);
+                            int a = (k + 1) % 3;
+                            int b = (k + 2) % 3;
+                            states[i][j][k] = Integer.max(states[i - 1][j][k], Integer.max(states[i - 1][j - 1][a], states[i - 1][j - 1][b])) + ((moves[i - 1] == k)?1:0);
                         }
                     }
                 }
             }
         }
-        pw.println(Integer.max(states[N - 1][K - 1][0], Integer.max(states[N - 1][K - 1][1], states[N - 1][K - 1][2])));
+        pw.println(Integer.max(states[N][K][0], Integer.max(states[N][K][1], states[N][K][2])));
         pw.close();
     }
 }
