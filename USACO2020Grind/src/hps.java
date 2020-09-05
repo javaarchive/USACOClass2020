@@ -71,7 +71,7 @@ public class hps {
                 //System.out.println(lower+" "+upper);
                 //System.out.println("Right part " + best(sub(ps[upper], ps[j])));
                 //System.out.println("Left part " + best(sub(ps[j], ps[lower])));
-                int sum = best(sub(ps[N],ps[upper + 1])) + best(sub(ps[upper + 1], ps[j])) + best(sub(ps[j + 1], ps[lower])) +  best(sub(ps[lower + 1], ps[0]));
+                int sum = best(sub(ps[N],ps[upper])) + best(sub(ps[upper + 1], ps[j])) + best(sub(ps[j + 1], ps[lower])) +  best(sub(ps[lower + 1], ps[0]));
                 System.out.println("Sum "+sum);
                 if(sum > bestSum){
                     if(divPlaces.contains(j)){
