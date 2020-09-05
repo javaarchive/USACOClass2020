@@ -50,9 +50,10 @@ public class hps {
          int upper = N;
          Integer[] dividers = new Integer[K];
          //System.out.println(Arrays.deepToString(ps));
-         divPlaces.add(N - 1);
+         divPlaces.add(N);
          int bestSum = 0;
-         for(int i = 0; i < K; i ++){
+         // K sections = K - 1 dividers
+         for(int i = 0; i < K - 1; i ++){
              System.out.println("======= K: "+i+" =======");
             // Check Divider best
             dividers = new Integer[divPlaces.size()];
@@ -63,7 +64,7 @@ public class hps {
             int upplace = 0;
             int bestPos = -1;
             bestSum = 0;
-            for(int j = 1; j < N; j ++){
+            for(int j = 0; j < N; j ++){
                 if(upper < j){
                     lower = upper;
                     upper = dividers[++upplace];
@@ -72,7 +73,7 @@ public class hps {
                 //System.out.println("Right part " + best(sub(ps[upper], ps[j])));
                 //System.out.println("Left part " + best(sub(ps[j], ps[lower])));
                 System.out.println(best(sub(ps[N],ps[upper])) + " " + best(sub(ps[upper], ps[j])) + " " + best(sub(ps[j], ps[lower])) + " " + best(sub(ps[lower], ps[0])));
-                int sum = best(sub(ps[N],ps[upper - 1])) + best(sub(ps[upper], ps[j - 1])) + best(sub(ps[j], ps[lower + 1])) +  best(sub(ps[lower], ps[0]));
+                int sum = best(sub(ps[N],ps[upper])) + best(sub(ps[upper], ps[j])) + best(sub(ps[j], ps[lower])) +  best(sub(ps[lower], ps[0]));
                 System.out.println("Sum "+sum);
                 if(sum > bestSum){
                     if(divPlaces.contains(j)){
@@ -84,6 +85,9 @@ public class hps {
             }
             System.out.println("Added divider at "+bestPos);
             divPlaces.add(bestPos + 1);
+         }
+         if(K == 1){
+            bestSum = best(ps[N]);
          }
          pw.println(bestSum);
          pw.close();
