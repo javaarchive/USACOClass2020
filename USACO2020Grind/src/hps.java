@@ -68,25 +68,29 @@ public class hps {
                 if(upper < j){
                     lower = upper;
                     upper = dividers[++upplace];
+                    //continue;
                 }
-                System.out.println(lower+" "+upper+" "+j);
+                //System.out.println(lower+" "+upper+" "+j);
                 //System.out.println("Right part " + best(sub(ps[upper], ps[j])));
                 //System.out.println("Left part " + best(sub(ps[j], ps[lower])));
-                System.out.println(best(sub(ps[N],ps[upper])) + " " + best(sub(ps[upper], ps[j])) + " " + best(sub(ps[j], ps[lower])) + " " + best(sub(ps[lower], ps[0])));
+                //System.out.println(best(sub(ps[N],ps[upper])) + best(sub(ps[upper], ps[j])) + best(sub(ps[j], ps[lower])) +  best(sub(ps[lower], ps[0])));
                 int sum = best(sub(ps[N],ps[upper])) + best(sub(ps[upper], ps[j])) + best(sub(ps[j], ps[lower])) +  best(sub(ps[lower], ps[0]));
-                System.out.println("Sum "+sum);
+                //System.out.println("Sum "+sum);
                 if(sum > bestSum){
                     if(divPlaces.contains(j)){
-                        continue;
+                        //continue;
                     }
                     bestPos = j;
                     bestSum = sum;
                 }
             }
-            System.out.println("Added divider at "+bestPos);
+            //System.out.println("Added divider at "+bestPos);
             divPlaces.add(bestPos + 1);
          }
-         
+         System.out.println("Dividers: "+divPlaces);
+         if(K == 0){
+             bestSum = best(ps[N]);
+         }
          pw.println(bestSum);
          pw.close();
     }
