@@ -52,8 +52,8 @@ public class hps {
          //System.out.println(Arrays.deepToString(ps));
          divPlaces.add(N);
          int bestSum = 0;
-         // K sections = K - 1 dividers
-         for(int i = 0; i < K - 1; i ++){
+         // K changes = K dividers
+         for(int i = 0; i < K; i ++){
              System.out.println("======= K: "+i+" =======");
             // Check Divider best
             dividers = new Integer[divPlaces.size()];
@@ -86,9 +86,7 @@ public class hps {
             System.out.println("Added divider at "+bestPos);
             divPlaces.add(bestPos + 1);
          }
-         if(K == 1){
-            bestSum = best(ps[N]);
-         }
+         
          pw.println(bestSum);
          pw.close();
     }
