@@ -14,10 +14,10 @@ public class checklist {
         System.out.println(Hpos + " " + Gpos+" : "+currentDist);
         if(dp[Hpos][Gpos] > currentDist){
             dp[Hpos][Gpos] = currentDist;
-            if(Hpos < Hcows.length-1){
+            if(Hpos < Hcows.length-1 && Gpos != 0){
                 recur(Hpos + 1, Gpos, (useH?Hcows:Gcows)[useH?Hpos:Gpos], true, currentDist);
             }
-            if(Gpos < Gcows.length-1){
+            if(Gpos < Gcows.length-1 && Hpos != 0){
                 recur(Hpos, Gpos + 1, (useH?Hcows:Gcows)[useH?Hpos:Gpos], false, currentDist);
             }
         }else{
@@ -51,8 +51,9 @@ public class checklist {
         for(int i = 0; i < dp.length; i ++){
             Arrays.fill(dp[i], Integer.MAX_VALUE);
         }
-        recur(0, 0, Hcows[0], true, 0);
-        recur(0, 0, Hcows[0], false, 0);
-        System.out.println(dp[H - 1][G - 1]);
+        recur(1, 0, Hcows[0], true, 0);
+        recur(0, 1, Hcows[0], false, 0);
+        pw.println(dp[H - 1][G - 1]);
+        pw.close();
     }
 }
