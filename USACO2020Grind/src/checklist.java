@@ -18,7 +18,7 @@ public class checklist {
                 recur(Hpos + 1, Gpos, (useH?Hcows:Gcows)[useH?Hpos:Gpos], true, currentDist);
             }
             if(Gpos < Gcows.length-1){
-                recur(Hpos, Gpos + 1, (useH?Hcows:Gcows)[useH?Hpos:Gpos], true, currentDist);
+                recur(Hpos, Gpos + 1, (useH?Hcows:Gcows)[useH?Hpos:Gpos], false, currentDist);
             }
         }else{
             return; // La prune
@@ -51,8 +51,8 @@ public class checklist {
         for(int i = 0; i < dp.length; i ++){
             Arrays.fill(dp[i], Integer.MAX_VALUE);
         }
-        recur(1, 0, Hcows[0], true, 0);
-        recur(0, 1, Hcows[0], false, 0);
+        recur(0, 0, Hcows[0], true, 0);
+        recur(0, 0, Hcows[0], false, 0);
         System.out.println(dp[H - 1][G - 1]);
     }
 }
