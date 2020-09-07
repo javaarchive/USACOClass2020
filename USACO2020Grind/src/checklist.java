@@ -2,8 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class checklist {
-    static int[][] dp;
-    static int[][] dpIds;
+    static int[][][] dp;
     static int[][] Hcows, Gcows;
     static int dist(int[] a, int[] b){
         int A = a[0] - b[0];
@@ -41,29 +40,33 @@ public class checklist {
             Gcows[i][0] = Integer.parseInt(st.nextToken());
             Gcows[i][1] = Integer.parseInt(st.nextToken());
         }
-        dp = new int[H + 1][G + 1]; // 0 = now cows iterated yet
-        dpIds = new int[H + 1][G + 1];
+        dp = new int[H + 1][G + 1][2]; // 0 = now cows iterated yet
         for(int i = 0; i < dp.length; i ++){
             Arrays.fill(dp[i], Integer.MAX_VALUE);
         }
-        dp[0][0] = 0;
-        dpIds[0][0] = 1;
+        dp[0][0][0] = 0;
+        dp[0][0][1] = 1; // 1: H, 2: G
+
         for(int i = 0; i < H; i ++){
-            dp[i + 1][0] = dist(Hcows[0], Hcows[i]);
-            dpIds[i + 1][0] = i + 1;
+            dp[i + 1][0][0] = dist(Hcows[0], Hcows[i]);
         }
         for(int i = 0; i < G; i ++){
-            dp[0][i + 1] = dist(Hcows[0], Gcows[i]);
-            dpIds[0][i + 1] = -(i + 1);
+            dp[0][i + 1][1] = dist(Hcows[0], Gcows[i]);
         }
         for(int i = 1; i <= H; i ++){
             for(int j = 1; j <= G; j ++){
-                int opt1 = dist(getPoint(dpIds[i - 1][j]),Hcows[i - 1]) + dp[i - 1][j];
-                int opt2 = dist(getPoint(dpIds[i][j - 1]),Gcows[j - 1]) + dp[i][j - 1];
-                if(opt1 < opt2){
+                int opt1 = dist(((dp[i - 1][j][1] == 1)?Hcows[dp[i - 1][j][0]]:Gcows[dp[i - 1][j][0]], dp[i]);
+                int opt2 = dist( + dp[i][j - 1];
+                if(i == 1){
+                    // opt1 = dp[i - 1][j][0];
+                }
+                System.out.println(opt1+" "+opt2);
+                if(opt1 < opt2 || (i == H && j == G)){
+                    System.out.println(i + " " + j + " prefering top");
                     dp[i][j] = opt1;
                     dpIds[i][j] = i;
-                }else{
+                }else if(!(i == H && j == G)){
+                    System.out.println(i + " " + j + " prefering left");
                     dp[i][j] = opt2;
                     dpIds[i][j] = -(j);
                 }
@@ -72,6 +75,12 @@ public class checklist {
         for(int i = 0; i < H + 1; i ++){
             for(int j = 0; j < G + 1; j ++){
                 System.out.print(dp[i][j]+"  ");
+            }
+            System.out.println();
+        }
+        for(int i = 0; i < H + 1; i ++){
+            for(int j = 0; j < G + 1; j ++){
+                System.out.print(dpIds[i][j]+"  ");
             }
             System.out.println();
         }
