@@ -53,21 +53,27 @@ public class checklist {
             dpIds[i + 1][0] = i + 1;
         }
         for(int i = 0; i < G; i ++){
-            dp[0][i + 1] = dist(Gcows[0], Gcows[i]);
+            dp[0][i + 1] = dist(Hcows[0], Gcows[i]);
             dpIds[0][i + 1] = -(i + 1);
         }
         for(int i = 1; i <= H; i ++){
             for(int j = 1; j <= G; j ++){
                 int opt1 = dist(getPoint(dpIds[i - 1][j]),Hcows[i - 1]) + dp[i - 1][j];
                 int opt2 = dist(getPoint(dpIds[i][j - 1]),Gcows[j - 1]) + dp[j][i - 1];
-                if(opt1 > opt2){
+                if(opt1 < opt2){
                     dp[i][j] = opt1;
-                    dpIds[i][j] = i - 1;
+                    dpIds[i][j] = i;
                 }else{
                     dp[i][j] = opt2;
-                    dpIds[i][j] = j - 1;
+                    dpIds[i][j] = -(j);
                 }
             }
+        }
+        for(int i = 0; i < H + 1; i ++){
+            for(int j = 0; j < G + 1; j ++){
+                System.out.print(dp[i][j]+"  ");
+            }
+            System.out.println();
         }
         pw.println(dp[H][G]);
         pw.close();
