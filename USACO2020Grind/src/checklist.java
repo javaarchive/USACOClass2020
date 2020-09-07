@@ -59,7 +59,7 @@ public class checklist {
         for(int i = 1; i <= H; i ++){
             for(int j = 1; j <= G; j ++){
                 int opt1 = dist(getPoint(dpIds[i - 1][j]),Hcows[i - 1]) + dp[i - 1][j];
-                int opt2 = dist(getPoint(dpIds[i][j - 1]),Gcows[j - 1]) + dp[j][i - 1];
+                int opt2 = dist(getPoint(dpIds[i][j - 1]),Gcows[j - 1]) + dp[i][j - 1];
                 if(opt1 < opt2){
                     dp[i][j] = opt1;
                     dpIds[i][j] = i;
