@@ -58,6 +58,14 @@ public class checklist {
             dp[0][i + 1][0] = 0;
             dp[0][i + 1][1] = dist(Hcows[0], Gcows[i]);
         }
+        int[][] newHCows = new int[H + 1][];
+        newHCows[0] = new int[2];
+        Arrays.copyOfRange(Hcows, 1, H + 1);
+        int[][] newGCows = new int[G + 1][];
+        newGCows[0] = new int[2];
+        Arrays.copyOfRange(Gcows, 1, G + 1);
+        Hcows = newHCows;
+        Gcows = newGCows;
         for(int i = 1; i <= H; i ++){
             for(int j = 1; j <= G; j ++){
                 if(i == 1){
