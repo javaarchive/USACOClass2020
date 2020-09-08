@@ -48,26 +48,18 @@ public class checklist {
             }
         }
         dp[0][0][0] = 0;
-        dp[0][0][1] = 0; // 1: H, 2: G
+        
 
-        for(int i = 0; i < H; i ++){
-            dp[i + 1][0][0] = dist(Hcows[0], Hcows[i]);
-            dp[i + 1][0][1] = 0;
+        for(int i = 0; i < H-1; i ++){
+            dp[i + 1][0][0] =  dp[i][0][0]+ dist(Hcows[i+1], Hcows[i]);
         }
-        for(int i = 0; i < G; i ++){
-            dp[0][i + 1][0] = 0;
-            dp[0][i + 1][1] = dist(Hcows[0], Gcows[i]);
+
+        dp[0][0][1] = dist(Gcows[0], Hcows[0]); // 1: H, 2: G
+        for(int i = 0; i < G-1; i ++){
+            dp[0][i + 1][1] = dp[0][i][1]  + dist(Gcows[i+1], Gcows[i]);
         }
-        int[][] newHCows = new int[H + 1][];
-        newHCows[0] = new int[2];
-        Arrays.copyOfRange(Hcows, 1, H + 1);
-        int[][] newGCows = new int[G + 1][];
-        newGCows[0] = new int[2];
-        Arrays.copyOfRange(Gcows, 1, G + 1);
-        Hcows = newHCows;
-        Gcows = newGCows;
-        for(int i = 1; i <= H; i ++){
-            for(int j = 1; j <= G; j ++){
+        for(int i = 1; i < H; i ++){
+            for(int j = 1; j < G; j ++){
                 if(i == 1){
                     // opt1 = dp[i - 1][j][0];
                 }
@@ -94,7 +86,7 @@ public class checklist {
             }
             System.out.println();
         }*/
-        pw.println(dp[H][G][0]);
+        pw.println(dp[H-1][G-1][0]);
         pw.close();
     }
 }
