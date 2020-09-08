@@ -66,8 +66,8 @@ public class checklist {
                     // opt1 = dp[i - 1][j][0];
                 }
                 System.out.println(opt1+" "+opt2);
-                dp[i][j][0] = Integer.min(opt1 + dist(Hcows[i - 1],Hcows[Integer.min(i, H - 1)]), opt2 + dist(Gcows[j - 1],Gcows[Integer.min(j, G - 1)]));
-                dp[i][j][1] = Integer.min(opt1 + dist(Hcows[i - 1],Gcows[Integer.min(j, G - 1)]), opt2 + dist(Gcows[j - 1],Hcows[Integer.min(i, H - 1)]));
+                dp[i][j][0] = Integer.min(opt1 + dist(Hcows[i - 1],Hcows[i]), opt2 + dist(Gcows[j - 1],Hcows[i]));
+                dp[i][j][1] = Integer.min(opt1 + dist(Gcows[j - 1],Gcows[j]), opt2 + dist(Gcows[j - 1],Gcows[j]));
             }
         }
         for(int i = 0; i < H + 1; i ++){
