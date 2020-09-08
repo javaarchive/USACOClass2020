@@ -42,49 +42,53 @@ public class checklist {
         }
         dp = new int[H + 1][G + 1][2]; // 0 = now cows iterated yet
         for(int i = 0; i < dp.length; i ++){
-            Arrays.fill(dp[i], Integer.MAX_VALUE);
+            for(int j = 0; j < dp[i].length; j ++){
+                dp[i][j][0] = Integer.MAX_VALUE;
+                dp[i][j][1] = Integer.MAX_VALUE;
+            }
         }
         dp[0][0][0] = 0;
-        dp[0][0][1] = 1; // 1: H, 2: G
+        dp[0][0][1] = 0; // 1: H, 2: G
 
         for(int i = 0; i < H; i ++){
             dp[i + 1][0][0] = dist(Hcows[0], Hcows[i]);
+            dp[i + 1][0][1] = 0;
         }
         for(int i = 0; i < G; i ++){
+            dp[0][i + 1][0] = 0;
             dp[0][i + 1][1] = dist(Hcows[0], Gcows[i]);
         }
         for(int i = 1; i <= H; i ++){
             for(int j = 1; j <= G; j ++){
-                int opt1 = dist(((dp[i - 1][j][1] == 1)?Hcows[dp[i - 1][j][0]]:Gcows[dp[i - 1][j][0]], dp[i]);
-                int opt2 = dist( + dp[i][j - 1];
+                int opt1 = dp[i - 1][j][0];
+                int opt2 = dp[i][j - 1][1];
                 if(i == 1){
                     // opt1 = dp[i - 1][j][0];
                 }
                 System.out.println(opt1+" "+opt2);
-                if(opt1 < opt2 || (i == H && j == G)){
-                    System.out.println(i + " " + j + " prefering top");
-                    dp[i][j] = opt1;
-                    dpIds[i][j] = i;
-                }else if(!(i == H && j == G)){
-                    System.out.println(i + " " + j + " prefering left");
-                    dp[i][j] = opt2;
-                    dpIds[i][j] = -(j);
-                }
+                dp[i][j][0] = Integer.min(opt1 + dist(Hcows[i - 1],Hcows[Integer.min(i, H - 1)]), opt2 + dist(Gcows[j - 1],Gcows[Integer.min(j, G - 1)]));
+                dp[i][j][1] = Integer.min(opt1 + dist(Hcows[i - 1],Gcows[Integer.min(j, G - 1)]), opt2 + dist(Gcows[j - 1],Hcows[Integer.min(i, H - 1)]));
             }
         }
         for(int i = 0; i < H + 1; i ++){
             for(int j = 0; j < G + 1; j ++){
-                System.out.print(dp[i][j]+"  ");
+                System.out.print(dp[i][j][0]+"  ");
             }
             System.out.println();
         }
         for(int i = 0; i < H + 1; i ++){
+            for(int j = 0; j < G + 1; j ++){
+                System.out.print(dp[i][j][1]+"  ");
+            }
+            System.out.println();
+        }
+        /*for(int i = 0; i < H + 1; i ++){
             for(int j = 0; j < G + 1; j ++){
                 System.out.print(dpIds[i][j]+"  ");
             }
             System.out.println();
-        }
-        pw.println(dp[H][G]);
+        }*/
+        pw.println(dp[H][G][0]);
         pw.close();
     }
 }
