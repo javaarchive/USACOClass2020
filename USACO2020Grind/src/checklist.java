@@ -60,14 +60,12 @@ public class checklist {
         }
         for(int i = 1; i <= H; i ++){
             for(int j = 1; j <= G; j ++){
-                int opt1 = dp[i - 1][j][0];
-                int opt2 = dp[i][j - 1][1];
                 if(i == 1){
                     // opt1 = dp[i - 1][j][0];
                 }
-                System.out.println(opt1+" "+opt2);
-                dp[i][j][0] = Integer.min(opt1 + dist(Hcows[i - 1],Hcows[i]), opt2 + dist(Gcows[j - 1],Hcows[i]));
-                dp[i][j][1] = Integer.min(opt1 + dist(Gcows[j - 1],Gcows[j]), opt2 + dist(Gcows[j - 1],Gcows[j]));
+                //System.out.println(opt1+" "+opt2);
+                dp[i][j][0] = Integer.min(dp[i - 1][j][0] + dist(Hcows[i - 1],Hcows[i]),dp[i - 1][j][1] + dist(Gcows[j],Hcows[i]));
+                dp[i][j][1] = Integer.min(dp[i][j - 1][1] + dist(Gcows[j - 1],Gcows[j]),dp[i][j - 1][0] + dist(Hcows[i],Gcows[j]));
             }
         }
         for(int i = 0; i < H + 1; i ++){
