@@ -13,20 +13,28 @@ public class teamwork {
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
         int[] cows = new int[N];
-        int[] dp = new int[N + 1];
+        int[] dp = new int[N];
         for(int i = 0; i < N; i ++){
             cows[i] = Integer.parseInt(f.readLine());
         }
-        
-        for(int i = 0; i < N; i ++){
-            int max = cows[i];
-            for(int j = i; j <= Integer.min(N - 1, K + i); j ++){
-                System.out.println("i: "+i + " j: "+j);
-                max = Integer.max(cows[j], max);
-                dp[Integer.min(N, j + i)] 
-                = Integer.max(dp[Integer.min(N, j + i)],dp[i] + max);
+        //dp[0] = cows[0];
+        for(int i = 0; i < N - 1; i ++){
+            int max = Integer.MIN_VALUE;
+            for(int j = i; j < (K + i); j ++){
+                //System.out.println("i: "+i + " j: "+j+" MAX: "+max);
+                if(j >= N){
+                    break;
+                }
+                max = Integer.max(max, cows[j]);
+                int prev = 0;
+                if(i > 0){
+                    prev = dp[i - 1];
+                }
+                dp[j] = Integer.max(dp[j], prev + max * (j - i + 1));
+                
             }
         }
-        System.out.println(Arrays.toString(dp));
+        pw.println(dp[N - 1]);
+        pw.close();
     }
 }
