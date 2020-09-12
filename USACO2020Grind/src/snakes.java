@@ -16,10 +16,12 @@ public class snakes {
         int[] snakes = new int[N];
         int[][] diff = new int[N][N];
         st = new StringTokenizer(f.readLine());
+        int sum = 0;
         for (int i = 0; i < N; i++) {
             snakes[i] = Integer.parseInt(st.nextToken());
+            sum += snakes[i];
         }
-        for (int i = 0; i < N; i++) {
+        /*for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 if ((i + j) >= N) {
                     continue;
@@ -35,7 +37,7 @@ public class snakes {
         }
         for (int i = 0; i < N; i++) {
             System.out.println(Arrays.toString(diff[i]));
-        }
+        }*/
         int[][] dp = new int[K + 1][N + 1];
         for (int i = 0; i < dp.length; i++) {
             Arrays.fill(dp[i], Integer.MAX_VALUE/2);
@@ -62,6 +64,7 @@ public class snakes {
         }
 
         // pw.println(dp[N - 1]);
+        pw.println(dp[K][N] - sum);
         pw.close();
     }
 }
