@@ -13,14 +13,13 @@ public class snakes {
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
         int[] snakes = new int[N];
-        int[][] dpmax = new int[N][K];
-        int[][] dpmin = new int[N][K];
+        int[][] dp = new int[N][N];
         st = new StringTokenizer(f.readLine());
         for(int i = 0; i < N; i ++){
             snakes[i] = Integer.parseInt(st.nextToken());
         }
         for(int i = 0; i < N; i ++){
-            for(int j = 0; j < K; j ++){
+            for(int j = 0; j < N; j ++){
                 if((i + j) >= N){
                     continue;
                 }
@@ -30,15 +29,11 @@ public class snakes {
                     max = Integer.max(max, snakes[k]);
                     min = Integer.min(min, snakes[k]);
                 }
-                dpmax[i][j] = max;
-                dpmin[i][j] = max;
+                dp[i][j] = max - min;
             }
         }
         for(int i = 0; i < N; i ++){
-            System.out.println(Arrays.toString(dpmin[i]));
-        }
-        for(int i = 0; i < N; i ++){
-            System.out.println(Arrays.toString(dpmin[i]));
+            System.out.println(Arrays.toString(dp[i]));
         }
         
 
