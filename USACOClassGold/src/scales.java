@@ -5,7 +5,7 @@ public class scales {
     static int[] arr;
     static int C;
     public static int recur(int curSum, int i){
-        System.out.println("RECUR("+curSum+","+i+");");
+        //System.out.println("RECUR("+curSum+","+i+");");
         if(i < 0){
             if(curSum <= C){
                 return curSum;
@@ -19,22 +19,26 @@ public class scales {
             a = arr[i - 1];
         }
         int b = arr[i];
-        System.out.println(a + " " + b);
+        //System.out.println(a + " " + b);
         //int c = ps[i];
         if(i == 0){
             if((curSum + arr[0]) > C){
-                return -1;
+                if(curSum <= C){
+                    return curSum;
+                }else{
+                    return -1;
+                }
             }else{
-                //System.out.println("R!");
+                //System.out.println("R: "+(curSum + arr[0]));
                 return curSum + arr[0];
             }
         }else if(a + b <= C){
             int r = Integer.max(recur(curSum + b, i - 2),recur(curSum + b + a, i - 2));
-            System.out.println("recur("+(i-2)+") = "+r);
+            //System.out.println("recur("+(i-2)+") = "+r);
             return r;
         }else if(b > C){
             int r = Integer.max(recur(curSum + a, i - 2),recur(curSum, i - 2));
-            System.out.println("recur("+(i - 2)+") = "+r);
+            //System.out.println("recur("+(i - 2)+") = "+r);
             return r;
         }else if(a + b > C){
             return Integer.max(recur(curSum + a, i - 2),recur(curSum + b, i - 2));
