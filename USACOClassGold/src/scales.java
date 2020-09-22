@@ -21,6 +21,7 @@ public class scales {
         int b = arr[i];
         //System.out.println(a + " " + b);
         //int c = ps[i];
+        int curAns;
         if(i == 0){
             if((curSum + arr[0]) > C){
                 if(curSum <= C){
