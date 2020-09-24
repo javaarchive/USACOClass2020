@@ -2,6 +2,14 @@ import java.io.*;
 import java.util.*;
 public class fliptile {
     static int N,M;
+    public static char XOR(char a, char b){
+        boolean A = (a == '1');
+        boolean B = (b == '1');
+        return (A != B) ? '1':'0';
+    }
+    public static char NOT(char c){
+        return (c == 'a') ? 'b':'a';
+    }
     public static void main(String[] args) throws IOException{
         // IO
         // new FileReader("tractor.in")
@@ -21,32 +29,59 @@ public class fliptile {
                 target[i][j] = c;
             }
         }
+        int[] preTable = new int[M];
+        int cur = 1;
+        for(int i = 0; i < M; i ++){
+            preTable[M - i - 1] = cur;
+            cur = cur * 2; 
+        }
+        System.out.println(Arrays.toString(preTable));
         int TwoPowM = (int) Math.pow(2, M);
         for(int i = 0 ;i < TwoPowM; i ++){
             System.out.println("Possible: "+i);
             int[] build = new int[M];
             build[0] = i;
+            String iStr = String.format("%"+M+"s",Integer.toBinaryString(build[0])).replace(' ','0');
+            char[][] grid = new char[N][M];
+            for(int j = 0; j < M; j ++){
+                grid[0][j] = iStr.charAt(j);
+            }
             for(int j = 1; j < N; j ++){
-                char[] s1 = String.format("%"+M+"s",Integer.toBinaryString(build[j - 1])).replace(' ','0').toCharArray(); 
-                char[] s2 = String.format("%"+M+"s",Integer.toBinaryString(build[j])).replace(' ','0').toCharArray(); 
-                char[] s3 = target[j];
-                for(int k = 0; k < N; k ++){
-                    boolean changeThis = (s1[k]) == s3[k];
-                    if(k != N - 1){
-                        if(changeThis){
-                            s2[k + 1] = (s2[k + 1] == '0')?'1':'0';
+                Arrays.fill(grid[j], '0');
+            }
+            for(int j = 1; j < N; j ++){
+                for(int k = 0; k < M; k ++){
+                    boolean works = true;
+                    if(k > 0){
+                        if(grid[j][k - 1] != 1){
+                            works = false;
                         }
                     }
-                    if(changeThis){
-                        s2[k] = (changeThis == (s2[k] == '1')) ? '1':'0';
+                    if(grid[j - 1][k] != 1){
+                        works = false;
                     }
-
+                    if(works){
+                        if(k > 0){
+                            grid[j][k - 1] = NOT(grid[j][k - 1]);
+                        }
+                        if(k < M - 1){
+                            grid[j][k + 1] = NOT(grid[j][k + 1]);
+                        }
+                        if(j > 0){
+                            grid[j - 1][k] = NOT(grid[j - 1][k]);
+                        }
+                        if(j < N - 1){
+                            grid[j + 1][k] = NOT(grid[j + 1][k]);
+                        }
+                        build[j] = build[j] + preTable[k];
+                    }
                 }
-                build[j] = Integer.parseInt(new String(s2),2);
                 
+                //System.out.println(String.format("%"+M+"s",Integer.toBinaryString(build[j])).replace(' ','0'));
             }
-            for(int j = 0; j < N; j ++){
-                System.out.println(String.format("%"+M+"s",Integer.toBinaryString(build[j])).replace(' ','0'));
+            for(int j = 0 ; j < N; j ++){
+                    System.out.println(String.format("%"+M+"s",Integer.toBinaryString(build[j])).replace(' ','0'));
+                    System.out.println(Arrays.toString(grid[j]));
             }
         }
     }
