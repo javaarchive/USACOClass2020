@@ -35,7 +35,7 @@ public class fliptile {
             preTable[M - i - 1] = cur;
             cur = cur * 2; 
         }
-        System.out.println(Arrays.toString(preTable));
+        //System.out.println(Arrays.toString(preTable));
         int TwoPowM = (int) Math.pow(2, M);
         boolean hasSol = false;
         for(int i = 0 ;i < TwoPowM; i ++){
@@ -69,7 +69,10 @@ public class fliptile {
                 }
                 ans[0][j] = Integer.parseInt(Character.toString(top.charAt(j)));
             }
-           
+            /*for(int j = 0 ; j < N; j ++){
+                //System.out.println(String.format("%"+M+"s",Integer.toBinaryString(build[j])).replace(' ','0'));
+                System.out.println("Before "+Arrays.toString(grid[j]));
+        }*/
             
             for(int j = 1; j < N; j ++){
                 if(j >= 2){
@@ -77,8 +80,11 @@ public class fliptile {
                         break;
                     }
                 }
+                
                 for(int k = 0; k < M; k ++){
-                    if(grid[j - 1][k] == 1){ // Must Flip
+                    
+                    if(grid[j - 1][k] == '1'){ // Must Flip
+                        //System.out.println("FLIP! "+j+" "+k);
                         ans[j][k] = 1;
                         grid[j][k] = NOT(grid[j][k]);
                         if(k > 0){	
