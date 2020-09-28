@@ -36,19 +36,44 @@ void solve(){
         cout << cows[i].pos << endl;
     }
     lcs.push_front({-1,-1}); // Cow to be removed
+    int upBound = 0;
     for(int i = 0 ; i < N; i ++){
         lcs.pop_front();
-        for(int j = i;  j < N; j ++){
-            if((cows[j].pos - cows[i].pos) <= cows[i].volume){
-                lcs.push_back(lcs[j]);
+
+        for(;upBound < N; upBound ++){
+            if((cows[upBound].pos - cows[i].pos) <= cows[i].volume){
+                lcs.push_back(cows[upBound]);
             }else{
                 break;
             }
         }
         cout << "ITER: " << i  << endl;
         for(auto it = lcs.begin(); it != lcs.end(); ++it){
-            cout << "Pos: " << it->pos << " Vol: "<< it->volume << endl;
+            cout << "Pos Right: " << it->pos << " Vol: "<< it->volume << endl;
         }
+        hearingRight[i] = lcs.size();
+    }
+    lcs.clear();
+    int lowBound = N - 1;
+    for(int i = N - 1; i >= 0; i --){
+        lcs.pop_front();
+
+        for(;lowBound >= 0; lowBound --){
+            if((cows[i].pos - cows[lowBound].pos) <= cows[i].volume){
+                lcs.push_back(cows[lowBound]);
+            }else{
+                break;
+            }
+        }
+        cout << "ITER: " << i  << " lcs size " << lcs.size() <<endl;
+        for(auto it = lcs.begin(); it != lcs.end(); ++it){
+            cout << "Pos Left: " << it->pos << " Vol: "<< it->volume << endl;
+        }
+        hearingLeft[i] = lcs.size();
+    }
+    cout << "Hearing Amounts " << endl;
+    for(int i = 0; i < N; i ++){
+        cout << hearingRight[i] << " " << hearingLeft[i] << endl;
     }
 }
 
