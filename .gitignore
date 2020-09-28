@@ -92,3 +92,4 @@ local.properties
 node_modules
 node_modules/*
 *.md
+*.sh
