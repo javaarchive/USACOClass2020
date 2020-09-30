@@ -8,8 +8,8 @@
 using namespace std;
 const int MAXN = 50001;
 struct LoudCow{
+    int height;
     int volume;
-    int pos;
     //bool operator() (LoudCow lc1, LoudCow lc2) {return lc1.pos < lc2.pos;}
 };
 
@@ -17,7 +17,7 @@ int N;
 
 bool cmp(LoudCow lc1, LoudCow lc2) 
 { 
-    return (lc1.pos < lc2.pos);
+    return (lc1.height < lc2.height);
 } 
 void setIO(string s) {
     ios_base::sync_with_stdio(0); cin.tie(0);
@@ -29,52 +29,66 @@ deque <LoudCow> lcs;
 int hearingLeft[50001];
 int hearingRight[50001];
 LoudCow cows[50001];
-void solve(){
-    sort(cows, cows + N, &cmp);
-    cout << "Initial Cows in cows array" << endl;
-    for(int i = 0; i < N; i ++){
-        cout << cows[i].pos << endl;
-    }
-    lcs.push_front({-1,-1}); // Cow to be removed
-    int upBound = 0;
-    for(int i = 0 ; i < N; i ++){
-        lcs.pop_front();
+//LoudCow Scows[50001];
 
-        for(;upBound < N; upBound ++){
-            if((cows[upBound].pos - cows[i].pos) <= cows[i].volume){
-                lcs.push_back(cows[upBound]);
-            }else{
-                break;
-            }
+int solve(){
+    //copy(cows, cows + N, Scows);
+    //sort(Scows, Scows + N, &cmp);
+    //cout << "Initial Cows in cows array" << endl;
+    /*for(int i = 0; i < N; i ++){
+        cout << cows[i].height << endl;
+    }*/
+    LoudCow maxcow;
+    maxcow.height --;
+    maxcow.volume --;
+    int maxcowpos = -1;
+    for(int i = 0; i < N; i ++){
+        if(cows[i].height > maxcow.height){
+            maxcow = cows[i];
+            maxcowpos = i;
         }
-        cout << "ITER: " << i  << endl;
-        for(auto it = lcs.begin(); it != lcs.end(); ++it){
-            cout << "Pos Right: " << it->pos << " Vol: "<< it->volume << endl;
-        }
-        hearingRight[i] = lcs.size();
+        hearingRight[i] = maxcowpos;
     }
-    lcs.clear();
-    int lowBound = N - 1;
+    maxcowpos = -1;
+    maxcow = LoudCow();
+    maxcow.volume --;
+    maxcow.height --;
     for(int i = N - 1; i >= 0; i --){
-        lcs.pop_front();
+        if(cows[i].height > maxcow.height){
+            maxcow = cows[i];
+            maxcowpos = i;
+        }
+        hearingLeft[i] = maxcowpos;
+    }
 
-        for(;lowBound >= 0; lowBound --){
-            if((cows[i].pos - cows[lowBound].pos) <= cows[i].volume){
-                lcs.push_back(cows[lowBound]);
-            }else{
-                break;
-            }
-        }
-        cout << "ITER: " << i  << " lcs size " << lcs.size() <<endl;
-        for(auto it = lcs.begin(); it != lcs.end(); ++it){
-            cout << "Pos Left: " << it->pos << " Vol: "<< it->volume << endl;
-        }
-        hearingLeft[i] = lcs.size();
-    }
-    cout << "Hearing Amounts " << endl;
+    int volumes[MAXN];
     for(int i = 0; i < N; i ++){
-        cout << hearingRight[i] << " " << hearingLeft[i] << endl;
+        int curVol = cows[i].volume;
+        int a = i;//= hearingLeft[i];
+        int b = i;//0 //= hearingRight[i];
+        if(i > 0){
+            a = hearingLeft[i - 1];
+        }
+        if(i < N-1){
+            b = hearingRight[i + 1];
+        }
+        if(a != i){
+            volumes[a] += curVol;
+        }
+        if(b != i && b != a){
+            volumes[b] += curVol;
+        }
     }
+    sort(volumes, volumes + N);
+    for(int i = 0; i < N; i ++){
+        cout << volumes[i] << " ";
+    }
+    cout << endl;
+    //std::cout << volumes[0] << " and " << volumes[N - 1];
+    for(int i = 0; i < N; i ++){
+        cout << volumes[i] << " ";
+    }
+    return volumes[N - 1];
 }
 
 
@@ -87,9 +101,9 @@ int main() {
     cin >> N;
     //cout<<N<<endl;
     for(int i = 0; i < N; i ++){
-        cin >> cows[i].pos >> cows[i].volume;
+        cin >> cows[i].height >> cows[i].volume;
         //cout << cows[i].pos <<endl;
     }
-    solve();
+    std::cout << solve();
     return 0;
 }
