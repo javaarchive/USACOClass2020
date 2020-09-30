@@ -64,14 +64,8 @@ int solve(){
     int volumes[MAXN];
     for(int i = 0; i < N; i ++){
         int curVol = cows[i].volume;
-        int a = i;//= hearingLeft[i];
-        int b = i;//0 //= hearingRight[i];
-        if(i > 0){
-            a = hearingLeft[i - 1];
-        }
-        if(i < N-1){
-            b = hearingRight[i + 1];
-        }
+        int a = hearingLeft[i];
+        int b = hearingRight[i];
         if(a != i){
             volumes[a] += curVol;
         }
