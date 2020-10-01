@@ -6,7 +6,7 @@
 #include <deque>
 #include <bits/stdc++.h>
 using namespace std;
-const int MAXN = 50001;
+const int MAXN = 500001;
 struct LoudCow{
     int height;
     int volume;
@@ -26,9 +26,9 @@ void setIO(string s) {
 }
 
 deque <LoudCow> lcs; 
-int hearingLeft[50001];
-int hearingRight[50001];
-LoudCow cows[50001];
+int hearingLeft[50001] = {0};
+int hearingRight[50001] = {0};
+LoudCow cows[50001]; 
 //LoudCow Scows[50001];
 
 int solve(){
@@ -60,8 +60,8 @@ int solve(){
         }
         hearingLeft[i] = maxcowpos;
     }
-
-    int volumes[MAXN];
+    
+    int volumes[MAXN] = {0};
     for(int i = 0; i < N; i ++){
         int curVol = cows[i].volume;
         int a = hearingLeft[i];
@@ -74,14 +74,14 @@ int solve(){
         }
     }
     sort(volumes, volumes + N);
-    for(int i = 0; i < N; i ++){
+    /*for(int i = 0; i < N; i ++){
         cout << volumes[i] << " ";
     }
     cout << endl;
     //std::cout << volumes[0] << " and " << volumes[N - 1];
     for(int i = 0; i < N; i ++){
         cout << volumes[i] << " ";
-    }
+    }*/
     return volumes[N - 1];
 }
 
