@@ -3,8 +3,10 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
-#include <deque>
+#include <stack>
 #include <bits/stdc++.h>
+
+
 using namespace std;
 const int MAXN = 500001;
 struct LoudCow{
@@ -25,7 +27,6 @@ void setIO(string s) {
     freopen((s + ".out").c_str(), "w", stdout);
 }
 
-deque <LoudCow> lcs; 
 int hearingLeft[50001] = {0};
 int hearingRight[50001] = {0};
 LoudCow cows[50001]; 
@@ -38,51 +39,17 @@ int solve(){
     /*for(int i = 0; i < N; i ++){
         cout << cows[i].height << endl;
     }*/
-    LoudCow maxcow;
-    maxcow.height --;
-    maxcow.volume --;
-    int maxcowpos = -1;
+    stack<LoudCow> stk;
     for(int i = 0; i < N; i ++){
-        if(cows[i].height > maxcow.height){
-            maxcow = cows[i];
-            maxcowpos = i;
-        }
-        hearingRight[i] = maxcowpos;
-    }
-    maxcowpos = -1;
-    maxcow = LoudCow();
-    maxcow.volume --;
-    maxcow.height --;
-    for(int i = N - 1; i >= 0; i --){
-        if(cows[i].height > maxcow.height){
-            maxcow = cows[i];
-            maxcowpos = i;
-        }
-        hearingLeft[i] = maxcowpos;
-    }
-    
-    int volumes[MAXN] = {0};
-    for(int i = 0; i < N; i ++){
-        int curVol = cows[i].volume;
-        int a = hearingLeft[i];
-        int b = hearingRight[i];
-        if(a != i){
-            volumes[a] += curVol;
-        }
-        if(b != i && b != a){
-            volumes[b] += curVol;
+        if(stk.empty() || stk.top().height > cows[i].height){
+            stk.push(cows[i]);
+        }else{
+            while(stk.top().height < cows[i].height){
+                stk.pop();
+            }
         }
     }
-    sort(volumes, volumes + N);
-    /*for(int i = 0; i < N; i ++){
-        cout << volumes[i] << " ";
-    }
-    cout << endl;
-    //std::cout << volumes[0] << " and " << volumes[N - 1];
-    for(int i = 0; i < N; i ++){
-        cout << volumes[i] << " ";
-    }*/
-    return volumes[N - 1];
+   return 0;
 }
 
 
