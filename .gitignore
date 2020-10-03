@@ -93,3 +93,5 @@ node_modules
 node_modules/*
 *.md
 *.sh
+*.exe
+.exe

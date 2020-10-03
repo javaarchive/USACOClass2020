@@ -12,6 +12,7 @@ const int MAXN = 500001;
 struct LoudCow{
     int height;
     int volume;
+    int index;
     //bool operator() (LoudCow lc1, LoudCow lc2) {return lc1.pos < lc2.pos;}
 };
 
@@ -27,9 +28,9 @@ void setIO(string s) {
     freopen((s + ".out").c_str(), "w", stdout);
 }
 
-int hearingLeft[50001] = {0};
-int hearingRight[50001] = {0};
-LoudCow cows[50001]; 
+int hearingLeft[MAXN] = {0};
+int hearingRight[MAXN] = {0};
+LoudCow cows[MAXN]; 
 //LoudCow Scows[50001];
 
 int solve(){
@@ -40,16 +41,30 @@ int solve(){
         cout << cows[i].height << endl;
     }*/
     stack<LoudCow> stk;
+    int volumes[MAXN] = {0};
+    int maxVol = 0;
     for(int i = 0; i < N; i ++){
-        if(stk.empty() || stk.top().height > cows[i].height){
-            stk.push(cows[i]);
-        }else{
-            while(stk.top().height < cows[i].height){
-                stk.pop();
-            }
+        while(!stk.empty() && stk.top().height < cows[i].height){
+            volumes[i] += stk.top().volume; 
+            stk.pop();
         }
+        //volumes[stk.top().]
+        stk.push(cows[i]);
     }
-   return 0;
+    stack<LoudCow> stk2;
+    for(int i = N - 1; i >= 0; i --){
+        while(!stk2.empty() && stk2.top().height < cows[i].height){
+            volumes[i] += stk2.top().volume; 
+            stk2.pop();
+        }
+        maxVol = max(volumes[i], maxVol);
+        //volumes[stk.top().]
+        stk2.push(cows[i]);
+    }
+
+    //sort(volumes, volumes + N);
+    
+   return maxVol;
 }
 
 
@@ -63,6 +78,7 @@ int main() {
     //cout<<N<<endl;
     for(int i = 0; i < N; i ++){
         cin >> cows[i].height >> cows[i].volume;
+        cows[i].index = i;
         //cout << cows[i].pos <<endl;
     }
     std::cout << solve();
