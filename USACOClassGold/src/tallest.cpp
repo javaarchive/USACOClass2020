@@ -2,25 +2,26 @@
 #include <algorithm>
 #include <vector>
 
-//the following are UBUNTU/LINUX, and MacOS ONLY terminal color codes.
+/*
 #define RESET   "\033[0m"
 #define endl   "\033[0m\n"
-#define BLACK   "\033[30m"      /* Black */
-#define RED     "\033[31m"      /* Red */
-#define GREEN   "\033[32m"      /* Green */
-#define YELLOW  "\033[33m"      /* Yellow */
-#define BLUE    "\033[34m"      /* Blue */
-#define MAGENTA "\033[35m"      /* Magenta */
-#define CYAN    "\033[36m"      /* Cyan */
-#define WHITE   "\033[37m"      /* White */
-#define BOLDBLACK   "\033[1m\033[30m"      /* Bold Black */
-#define BOLDRED     "\033[1m\033[31m"      /* Bold Red */
-#define BOLDGREEN   "\033[1m\033[32m"      /* Bold Green */
-#define BOLDYELLOW  "\033[1m\033[33m"      /* Bold Yellow */
-#define BOLDBLUE    "\033[1m\033[34m"      /* Bold Blue */
-#define BOLDMAGENTA "\033[1m\033[35m"      /* Bold Magenta */
-#define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
-#define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
+#define BLACK   "\033[30m"      
+#define RED     "\033[31m"      
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"     
+#define BLUE    "\033[34m"      
+#define MAGENTA "\033[35m"      
+#define CYAN    "\033[36m"     
+#define WHITE   "\033[37m"     
+#define BOLDBLACK   "\033[1m\033[30m"      
+#define BOLDRED     "\033[1m\033[31m"      
+#define BOLDGREEN   "\033[1m\033[32m"      
+#define BOLDYELLOW  "\033[1m\033[33m"      
+#define BOLDBLUE    "\033[1m\033[34m"      
+#define BOLDMAGENTA "\033[1m\033[35m"      
+#define BOLDCYAN    "\033[1m\033[36m"     
+#define BOLDWHITE   "\033[1m\033[37m"     
+*/
 using namespace std;
 
 const int MAXR = 10000;
@@ -40,22 +41,22 @@ bool cmp(Interval a, Interval b){
     return out;
 }
 bool works(int ri, int ci){
-    cout << CYAN << "Checking if " << ci << " is within " << "r["<<ri<<"]: "<<ranges[ri].start << " and " << ranges[ri].end << endl;
-    return (ci < max(ranges[ri].end,ranges[ri].start) && min(ranges[ri].end, ranges[ri].start) < ci);
+    //cout << CYAN << "Checking if " << ci << " is within " << "r["<<ri<<"]: "<<ranges[ri].start << " and " << ranges[ri].end << endl;
+    return (ranges[ri].start < ci) && (ci < ranges[ri].end);
 }
 int bsBottom(int ci){
     int l = 0;
     int r = newR - 1;
     while(l <= r){
         int m = l +  (r - l) / 2;
-        cout << l << " " << m << " " << r << endl;
+        //cout << l << " " << m << " " << r << endl;
         bool mWorks = works(m,ci);
         bool bWorks = (m != 0) && works(m - 1,ci);
-        cout << bWorks << endl;
+        //cout << bWorks << endl;
         if(mWorks && !bWorks){
             return m;
         }else if(mWorks && bWorks){
-            l = m + 1;
+            r = m - 1;
         }else if(ranges[m].start < ci){
             l = m + 1;
         }else{
@@ -70,7 +71,7 @@ int bsTop(int ci){
     int r = newR - 1;
     while(l <= r){
         int m = l +  (r - l) / 2;
-        cout << GREEN << l << " " << m << " " << r << endl;
+        //cout << GREEN << l << " " << m << " " << r << endl;
         bool mWorks = works(m,ci);
         bool tWorks = (m != (newR - 1)) && works(m + 1,ci);
         if(mWorks && !tWorks){
@@ -86,14 +87,20 @@ int bsTop(int ci){
     }
     return -1;
 }
-
 void solve(){
     sort(ranges.begin(), ranges.end(), &cmp);
     for(int i = 0; i < ranges.size() - 1; i ++){
         if(ranges[i].start == ranges[i + 1].start){
             if(ranges[i].end == ranges[i + 1].end){
                 ranges.erase(ranges.begin() + i + 1);
+                //i --;
             }
+        }
+    }
+    for(int i = 0; i < ranges.size(); i ++){
+        if(ranges[i].end - ranges[i].start == 1){
+            ranges.erase(ranges.begin() + i);
+            i --;
         }
     }
     
@@ -103,12 +110,17 @@ void solve(){
     }
     //int startRangeIndex = 0;
     //int endRangeIndex = 0;
-    cout << newR << endl;
+    //cout << newR << endl;
     for(int i = 0; i < N; i ++){
         int bsBottomIndex = bsBottom(i);
-        std::cout << "BS TOP: " << endl;
+        //std::cout << "BS TOP: " << endl;
         int bsTopIndex = bsTop(i);
-        cout << "Hits for " << i << " range " << bsTopIndex << " " << bsTopIndex << endl;
+        cout << "Hits for " << i << " range " << bsBottomIndex << " " << bsTopIndex << endl;
+        if(bsBottomIndex == -1 || bsTopIndex == -1){
+            cout << H << endl;
+        }else{
+            cout << (H - (bsTopIndex - bsBottomIndex + 1)) << endl;
+        }
     }
 }
 int main(int argc, const char** argv) {
