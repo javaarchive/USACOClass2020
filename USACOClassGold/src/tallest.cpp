@@ -3,7 +3,7 @@
 #include <vector>
 
 #define RESET   "\033[0m"
-#define endl   "\033[0m\n"
+//#define endl   "\033[0m\n"
 #define BLACK   "\033[30m"      
 #define RED     "\033[31m"      
 #define GREEN   "\033[32m"
@@ -31,6 +31,7 @@ struct Interval{
 vector<Interval> ranges;
 int N, R, I, H;
 int newR;
+int ss[10001]; // Suffix sums 
 //int ;
 bool cmp(Interval a, Interval b){
     bool out = (a.start < b.start);
@@ -58,12 +59,18 @@ void solve(){
     
     newR = ranges.size();
     for(int i = 0; i < newR; i ++){
-        cout << "Debug ranges[" << i << "] : " << ranges[i].start << ", " << ranges[i].end << endl;
+        //cout << "Debug ranges[" << i << "] : " << ranges[i].start << ", " << ranges[i].end << endl;
+        ss[ranges[i].start] ++;
+        ss[ranges[i].end - 1]   --;
     }
-    //int startRangeIndex = 0;
+    //int startRangeIndex     //int startRangeIndex = 0;
     //int endRangeIndex = 0;
     //cout << newR << endl;
-    
+    int csum = 0;
+    for(int i = 0; i < N; i ++){
+        cout << (H - csum) << endl;
+        csum += ss[i];
+    }
 }
 int main(int argc, const char** argv) {
     cin >> N >> I >> H >> R;
