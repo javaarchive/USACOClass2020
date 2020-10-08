@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <vector>
 
+/*
 #define RESET   "\033[0m"
 #define endl   "\033[0m\n"
 #define BLACK   "\033[30m"      
@@ -20,7 +21,7 @@
 #define BOLDMAGENTA "\033[1m\033[35m"      
 #define BOLDCYAN    "\033[1m\033[36m"     
 #define BOLDWHITE   "\033[1m\033[37m"     
-
+*/
 using namespace std;
 
 const int MAXR = 10000;
@@ -38,6 +39,53 @@ bool cmp(Interval a, Interval b){
         out = a.end < b.end;
     }
     return out;
+}
+bool works(int ri, int ci){
+    //cout << CYAN << "Checking if " << ci << " is within " << "r["<<ri<<"]: "<<ranges[ri].start << " and " << ranges[ri].end << endl;
+    return (ranges[ri].start < ci) && (ci < ranges[ri].end);
+}
+int bsBottom(int ci){
+    int l = 0;
+    int r = newR - 1;
+    while(l <= r){
+        int m = l +  (r - l) / 2;
+        //cout << l << " " << m << " " << r << endl;
+        bool mWorks = works(m,ci);
+        bool bWorks = (m != 0) && works(m - 1,ci);
+        //cout << bWorks << endl;
+        if(mWorks && !bWorks){
+            return m;
+        }else if(mWorks && bWorks){
+            r = m;
+        }else if(ranges[m].start < ci){
+            l = m + 1;
+        }else{
+            r = m;
+        }
+
+    }
+    return -1;
+}
+int bsTop(int ci){
+    int l = 0;
+    int r = newR - 1;
+    while(l <= r){
+        int m = l +  (r - l) / 2;
+        //cout << GREEN << l << " " << m << " " << r << endl;
+        bool mWorks = works(m,ci);
+        bool tWorks = (m != (newR - 1)) && works(m + 1,ci);
+        if(mWorks && !tWorks){
+            return m;
+        }else if(mWorks && tWorks){
+            l = m + 1;
+        }else if(ranges[m].start < ci){
+            l = m + 1;
+        }else{
+            r = m;
+        }
+
+    }
+    return -1;
 }
 void solve(){
     sort(ranges.begin(), ranges.end(), &cmp);
@@ -63,7 +111,17 @@ void solve(){
     //int startRangeIndex = 0;
     //int endRangeIndex = 0;
     //cout << newR << endl;
-    
+    for(int i = 0; i < N; i ++){
+        int bsBottomIndex = bsBottom(i);
+        //std::cout << "BS TOP: " << endl;
+        int bsTopIndex = bsTop(i);
+        cout << "Hits for " << i << " range " << bsBottomIndex << " " << bsTopIndex << endl;
+        if(bsBottomIndex == -1 || bsTopIndex == -1){
+            cout << H << endl;
+        }else{
+            cout << (H - (bsTopIndex - bsBottomIndex + 1)) << endl;
+        }
+    }
 }
 int main(int argc, const char** argv) {
     cin >> N >> I >> H >> R;
