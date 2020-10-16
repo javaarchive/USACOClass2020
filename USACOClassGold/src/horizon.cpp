@@ -9,7 +9,7 @@ int N;
 struct Endpoint
 {
     bool startPoint;
-    int height;
+    long long height;
     int id;
     bool operator<(const Endpoint &e2) const
     {
@@ -22,16 +22,18 @@ struct Endpoint
 };
 map<int, set<Endpoint>> xtoys;
 
-int solve()
+long long solve()
 {
-    vector<int> heights;
-    vector<int> widths;
+    vector<long long> heights;
+    vector<long long> widths;
     bool first = true;
     int lastX = -1;
     set<Endpoint> active;
+    //cout << "Solving";
     for (auto iter = xtoys.begin(); iter != xtoys.end(); iter++)
     {
         int curX = iter->first;
+        //cout << "CURX: " << curX << endl;
         set<Endpoint> se = iter->second;
         for (auto iter2 = se.begin(); iter2 != se.end(); iter2++)
         {
@@ -52,29 +54,35 @@ int solve()
         {
             first = false;
         }
-        heights.push_back((*(active.rbegin())).height);
+        if(!active.empty()){
+            heights.push_back((*(active.rbegin())).height);
+        }else{
+            heights.push_back(0);
+        }
         lastX = curX;
-
-        //return 0;
     }
-    cout << "Widths";
+    /*cout << "Widths ";
     for (int i = 0; i < widths.size(); i++)
     {
         cout << " " << widths[i];
     }
     cout << endl;
-    cout << "Heights";
-    for (int i = 0; i < widths.size(); i++)
+    cout << "Heights ";
+    for (int i = 0; i < heights.size(); i++)
     {
-        cout << " " << widths[i];
+        cout << " " << heights[i];
     }
-    cout << endl;
-    return 0;
+    cout << endl;*/
+    long long ans = 0;
+    for(int i = 0; i < widths.size(); i ++){
+        ans += widths[i] * heights[i];
+    }
+    return ans;
 }
 int main(int argc, const char **argv)
 {
     cin >> N;
-    int x1, x2, height;
+    long long x1, x2, height;
     for (int i = 0; i < N; i++)
     {
         cin >> x1 >> x2 >> height;
