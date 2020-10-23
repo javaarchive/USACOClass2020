@@ -14,11 +14,14 @@ vector<pair<int,int>> cows;
 int N;
 int totalTypes;
 set<int> typeset;
-bool works(int range){
+bool works(const int& range){
     int types = 0;
     map<int,int> freq;
     //freq[0] ++;
     int toprange = 0;
+    if((range + 1) < totalTypes){
+        return false; // can we even squish cows?
+    }
     //cout << "INIT " << freq[0] << endl; 
     for(int i = 0; i < cows.size(); i ++){
         int bottom = cows[i].first;
@@ -48,6 +51,7 @@ bool works(int range){
             return true;
         }
     }
+    
     return false;
 }
 bool cmp(const pair<int, int>&i, const pair<int, int>&j) 
@@ -68,11 +72,17 @@ int solve(){
         if(mWorks && !bWorks){
             return m;
         }else if(mWorks && bWorks){
-            r = m + 1;
+            r = m;
+            if(l == r){
+                break;
+            }
         }else if(mWorks){
-            r = m + 1;
+            r = m;
+            if(l == r){
+                break;
+            }
         }else{
-            l = m - 1;
+            l = m + 1;
         }
     }
     return 50000;
@@ -86,6 +96,10 @@ int main(int argc, const char** argv) {
         minp = min(minp, a);
         cows.push_back(make_pair(a,b));
         typeset.insert(b);
+    }
+    if(N == totalTypes){
+        cout << maxp - minp << endl;
+        return 0;
     }
     totalTypes = typeset.size();
     cout << solve();
