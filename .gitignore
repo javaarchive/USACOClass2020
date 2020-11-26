@@ -95,3 +95,14 @@ node_modules/*
 *.sh
 *.exe
 .exe
+*.obj
+a.out
+a.exe
+*.code-workspace
+*.sqlite
+*.db
+*.sqlite3
+.vs/*
+.vs
+.sqlite3
+.sqlite

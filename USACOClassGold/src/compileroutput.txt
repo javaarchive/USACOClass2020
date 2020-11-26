@@ -1,0 +1,126 @@
+In file included from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/unordered_map:46,
+                 from mst2.cpp:7:
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable.h: In instantiation of 'class std::_Hashtable<std::pair<int, int>, std::pair<const std::pair<int, int>, int>, std::allocator<std::pair<const std::pair<int, int>, int> >, std::__detail::_Select1st, std::equal_to<std::pair<int, int> >, std::hash<std::pair<int, int> >, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<true, false, true> >':
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/unordered_map.h:105:18:   required from 'class std::unordered_map<std::pair<int, int>, int>'
+mst2.cpp:12:35:   required from here
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable.h:195:21: error: static assertion failed: hash function must be invocable with an argument of key type
+       static_assert(__is_invocable<const _H1&, const _Key&>{},
+                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+mst2.cpp:12:35: error: use of deleted function 'std::unordered_map<_Key, _Tp, _Hash, _Pred, _Alloc>::unordered_map() [with _Key = std::pair<int, int>; _Tp = int; _Hash = std::hash<std::pair<int, int> >; _Pred = std::equal_to<std::pair<int, int> >; _Alloc = std::allocator<std::pair<const std::pair<int, int>, int> >]'
+ unordered_map<pair<int,int>, int> lookup;
+                                   ^~~~~~
+In file included from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/unordered_map:47,
+                 from mst2.cpp:7:
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/unordered_map.h:141:7: note: 'std::unordered_map<_Key, _Tp, _Hash, _Pred, _Alloc>::unordered_map() [with _Key = std::pair<int, int>; _Tp = int; _Hash = std::hash<std::pair<int, int> >; _Pred = std::equal_to<std::pair<int, int> >; _Alloc = std::allocator<std::pair<const std::pair<int, int>, int> >]' is implicitly deleted because the default definition would be ill-formed:
+       unordered_map() = default;
+       ^~~~~~~~~~~~~
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/unordered_map.h:141:7: error: use of deleted function 'std::_Hashtable<_Key, _Value, _Alloc, _ExtractKey, _Equal, _H1, _H2, _Hash, _RehashPolicy, _Traits>::_Hashtable() [with _Key = std::pair<int, int>; _Value = std::pair<const std::pair<int, int>, int>; _Alloc = std::allocator<std::pair<const std::pair<int, int>, int> >; _ExtractKey = std::__detail::_Select1st; _Equal = std::equal_to<std::pair<int, int> >; _H1 = std::hash<std::pair<int, int> >; _H2 = std::__detail::_Mod_range_hashing; _Hash = std::__detail::_Default_ranged_hash; _RehashPolicy = std::__detail::_Prime_rehash_policy; _Traits = std::__detail::_Hashtable_traits<true, false, true>]'
+In file included from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/unordered_map:46,
+                 from mst2.cpp:7:
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable.h:413:7: note: 'std::_Hashtable<_Key, _Value, _Alloc, _ExtractKey, _Equal, _H1, _H2, _Hash, _RehashPolicy, _Traits>::_Hashtable() [with _Key = std::pair<int, int>; _Value = std::pair<const std::pair<int, int>, int>; _Alloc = std::allocator<std::pair<const std::pair<int, int>, int> >; _ExtractKey = std::__detail::_Select1st; _Equal = std::equal_to<std::pair<int, int> >; _H1 = std::hash<std::pair<int, int> >; _H2 = std::__detail::_Mod_range_hashing; _Hash = std::__detail::_Default_ranged_hash; _RehashPolicy = std::__detail::_Prime_rehash_policy; _Traits = std::__detail::_Hashtable_traits<true, false, true>]' is implicitly deleted because the default definition would be ill-formed:
+       _Hashtable() = default;
+       ^~~~~~~~~~
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable.h:413:7: error: use of deleted function 'std::__detail::_Hashtable_base<_Key, _Value, _ExtractKey, _Equal, _H1, _H2, _Hash, _Traits>::_Hashtable_base() [with _Key = std::pair<int, int>; _Value = std::pair<const std::pair<int, int>, int>; _ExtractKey = std::__detail::_Select1st; _Equal = std::equal_to<std::pair<int, int> >; _H1 = std::hash<std::pair<int, int> >; _H2 = std::__detail::_Mod_range_hashing; _Hash = std::__detail::_Default_ranged_hash; _Traits = std::__detail::_Hashtable_traits<true, false, true>]'
+In file included from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable.h:35,
+                 from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/unordered_map:46,
+                 from mst2.cpp:7:
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable_policy.h:1824:5: note: 'std::__detail::_Hashtable_base<_Key, _Value, _ExtractKey, _Equal, _H1, _H2, _Hash, _Traits>::_Hashtable_base() [with _Key = std::pair<int, int>; _Value = std::pair<const std::pair<int, int>, int>; _ExtractKey = std::__detail::_Select1st; _Equal = std::equal_to<std::pair<int, int> >; _H1 = std::hash<std::pair<int, int> >; _H2 = std::__detail::_Mod_range_hashing; _Hash = std::__detail::_Default_ranged_hash; _Traits = std::__detail::_Hashtable_traits<true, false, true>]' is implicitly deleted because the default definition would be ill-formed:
+     _Hashtable_base() = default;
+     ^~~~~~~~~~~~~~~
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable_policy.h:1824:5: error: use of deleted function 'std::__detail::_Hash_code_base<_Key, _Value, _ExtractKey, _H1, _H2, std::__detail::_Default_ranged_hash, true>::_Hash_code_base() [with _Key = std::pair<int, int>; _Value = std::pair<const std::pair<int, int>, int>; _ExtractKey = std::__detail::_Select1st; _H1 = std::hash<std::pair<int, int> >; _H2 = std::__detail::_Mod_range_hashing]'
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable_policy.h:1379:7: note: 'std::__detail::_Hash_code_base<_Key, _Value, _ExtractKey, _H1, _H2, std::__detail::_Default_ranged_hash, true>::_Hash_code_base() [with _Key = std::pair<int, int>; _Value = std::pair<const std::pair<int, int>, int>; _ExtractKey = std::__detail::_Select1st; _H1 = std::hash<std::pair<int, int> >; _H2 = std::__detail::_Mod_range_hashing]' is implicitly deleted because the default definition would be ill-formed:
+       _Hash_code_base() = default;
+       ^~~~~~~~~~~~~~~
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable_policy.h:1379:7: error: use of deleted function 'std::__detail::_Hashtable_ebo_helper<_Nm, _Tp, true>::_Hashtable_ebo_helper() [with int _Nm = 1; _Tp = std::hash<std::pair<int, int> >]'
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable_policy.h:1106:7: note: 'std::__detail::_Hashtable_ebo_helper<_Nm, _Tp, true>::_Hashtable_ebo_helper() [with int _Nm = 1; _Tp = std::hash<std::pair<int, int> >]' is implicitly deleted because the default definition would be ill-formed:
+       _Hashtable_ebo_helper() = default;
+       ^~~~~~~~~~~~~~~~~~~~~
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable_policy.h:1106:7: error: use of deleted function 'std::hash<std::pair<int, int> >::hash()'
+In file included from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/basic_string.h:6587,
+                 from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/string:52,
+                 from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/locale_classes.h:40,
+                 from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/ios_base.h:41,
+                 from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ios:42,
+                 from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ostream:38,
+                 from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/iostream:39,
+                 from mst2.cpp:1:
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/functional_hash.h:101:12: note: 'std::hash<std::pair<int, int> >::hash()' is implicitly deleted because the default definition would be ill-formed:
+     struct hash : __hash_enum<_Tp>
+            ^~~~
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/functional_hash.h:101:12: error: no matching function for call to 'std::__hash_enum<std::pair<int, int>, false>::__hash_enum()'
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/functional_hash.h:82:7: note: candidate: 'std::__hash_enum<_Tp, <anonymous> >::__hash_enum(std::__hash_enum<_Tp, <anonymous> >&&) [with _Tp = std::pair<int, int>; bool <anonymous> = false]'
+       __hash_enum(__hash_enum&&);
+       ^~~~~~~~~~~
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/functional_hash.h:82:7: note:   candidate expects 1 argument, 0 provided
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/functional_hash.h:101:12: error: 'std::__hash_enum<_Tp, <anonymous> >::~__hash_enum() [with _Tp = std::pair<int, int>; bool <anonymous> = false]' is private within this context
+     struct hash : __hash_enum<_Tp>
+            ^~~~
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/functional_hash.h:83:7: note: declared private here
+       ~__hash_enum();
+       ^
+In file included from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable.h:35,
+                 from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/unordered_map:46,
+                 from mst2.cpp:7:
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable_policy.h:1106:7: error: use of deleted function 'std::hash<std::pair<int, int> >::~hash()'
+       _Hashtable_ebo_helper() = default;
+       ^~~~~~~~~~~~~~~~~~~~~
+In file included from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/basic_string.h:6587,
+                 from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/string:52,
+                 from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/locale_classes.h:40,
+                 from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/ios_base.h:41,
+                 from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ios:42,
+                 from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/ostream:38,
+                 from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/iostream:39,
+                 from mst2.cpp:1:
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/functional_hash.h:101:12: note: 'std::hash<std::pair<int, int> >::~hash()' is implicitly deleted because the default definition would be ill-formed:
+     struct hash : __hash_enum<_Tp>
+            ^~~~
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/functional_hash.h:101:12: error: 'std::__hash_enum<_Tp, <anonymous> >::~__hash_enum() [with _Tp = std::pair<int, int>; bool <anonymous> = false]' is private within this context
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/functional_hash.h:83:7: note: declared private here
+       ~__hash_enum();
+       ^
+In file included from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable.h:35,
+                 from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/unordered_map:46,
+                 from mst2.cpp:7:
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable_policy.h:1379:7: error: use of deleted function 'std::__detail::_Hashtable_ebo_helper<1, std::hash<std::pair<int, int> >, true>::~_Hashtable_ebo_helper()'
+       _Hash_code_base() = default;
+       ^~~~~~~~~~~~~~~
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable_policy.h:1103:12: note: 'std::__detail::_Hashtable_ebo_helper<1, std::hash<std::pair<int, int> >, true>::~_Hashtable_ebo_helper()' is implicitly deleted because the default definition would be ill-formed:
+     struct _Hashtable_ebo_helper<_Nm, _Tp, true>
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable_policy.h:1103:12: error: use of deleted function 'std::hash<std::pair<int, int> >::~hash()'
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable_policy.h:1824:5: error: use of deleted function 'std::__detail::_Hash_code_base<std::pair<int, int>, std::pair<const std::pair<int, int>, int>, std::__detail::_Select1st, std::hash<std::pair<int, int> >, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, true>::~_Hash_code_base()'
+     _Hashtable_base() = default;
+     ^~~~~~~~~~~~~~~
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable_policy.h:1352:12: note: 'std::__detail::_Hash_code_base<std::pair<int, int>, std::pair<const std::pair<int, int>, int>, std::__detail::_Select1st, std::hash<std::pair<int, int> >, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, true>::~_Hash_code_base()' is implicitly deleted because the default definition would be ill-formed:
+     struct _Hash_code_base<_Key, _Value, _ExtractKey, _H1, _H2,
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       _Default_ranged_hash, true>
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable_policy.h:1352:12: error: use of deleted function 'std::__detail::_Hashtable_ebo_helper<1, std::hash<std::pair<int, int> >, true>::~_Hashtable_ebo_helper()'
+In file included from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/unordered_map:46,
+                 from mst2.cpp:7:
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable.h:413:7: error: use of deleted function 'std::__detail::_Hashtable_base<std::pair<int, int>, std::pair<const std::pair<int, int>, int>, std::__detail::_Select1st, std::equal_to<std::pair<int, int> >, std::hash<std::pair<int, int> >, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<true, false, true> >::~_Hashtable_base()'
+       _Hashtable() = default;
+       ^~~~~~~~~~
+In file included from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable.h:35,
+                 from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/unordered_map:46,
+                 from mst2.cpp:7:
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable_policy.h:1772:10: note: 'std::__detail::_Hashtable_base<std::pair<int, int>, std::pair<const std::pair<int, int>, int>, std::__detail::_Select1st, std::equal_to<std::pair<int, int> >, std::hash<std::pair<int, int> >, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<true, false, true> >::~_Hashtable_base()' is implicitly deleted because the default definition would be ill-formed:
+   struct _Hashtable_base
+          ^~~~~~~~~~~~~~~
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable_policy.h:1772:10: error: use of deleted function 'std::__detail::_Hash_code_base<std::pair<int, int>, std::pair<const std::pair<int, int>, int>, std::__detail::_Select1st, std::hash<std::pair<int, int> >, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, true>::~_Hash_code_base()'
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable_policy.h: In instantiation of 'std::__detail::_Hash_code_base<_Key, _Value, _ExtractKey, _H1, _H2, std::__detail::_Default_ranged_hash, true>::__hash_code std::__detail::_Hash_code_base<_Key, _Value, _ExtractKey, _H1, _H2, std::__detail::_Default_ranged_hash, true>::_M_hash_code(const _Key&) const [with _Key = std::pair<int, int>; _Value = std::pair<const std::pair<int, int>, int>; _ExtractKey = std::__detail::_Select1st; _H1 = std::hash<std::pair<int, int> >; _H2 = std::__detail::_Mod_range_hashing; std::__detail::_Hash_code_base<_Key, _Value, _ExtractKey, _H1, _H2, std::__detail::_Default_ranged_hash, true>::__hash_code = long long unsigned int]':
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable.h:1468:19:   required from 'std::_Hashtable<_Key, _Value, _Alloc, _ExtractKey, _Equal, _H1, _H2, _Hash, _RehashPolicy, _Traits>::size_type std::_Hashtable<_Key, _Value, _Alloc, _ExtractKey, _Equal, _H1, _H2, _Hash, _RehashPolicy, _Traits>::count(const key_type&) const [with _Key = std::pair<int, int>; _Value = std::pair<const std::pair<int, int>, int>; _Alloc = std::allocator<std::pair<const std::pair<int, int>, int> >; _ExtractKey = std::__detail::_Select1st; _Equal = std::equal_to<std::pair<int, int> >; _H1 = std::hash<std::pair<int, int> >; _H2 = std::__detail::_Mod_range_hashing; _Hash = std::__detail::_Default_ranged_hash; _RehashPolicy = std::__detail::_Prime_rehash_policy; _Traits = std::__detail::_Hashtable_traits<true, false, true>; std::_Hashtable<_Key, _Value, _Alloc, _ExtractKey, _Equal, _H1, _H2, _Hash, _RehashPolicy, _Traits>::size_type = long long unsigned int; std::_Hashtable<_Key, _Value, _Alloc, _ExtractKey, _Equal, _H1, _H2, _Hash, _RehashPolicy, _Traits>::key_type = std::pair<int, int>]'
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/unordered_map.h:942:30:   required from 'std::unordered_map<_Key, _Tp, _Hash, _Pred, _Alloc>::size_type std::unordered_map<_Key, _Tp, _Hash, _Pred, _Alloc>::count(const key_type&) const [with _Key = std::pair<int, int>; _Tp = int; _Hash = std::hash<std::pair<int, int> >; _Pred = std::equal_to<std::pair<int, int> >; _Alloc = std::allocator<std::pair<const std::pair<int, int>, int> >; std::unordered_map<_Key, _Tp, _Hash, _Pred, _Alloc>::size_type = long long unsigned int; std::unordered_map<_Key, _Tp, _Hash, _Pred, _Alloc>::key_type = std::pair<int, int>]'
+mst2.cpp:28:38:   required from here
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable_policy.h:1387:23: error: no match for call to '(const std::hash<std::pair<int, int> >) (const std::pair<int, int>&)'
+       { return _M_h1()(__k); }
+                ~~~~~~~^~~~~
+In file included from C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/unordered_map:46,
+                 from mst2.cpp:7:
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable.h: In instantiation of 'std::_Hashtable<_Key, _Value, _Alloc, _ExtractKey, _Equal, _H1, _H2, _Hash, _RehashPolicy, _Traits>::~_Hashtable() [with _Key = std::pair<int, int>; _Value = std::pair<const std::pair<int, int>, int>; _Alloc = std::allocator<std::pair<const std::pair<int, int>, int> >; _ExtractKey = std::__detail::_Select1st; _Equal = std::equal_to<std::pair<int, int> >; _H1 = std::hash<std::pair<int, int> >; _H2 = std::__detail::_Mod_range_hashing; _Hash = std::__detail::_Default_ranged_hash; _RehashPolicy = std::__detail::_Prime_rehash_policy; _Traits = std::__detail::_Hashtable_traits<true, false, true>]':
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/unordered_map.h:102:11:   required from here
+C:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/hashtable.h:1373:5: error: use of deleted function 'std::__detail::_Hashtable_base<std::pair<int, int>, std::pair<const std::pair<int, int>, int>, std::__detail::_Select1st, std::equal_to<std::pair<int, int> >, std::hash<std::pair<int, int> >, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Hashtable_traits<true, false, true> >::~_Hashtable_base()'
+     }
+     ^

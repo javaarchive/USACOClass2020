@@ -2,6 +2,7 @@
 #include <queue>
 #include <utility>
 #include <limits>
+#define LIMIT 50001
 
 using namespace std;
 //                  Dist Node
@@ -10,7 +11,7 @@ priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> nextC
 int V, E, S;
 vector<int> distsFromSource;
 //          dist node
-vector<pair<int,int>> graph[2501];
+vector<pair<int,int>> graph[LIMIT];
 void solve(){
     for(int i = 0; i <= V; i ++){
         distsFromSource.push_back(INT32_MAX);
