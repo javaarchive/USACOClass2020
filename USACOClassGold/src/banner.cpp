@@ -14,6 +14,7 @@ long long dist(int x1, int y1, int x2, int y2){
 bool coprime(int a, int b){
    //cout << a << "," << b << endl;
     // hahaha std go brrr
+    if(a+b==1) return true;
     if(a == 0 || b == 0 && a != b){
         return false; // Just in case
     }
@@ -28,19 +29,17 @@ long long solve(){
             if(i == 0 && j == 0){
                 continue; // Just a point
             }
-            
             //cout << "Proc: "<< i << "," << j << endl;
-            if(coprime(abs(i),abs(j))){
+            if(coprime(i,j)){
                 long long eDist = dist(0,0,i,j);
                 //cout << "i: " << i << " j: " << j << " dist: " << setprecision(2) << eDist<< endl;
                 //cout << W << "  - " << i << endl;
                 if(l1 <= eDist && eDist <= l2){
-                    long long toAdd = (W - abs(i) + 1) * (H - abs(j) + 1);
-                    if(j != 0){
-                        toAdd = toAdd * 2;
-                    }
+                    long long toAdd = (W - i + 1) * (H - j + 1);
                     //cout << "Adding " << toAdd << endl;
                     ans += toAdd;
+                    if(i != 0 && j != 0)
+                        ans +=toAdd;
                 }
             }
         }
