@@ -37,6 +37,9 @@ void addCow(int i){
             if(pickedNewCereal[takenCow] == 0){
                 pickedNewCereal[takenCow] ++;
                 int newTkCow = takenIDs[tcow.second];
+                if(newTkCow > takenCow){
+                    break;
+                }
                 takenIDs[tcow.second] = takenCow;
                 takenCow = newTkCow;
                 if(takenCow == -1){
