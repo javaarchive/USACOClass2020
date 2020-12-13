@@ -23,8 +23,10 @@ void setIO(string s) {
     freopen((s + ".in").c_str(), "r", stdin);
     freopen((s + ".out").c_str(), "w", stdout);
 }
-map<int,vector<int>> X;
-map<int,vector<int>> Y;
+map<int,int> X;
+map<int,int> Y;
+map<int,long long> sumsX;
+map<int,long long> sumsY;
 Point points[100001];
 long long solve(){
     long long out = 0;
@@ -33,17 +35,15 @@ long long solve(){
         
         long long a = 0;
         long long b = 0;
-        vector<int> vx = X[p.y];
-        vector<int> vy = Y[p.x];
-        if(vx.size() <= 1 || vy.size() <= 1){
+        long long Xsum = sumsX[p.y];
+        long long Ysum = sumsY[p.x];
+        a = llabs(Xsum - (X[i] * p.x));
+        b = llabs(Ysum - (Y[i] * p.y));
+        //cout << a << "*" << b << endl;
+        /*if(X[p.y] <= 0 || Y[p.x] <= 0){
             continue;
-        }
-        for(auto j = vx.begin(); j != vx.end(); j ++){
-            a += (long long) abs(*j - p.x);
-        }
-        for(auto j = vy.begin(); j != vy.end(); j ++){
-            b += (long long) abs(*j - p.y);
-        }//              123456789
+        }*/
+        
         out += ((long long)(a * b))%(1000000000 + 7);
         //           123456789
         out = out %(1000000000 + 7);
@@ -57,19 +57,30 @@ int main(int argc, const char** argv) {
     for(int i = 0; i < N; i ++){
         Point p;
         cin >> p.x >> p.y;
-        p.x += 10001;
-        p.y += 10001;
+        //p.x += 10001;
+        //p.y += 10001;
+        sumsX[p.y] = 0;
+        sumsY[p.x] = 0;
+        X[p.x] = 0;
+        Y[p.y] = 0;
         points[i] = p;
     }
-    //sort(points, points + N);
     for(int i = 0; i < N; i ++){
-        X[points[i].y].push_back(points[i].x);
+        Point p = points[i];
+        sumsX[p.y] += p.x;
+        sumsY[p.x] += p.y;
+        X[p.y] ++;
+        Y[p.x] ++;
     }
-    useX = false;
+    //sort(points, points + N);
+    //for(int i = 0; i < N; i ++){
+        //X[points[i].y] ++;
+    //}
+    //useX = false;
      //sort(points, points + N);
-     for(int i = 0; i < N; i ++){
-        Y[points[i].x].push_back(points[i].y);
-    }
+     //for(int i = 0; i < N; i ++){
+       // Y[points[i].x] ++;
+    //}
     
    
     cout << (long long) solve();
