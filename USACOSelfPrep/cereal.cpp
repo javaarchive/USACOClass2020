@@ -12,6 +12,7 @@ int takenIDs[100001];
 int pickedNewCereal[100001] = {0};
 int hasCereal = 0;
 pair<int,int> cows[100001];
+int out[100001];
 void addCow(int i){
     pair<int,int> cow = cows[i];
     int oldCow = takenIDs[cow.first];
@@ -31,29 +32,27 @@ void addCow(int i){
                 cout << pickedNewCereal[i] << " ";
             }
             cout << endl;*/
-            if(takenCow == -1){
-                    break;
-                }
             if(pickedNewCereal[takenCow] == 0){
                 pickedNewCereal[takenCow] ++;
                 int newTkCow = takenIDs[tcow.second];
-                if(newTkCow > takenCow){
+               
+                if(newTkCow < takenCow && newTkCow != -1){
+                    hasCereal --;
                     break;
                 }
                 takenIDs[tcow.second] = takenCow;
                 takenCow = newTkCow;
-                if(takenCow == -1){
+                 if(newTkCow == -1){
                     break;
                 }
             }else{
-                pickedNewCereal[takenCow] ++;
+                //pickedNewCereal[takenCow] ++;
                 // Moo in disappointment
                 //cout << takenCow << " moos in disappointment" << endl;
-                hasCereal --;
                 if(takenCow == -1){
                     break;
                 }
-                
+                hasCereal --;
                 break;
             }
             
@@ -69,24 +68,24 @@ void addCow(int i){
     //takenIDs[cow.first] = i;
 }
 int main(){
-    setIO("cereal2");
+    setIO("cereal");
     cin >> N >> M;
     for(int i = 0; i < N; i ++){
         pair<int,int> p;
         cin >> p.first >> p.second;
         cows[i] = p;
     }
-    vector<int> out;
-    fill(pickedNewCereal, pickedNewCereal + 100001,0);
-    fill(takenIDs, takenIDs + 100001, -1);
+    //vector<int> out;
     
+    fill(takenIDs, takenIDs + 100001, -1);
     for(int i = 0; i < N; i ++){
         hasCereal ++;
         //cout << "add " << (N - i - 1) << endl;
-        addCow(N - i - 1); // Check if any cows get kicked off and if they do decrement
-        out.insert(out.begin(), hasCereal);
+        addCow(N - i - 1);
+        out[i] = hasCereal;
+       // out.insert(out.begin(), hasCereal);
     }
-    for(int i = 0; i < out.size(); i ++){
+    for(int i = N - 1; i >= 0; i --){
         cout << out[i] << endl;
     }
 }
