@@ -37,9 +37,12 @@ long long solve(){
         long long b = 0;
         long long Xsum = sumsX[p.y];
         long long Ysum = sumsY[p.x];
-        a = llabs(Xsum - (X[i] * p.x));
-        b = llabs(Ysum - (Y[i] * p.y));
-        //cout << a << "*" << b << endl;
+        a = (Xsum - (long long) ((X[p.x]) * (p.x)));
+        b = (Ysum - (long long) ((Y[p.y]) * (p.y)));
+        
+        //cout << Xsum << " - (" << Y[i] << " * " << p.x << " ) " << endl;
+        //cout << Ysum << " - (" << X[i] << " * " << p.y << " ) " << endl;
+        cout << a << "*" << b << endl;
         /*if(X[p.y] <= 0 || Y[p.x] <= 0){
             continue;
         }*/
@@ -57,8 +60,8 @@ int main(int argc, const char** argv) {
     for(int i = 0; i < N; i ++){
         Point p;
         cin >> p.x >> p.y;
-        //p.x += 10001;
-        //p.y += 10001;
+        p.x += 10001;
+        p.y += 10001;
         sumsX[p.y] = 0;
         sumsY[p.x] = 0;
         X[p.x] = 0;
@@ -69,8 +72,8 @@ int main(int argc, const char** argv) {
         Point p = points[i];
         sumsX[p.y] += p.x;
         sumsY[p.x] += p.y;
-        X[p.y] ++;
-        Y[p.x] ++;
+        X[p.x] ++;
+        Y[p.y] ++;
     }
     //sort(points, points + N);
     //for(int i = 0; i < N; i ++){
