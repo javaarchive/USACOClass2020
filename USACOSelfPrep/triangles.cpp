@@ -25,8 +25,12 @@ void setIO(string s) {
 }
 map<int,int> X;
 map<int,int> Y;
-map<int,long long> sumsX;
-map<int,long long> sumsY;
+//map<int,long long> sumsX;
+//map<int,long long> sumsY;
+map<int,int> maxX;
+map<int,int> maxY;
+map<int,int> minX;
+map<int,int> minY;
 Point points[100001];
 long long solve(){
     long long out = 0;
@@ -35,8 +39,8 @@ long long solve(){
         
         long long a = 0;
         long long b = 0;
-        long long Xsum = sumsX[p.y];
-        long long Ysum = sumsY[p.x];
+        //long long Xsum = sumsX[p.y];
+        //long long Ysum = sumsY[p.x];
         a = (Xsum - (long long) ((X[p.x]) * (p.x)));
         b = (Ysum - (long long) ((Y[p.y]) * (p.y)));
         
@@ -62,16 +66,22 @@ int main(int argc, const char** argv) {
         cin >> p.x >> p.y;
         p.x += 10001;
         p.y += 10001;
-        sumsX[p.y] = 0;
-        sumsY[p.x] = 0;
+        minX[p.y] = INT32_MAX;
+        minY[p.x] = INT32_MAX;
+        maxX[p.y] = INT32_MIN;
+        maxY[p.x] = INT32_MIN;
         X[p.x] = 0;
         Y[p.y] = 0;
         points[i] = p;
     }
     for(int i = 0; i < N; i ++){
         Point p = points[i];
-        sumsX[p.y] += p.x;
-        sumsY[p.x] += p.y;
+        //sumsX[p.y] += p.x;
+        //sumsY[p.x] += p.y;
+        minX[p.y] = min(minX[p.y],p.x);
+        minX[p.y] = min(minX[p.y],p.x);
+        minX[p.y] = min(minX[p.y],p.x);
+        minX[p.y] = min(minX[p.y],p.x);
         X[p.x] ++;
         Y[p.y] ++;
     }
