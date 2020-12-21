@@ -12,14 +12,12 @@ int myshinytable[] = {1,2,4,7,8,11,13,14,16,17,19,22,23,26,28,29};//31 32 34 37 
 //                    1 2 3 4 5 6  7  8  9  10 11 12 13 14 15 16    17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33
 int main(int argc, const char **argv)
 {
-    //setIO("moobuzz");
+    setIO("moobuzz");
     int len = sizeof(myshinytable)/sizeof(myshinytable[0]);
     int N;
     cin >> N;
     N --;
-    cout << ((myshinytable[(N)%8])) << " " << (((int)(N/8)) * 15) << endl;
-    cout << (myshinytable[(N)%8]) << " " << floor((N)/8) * 15 << endl;
-    cout << (myshinytable[(N)%8]) << " " << N/8 * 15;
+    cout << myshinytable[N%8] + N/8 * 15<< endl;
 
     return 0;
 }
