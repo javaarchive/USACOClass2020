@@ -33,18 +33,30 @@ int main(int argc, const char** argv) {
         //completionTimes.insert(cows[i].movingLeft?cows[i].pos:L-cows[i].pos);
     }
     sort(cows,cows + N, [](Cow a, Cow b){
-        int na = a.movingLeft?a.pos:L-a.pos;
-        int nb = b.movingLeft?b.pos:L-b.pos;
-        return na < nb;
+        return a.pos < b.pos;
     });
     int leftCursor = 0;
     for(int i = 0; i < N; i ++){
         if(cows[i].movingLeft){
             nCows[i].movingLeft = cows[i].movingLeft;
             nCows[i].weight = cows[i].weight;
-            nCows[i].pos = cows[leftCursors].pos;
+            nCows[i].pos = cows[leftCursor].pos;
             leftCursor ++;
         }
     }
+    int rightCursor = N - 1;
+    for(int i = 0; i < N; i ++){
+        if(!cows[i].movingLeft){
+            nCows[i].movingLeft = cows[i].movingLeft;
+            nCows[i].weight = cows[i].weight;
+            nCows[i].pos = cows[rightCursor].pos;
+            rightCursor --;
+        }
+    }
+    sort(nCows, nCows + N, [](Cow a,Cow b){
+        int na = a.movingLeft?a.pos:L-a.pos;
+        int nb = b.movingLeft?b.pos:L-b.pos;
+        return na < nb;
+    })
     return 0;
 }
