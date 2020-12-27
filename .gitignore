@@ -106,3 +106,5 @@ a.exe
 .vs
 .sqlite3
 .sqlite
+.in
+*.in
