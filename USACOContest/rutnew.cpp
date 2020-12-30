@@ -5,7 +5,7 @@
 using namespace std;
 int N;
 struct Point{
-    int x,y;
+    int x,y,id;
     bool equals(Point p2){
         return (x == p2.x) && (y == p2.y);
     }
@@ -29,6 +29,9 @@ struct DirVector{
         return (x == dv.x) && (y == dv.y);
     }
 };
+int XYdist(Point p, Point p2){
+    return abs(p.x - p2.x) + abs(p.y - p2.y);
+}
 vector<Point> east;
 vector<Point> north;
 vector<int> table;
@@ -42,15 +45,73 @@ void solve(){
     sort(east.begin(),east.end(), sortY);
     sort(north.begin(),north.end(), sortX);
     vector<bool> stopped;
+    vector<int> stoppedByID;
+    stoppedByID.resize(N);
+    for(int i = 0; i < N; i ++){
+        stoppedByID[i] = -1;
+    }
     stopped.resize(N);
+    
     for(int i = 0; i < east.size(); i ++){
+        bool breakOuter = false;
         for(int j = 0; j < north.size(); j ++){ // Start with closest few
+         cout << "Checking: " << east[i].x << "," << east[i].y << " and " << north[j].x << "," << north[j].y << endl;
             Point intersection;
-            if(stopped[i] || stopped[j]){
-                continue; // They do not touch
+            if(stopped[east[i].id]){
+                break; // PRUNE!
+                breakOuter = true;
             }
-            intersection.x = east[i].x;
-            intersection.y = north[i].y;
+            if(stopped[north[j].id]){
+                break;; // They do not touch
+            }
+            if(east[i].y < north[j].y){
+                continue; // They will not hit
+            }
+            if(north[j].x < east[i].x){
+                continue; // They will also not hit
+            }
+            intersection.x = north[j].x;
+            intersection.y = east[i].y;
+            int iDist = XYdist(intersection, east[i]);
+            int jDist = XYdist(intersection, north[j]);
+            //cout << "east dist: " << iDist << endl;
+            //cout << "north dist: " << jDist << endl;
+            if(iDist == jDist){
+                continue;
+            }
+            if(iDist < jDist){
+                cout << "Blaming east " << east[i].id << endl;
+                //table[east[i].id] ++;
+                stopped[north[j].id] = true;
+                stoppedByID[north[j].id] = east[i].id;
+                 int nextBlame = east[i].id;
+                while(true){
+                    table[nextBlame] ++;
+                    if(stoppedByID[nextBlame] < 0){
+                        break;
+                    }
+                    nextBlame = stoppedByID[nextBlame];
+                }
+            }else{
+                cout << "Blaming north " << north[j].id << endl;
+                //table[north[j].id] ++;
+                stopped[east[i].id] = true;
+                stoppedByID[east[i].id] = north[j].id;
+                int nextBlame = north[j].id;
+                while(true){
+                    table[nextBlame] ++;
+                    if(stoppedByID[nextBlame] < 0){
+                        break;
+                    }
+                    nextBlame = stoppedByID[nextBlame];
+                }
+            }
+            cout << east[i].x << "," << east[i].y << " intersecting with " << north[j].x << "," << north[j].y << endl;
+            
+           
+        }
+        if(breakOuter){
+            break;
         }
     }
 }
@@ -62,6 +123,7 @@ int main(int argc, const char** argv) {
         Point p;
         cin >> dtype;
         cin >> p.x >> p.y;
+        p.id = i;
         if(dtype == 'E'){
             east.push_back(p);
         }else{
