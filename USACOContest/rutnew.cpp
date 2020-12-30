@@ -101,19 +101,25 @@ void solve(){
             break;
         }
     }
-    //vector<bool> visited;
-    //visited.resize(N);
+    vector<bool> visited;
+    visited.resize(N);
     for(int i = 0; i < N; i ++){
         if(stoppedByID[i] < 0){
             continue;
         }
+        
         stack<int> next;
+        if(visited[stoppedByID[i]]){
+            continue;
+        }
         next.push(stoppedByID[i]);
+        visited[stoppedByID[i]] = true;
         while(!next.empty()){
             int node = next.top();
             next.pop();
             table[node] ++;
-            if(stoppedByID[node] >= 0){
+            if(stoppedByID[node] >= 0 || visited[node]){
+                visited[stoppedByID[node]] = true;
                 next.push(stoppedByID[node]);
             }
         }
