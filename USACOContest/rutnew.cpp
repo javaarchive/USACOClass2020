@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <stack>
 #include <algorithm>
 
 using namespace std;
@@ -55,7 +56,7 @@ void solve(){
     for(int i = 0; i < east.size(); i ++){
         bool breakOuter = false;
         for(int j = 0; j < north.size(); j ++){ // Start with closest few
-         cout << "Checking: " << east[i].x << "," << east[i].y << " and " << north[j].x << "," << north[j].y << endl;
+         // cout << "Checking: " << east[i].x << "," << east[i].y << " and " << north[j].x << "," << north[j].y << endl;
             Point intersection;
             if(stopped[east[i].id]){
                 break; // PRUNE!
@@ -80,38 +81,41 @@ void solve(){
                 continue;
             }
             if(iDist < jDist){
-                cout << "Blaming east " << east[i].id << endl;
+                //cout << "Blaming east " << east[i].id << endl;
                 //table[east[i].id] ++;
                 stopped[north[j].id] = true;
                 stoppedByID[north[j].id] = east[i].id;
-                 int nextBlame = east[i].id;
-                while(true){
-                    table[nextBlame] ++;
-                    if(stoppedByID[nextBlame] < 0){
-                        break;
-                    }
-                    nextBlame = stoppedByID[nextBlame];
-                }
+                 
             }else{
-                cout << "Blaming north " << north[j].id << endl;
+                //cout << "Blaming north " << north[j].id << endl;
                 //table[north[j].id] ++;
                 stopped[east[i].id] = true;
                 stoppedByID[east[i].id] = north[j].id;
-                int nextBlame = north[j].id;
-                while(true){
-                    table[nextBlame] ++;
-                    if(stoppedByID[nextBlame] < 0){
-                        break;
-                    }
-                    nextBlame = stoppedByID[nextBlame];
-                }
+                
             }
-            cout << east[i].x << "," << east[i].y << " intersecting with " << north[j].x << "," << north[j].y << endl;
+            //cout << east[i].x << "," << east[i].y << " intersecting with " << north[j].x << "," << north[j].y << endl;
             
            
         }
         if(breakOuter){
             break;
+        }
+    }
+    //vector<bool> visited;
+    //visited.resize(N);
+    for(int i = 0; i < N; i ++){
+        if(stoppedByID[i] < 0){
+            continue;
+        }
+        stack<int> next;
+        next.push(stoppedByID[i]);
+        while(!next.empty()){
+            int node = next.top();
+            next.pop();
+            table[node] ++;
+            if(stoppedByID[node] >= 0){
+                next.push(stoppedByID[node]);
+            }
         }
     }
 }
