@@ -5,8 +5,8 @@
 #define MAXN 7501
 using namespace std;
 int N,K;
-long long solve(){
-    vector<long long> weights;
+int solve(){
+    vector<int> weights;
     weights.resize(N);
     vector<bool> visited;
     visited.resize(N);
@@ -16,10 +16,10 @@ long long solve(){
     int startNode = 0;
     weights[startNode] = 0;
     //                  weight    id
-    priority_queue<pair<long long,int>> pq;
+    priority_queue<pair<int  ,int   >, vector<pair<int,int>>, greater<pair<int,int>>> pq;
     pq.push(make_pair(0, startNode));
     while(!pq.empty()){
-        pair<long long,int> p = pq.top();
+        pair<int,int> p = pq.top();
         pq.pop();
         int weight = p.first;
         int oldNode = p.second;
@@ -35,7 +35,9 @@ long long solve(){
                 continue;
             }
             //               2019201913x+2019201949y
-            long long newWeight = (((long long)2019201913)*((long long) (node+1)) + (((long long) 2019201949)*((long long) (i + 1)))) % 2019201997;
+            int a = min(node, i);
+            int b = max(node, i);
+            int newWeight = ((2019201913LL)*((long long) (a+1)) + ((2019201949LL)*((long long) (b + 1)))) % 2019201997;
             if(!visited[i]){
                 if(newWeight < weights[i]){
                     weights[i] = newWeight;
@@ -46,9 +48,9 @@ long long solve(){
         }
     }
     sort(weights.begin(), weights.end());
-    for(int i = 0; i < N; i ++){
+    /*for(int i = 0; i < N; i ++){
         cout << weights[i] << " ";
-    }
+    }*/
     return weights[K - 1];
 
 }
