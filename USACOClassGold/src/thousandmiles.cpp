@@ -17,7 +17,7 @@ int solve(){
     //weights[startNode] = 0;
     //                  weight    id
     priority_queue<pair<int  ,int   >, vector<pair<int,int>>, greater<pair<int,int>>> pq;
-    pq.push(make_pair(0, startNode));
+    pq.push(make_pair(weights[startNode], startNode));
     while(!pq.empty()){
         pair<int,int> p = pq.top();
         pq.pop();
