@@ -54,16 +54,14 @@ void solve(){
     stopped.resize(N);
     
     for(int i = 0; i < east.size(); i ++){
-        bool breakOuter = false;
         for(int j = 0; j < north.size(); j ++){ // Start with closest few
          // cout << "Checking: " << east[i].x << "," << east[i].y << " and " << north[j].x << "," << north[j].y << endl;
             Point intersection;
             if(stopped[east[i].id]){
-                break; // PRUNE!
-                breakOuter = true;
+                continue; // PRUNE!
             }
             if(stopped[north[j].id]){
-                break;; // They do not touch
+                continue; // They do not touch
             }
             if(east[i].y < north[j].y){
                 continue; // They will not hit
@@ -96,9 +94,6 @@ void solve(){
             //cout << east[i].x << "," << east[i].y << " intersecting with " << north[j].x << "," << north[j].y << endl;
             
            
-        }
-        if(breakOuter){
-            break;
         }
     }
     //vector<bool> visited;
