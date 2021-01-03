@@ -13,8 +13,8 @@ int solve(){
     for(int i = 0; i < N; i ++){
         weights[i] = INT32_MAX;
     }
-    int startNode = 0;
-    weights[startNode] = 0;
+    const int startNode = 0;
+    //weights[startNode] = 0;
     //                  weight    id
     priority_queue<pair<int  ,int   >, vector<pair<int,int>>, greater<pair<int,int>>> pq;
     pq.push(make_pair(0, startNode));
@@ -22,13 +22,7 @@ int solve(){
         pair<int,int> p = pq.top();
         pq.pop();
         int weight = p.first;
-        int oldNode = p.second;
-        int node = 0;
-        for(int i = 0; i < N; i ++){
-            if(!visited[i] && weights[node] > weights[i]){
-                node = i;
-            }
-        }
+        int node = p.second;
         visited[node] = true;
         for(int i = 0; i < N; i ++){
             if(node == i){
@@ -41,17 +35,18 @@ int solve(){
             if(!visited[i]){
                 if(newWeight < weights[i]){
                     weights[i] = newWeight;
-                    pq.push(make_pair(newWeight, node));
+                    pq.push(make_pair(newWeight, i));
                 }
             }
 
         }
     }
     sort(weights.begin(), weights.end());
+
     /*for(int i = 0; i < N; i ++){
         cout << weights[i] << " ";
     }*/
-    return weights[K - 1];
+    return weights[(N - K)];
 
 }
 int main(int argc, const char** argv) {
