@@ -67,7 +67,7 @@ int main(int argc, const char** argv) {
             if(i == node){
                 continue;
             }
-            if(firstSector[i] == false && (edges[node][i] || edges[i][node])){
+            if(graph[node][i] != INT32_MAX){
                 firstSector[i] = true;
                 toExplore.push(i);
             }
@@ -82,7 +82,7 @@ int main(int argc, const char** argv) {
             if(i == j){
                 continue;
             }
-            if(firstSector[i] != firstSector[j]){
+            if(graph[i][j] == INT32_MAX){
                 continue;
             }
             mx[i] = max(mx[i],graph[i][j]);
