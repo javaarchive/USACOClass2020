@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <queue>
 #define MAXN 151
+#define INF 100000000000LL
 
 using namespace std;
 int N;
@@ -25,7 +26,7 @@ int main(int argc, const char** argv) {
     }
     for(int i = 0; i < N; i ++){
         for(int j = 0; j < N; j ++){
-            graph[i][j] = INT32_MAX;
+            graph[i][j] = INF;
         }
     }
     string line;
@@ -38,7 +39,7 @@ int main(int argc, const char** argv) {
                 graph[i][j] = dist(coords[i], coords[j]);
                 edges[i][j] = true;
             }else{
-                graph[i][j] = INT32_MAX;
+                graph[i][j] = INF;
                 edges[i][j] = false;
             }
             // graph[i][j] = state;
@@ -55,23 +56,29 @@ int main(int argc, const char** argv) {
             }
         }
     }
-    bool firstSector[MAXN] = {false};
-    fill(firstSector, firstSector + MAXN, false);
-    firstSector[0] = true;
-    queue<int> toExplore;
-    toExplore.push(0);
-    while(!toExplore.empty()){
-        int node = toExplore.front();
-        toExplore.pop();
-        for(int i = 0; i < N; i ++){
-            if(i == node){
-                continue;
-            }
-            if(graph[node][i] != INT32_MAX){
-                firstSector[i] = true;
-                toExplore.push(i);
+    int sector[MAXN] = {0};
+    int nextID = 1;
+    int fd[MAXN];
+    for(int node = 0; node < N; node ++){
+        if(sector[node] != 0){
+            continue; // Node already explored;
+        }
+        queue<int> toExplore;
+        toExplore.push(node);
+        while(!toExplore.empty()){
+            int node = toExplore.front();
+            toExplore.pop();
+            for(int i = 0; i < N; i ++){
+                if(i == node){
+                    continue;
+                }
+                if(sector[i] == 0 && (graph[node][i] != INF)){
+                    sector[i] = nextID;
+                    toExplore.push(i);
+                }
             }
         }
+        nextID ++;
     }
     double minDiameter = __DBL_MAX__;
     //cout << "Iter";
@@ -82,21 +89,28 @@ int main(int argc, const char** argv) {
             if(i == j){
                 continue;
             }
-            if(graph[i][j] == INT32_MAX){
+            if((graph[i][j] + 0.0000001) >= INF){
                 continue;
             }
             mx[i] = max(mx[i],graph[i][j]);
+            mx[j] = max(mx[j],graph[i][j]);
         }
     }
     for(int i = 0; i < N; i ++){
-        if(firstSector[i] == false){
-            continue;
+        if(mx[i] > fd[sector[i]]){
+            fd[sector[i]] = mx[i];
         }
-        for(int j = i + 1; j < N; j ++){
-            //cout << i << "," << j << " -> " << graph[i][j] << endl;
-            if(firstSector[j]){
+    }
+    for(int i = 0; i < N; i ++){
+        for(int j = 0; j < N; j ++){
+            if(i == j){
                 continue;
             }
+            //cout << i << "," << j << " -> " << graph[i][j] << endl;
+            /*if(){
+                continue;
+            }*/
+            if((graph[i][j]+0.0000001) < INF) continue;
             /*if(edges[i][j]){
                 continue; // Edge already exists
             }*/
@@ -112,7 +126,10 @@ int main(int argc, const char** argv) {
             double maxLenA = mx[i];
             double maxLenB = mx[j];
             //cout << "Diamater calc: " << maxLenA << " + " << maxLenB << " + " << newLength << " -> " << (maxLenA + maxLenB + newLength) << endl;
-            minDiameter = min(minDiameter, maxLenA + maxLenB + newLength);
+            if((graph[i][j]+0.0000001)>=INF)
+            {
+                minDiameter = min(minDiameter, maxLenA + maxLenB + newLength);
+            }
             //if(newLength >= graph[i][j]){continue;}
             // Check distances to every other point
         }
