@@ -62,14 +62,13 @@ int main(int argc, const char **argv)
             }
         }
     }
-    
-    
+
     int visited[MAXN][MAXN];
-    for (int i = 0; i < N; i ++)
+    for (int i = 0; i < N; i++)
     {
         for (int j = 0; j < M; j++)
         {
-            visited[i][j] = -1;
+            visited[i][j] = INT32_MAX;
         }
     }
     queue<pair<int, pair<int, int>>> q;
@@ -85,10 +84,10 @@ int main(int argc, const char **argv)
         {
             int newx = p.first + dx[i];
             int newy = p.second + dy[i];
-           
+
             if (0 <= newx && newx < N && 0 <= newy && newy < M)
             {
-                 
+
                 if (grid[newx][newy] == 1 || grid[newx][newy] == 3 || grid[newx][newy] == 4)
                 {
                     // cout << "Travel to " << newx << "," << newy << endl;
@@ -98,33 +97,24 @@ int main(int argc, const char **argv)
                         q.push(make_pair(dist + 1, make_pair(newx, newy)));
                     }
                 }
-                
             }
         }
     }
-    cout << "Printing initial" << endl;
+    /*cout << "Printing initial" << endl;
     for(int i = 0; i < N; i ++){
         for(int j = 0; j < M; j ++){
             cout << visited[i][j] << " ";
         }
         cout << endl;
-    }
-    int visited2[MAXN][MAXN]; // Dist from nearest preexisting lilypad
-    for (int i = 0; i < N; i ++)
-    {
-        for (int j = 0; j < M; j++)
-        {
-            visited2[i][j] = -1;
-        }
-    }
+    }*/
+
     for (int i = 0; i < lilypads.size(); i++)
     {
         // cout << "lpad " << lilypads[i].first << " " << lilypads[i].second << endl;
         // q.push(make_pair(0, lilypads[i]));
         // visited2[lilypads[i].first][lilypads[i].second] = 0;
     }
-    q.push(make_pair(0,make_pair(sx,sy)));
-    visited2[sx][sy] = 0;
+    q.push(make_pair(0, make_pair(sx, sy)));
     bool solFound = false;
     int solUnits = -1;
     int minJumps = INT32_MAX;
@@ -142,39 +132,34 @@ int main(int argc, const char **argv)
             int newx = p.first + dx[i];
             int newy = p.second + dy[i];
             bool lilypadExistsAlready = (grid[newx][newy] == 1) || (grid[newx][newy] == 3) || ((grid[newx][newy] == 4));
-            int addDist = lilypadExistsAlready?0:1;
-            if(!(0 <= newx && newx < N && 0 <= newy && newy < M)){
+            int addDist = lilypadExistsAlready ? 0 : 1;
+            if (!(0 <= newx && newx < N && 0 <= newy && newy < M))
+            {
                 continue;
             }
-            if(visited2[newx][newy] != -1){
+            cout << "Explore: " << newx << "," << newy << endl;
+            if (visited[newx][newy] <= (visited[p.first][p.second] + addDist))
+            {
                 continue;
             }
-            cout << "Explore: "<< newx << "," << newy << endl;
-            if(visited[newx][newy] == -1){
-                visited[newx][newy] = visited[p.first][p.second] + addDist;
-                
-            }
-            visited2[newx][newy] = visited2[p.first][p.second] + addDist;
-            if(newx == fx && newy == fy){
-
+            visited[newx][newy] = visited[p.first][p.second] + addDist;
+            if (newx == fx && newy == fy)
+            {
                 solUnits = min(dist + addDist, solUnits);
                 minJumps = min(minJumps, visited[newx][newy]);
             }
-            q.push(make_pair(dist + 1, make_pair(newx,newy)));
+            q.push(make_pair(dist + 1, make_pair(newx, newy)));
+        }
+        for (int i = 0; i < N; i++)
+        {
+            for (int j = 0; j < M; j++)
+            {
+                cout << visited[i][j] << " ";
+            }
+            cout << endl;
         }
     }
-    for(int i = 0; i < N; i ++){
-        for(int j = 0; j < M; j ++){
-            cout << visited[i][j] << " ";
-        }
-        cout << endl;
-    }
-    for(int i = 0; i < N; i ++){
-        for(int j = 0; j < M; j ++){
-            cout << visited2[i][j] << " ";
-        }
-        cout << endl;
-    }
+
     cout << solUnits << endl;
     if (solUnits != -1)
     {
