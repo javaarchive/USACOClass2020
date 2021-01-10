@@ -151,10 +151,10 @@ int main(int argc, const char **argv)
             }
             cout << "Explore: "<< newx << "," << newy << endl;
             if(visited[newx][newy] == -1){
-                visited[newx][newy] = visited[p.first][p.second] + 1;
+                visited[newx][newy] = visited[p.first][p.second] + addDist;
                 
             }
-            visited2[newx][newy] = visited2[p.first][p.second] + 1;
+            visited2[newx][newy] = visited2[p.first][p.second] + addDist;
             if(newx == fx && newy == fy){
 
                 solUnits = min(dist + addDist, solUnits);
