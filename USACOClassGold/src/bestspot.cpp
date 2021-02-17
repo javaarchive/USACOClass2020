@@ -21,13 +21,17 @@ int solve(){
     for(int i = 0; i < P; i ++){
         double avg = 0;
         for(int j = 0; j < favorited.size(); j ++){
-            cout << i << " , " << favorited[j] << " : "<<matrix[i][favorited[j]] << endl;
-            avg += matrix[i][favorited[j]];
+            //cout << (i + 1) << " , " << (favorited[j] + 1) << " : "<< matrix[i][favorited[j]] << endl;
+            if(i == favorited[j]){
+                // add nothing
+            }else{
+                avg += matrix[i][favorited[j]];
+            }
             //cout << "New avg: " << avg << endl;
         }
-        cout << i << " : " << avg << endl;
+        //cout << i+1 << " : " << avg << endl;
         avg = avg/F;
-        cout << i << " : " << avg << endl;
+        //cout << i+1 << " : " << avg << endl;
         if(avg < best){
             bestPos = i;
             best = avg;
@@ -58,7 +62,7 @@ int main(int argc, const char** argv) {
         matrix[A][B] = dist;
         matrix[B][A] = dist;
     }
-    cout << (solve());
+    cout << (solve() + 1);
 
     return 0;
 }
