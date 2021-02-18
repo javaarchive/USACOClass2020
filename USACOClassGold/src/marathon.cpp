@@ -29,11 +29,11 @@ int main(int argc, const char** argv) {
     
     for(int l = 0; l < K; l ++){ // cur level
         for(int i = 0; i < N; i ++){ // position
-            for(int j = 1; j <= K - l; j ++){ // up K rows
-                if(i + l > N){
+            for(int j = 1; j <= K - l; j ++){ // up j rows
+                if(i + l >= N){
                     continue;
                 }
-                dp[l][i + l] = min(dp[l][i],dp[l][i + l]); // base code
+                dp[l + j][i + j] = min(dp[l][i],dp[l + j][i + j]); // base code
             }
         }
     }
