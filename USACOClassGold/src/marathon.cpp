@@ -5,6 +5,9 @@ int N,K;
 int dp[MAXN][MAXN]; // checkpoint,skipped
 pair<int,int> points[MAXN];
 int distTo[MAXN];
+int dist(pair<int,int> a, pair<int,int> b){
+    return abs(a.first - b.first) + abs(a.second - b.second);
+}
 int main(int argc, const char** argv) {
     int N,K;
     cin >> N >> K; 
@@ -14,9 +17,9 @@ int main(int argc, const char** argv) {
     }
     pair<int,int> last = points[0];
     int curDist = 0;
-    for(int i = 0; i <= N; i ++){
+    for(int i = 0; i <= K; i ++){
         for(int j = 0; j <= N; j ++){
-            dp[i][j] = INT32_MAX;
+            dp[i][j] = INT32_MAX/2;
         }
     }
     dp[0][0] = 0;
@@ -25,36 +28,27 @@ int main(int argc, const char** argv) {
         distTo[i] = AtoB;
         // cout << AtoB << endl;
         curDist += AtoB;
-        if(i == 1){
-            dp[0][i] = 0;
-            curDist -= AtoB;
-        }else{
-            dp[0][i] = curDist;
-        }
+        dp[0][i] = curDist;
         last = points[i];
     }
     
-    for(int i = 1 ; i <= K; i ++){
-        for(int j = 0; j < N; j ++){
-            if(j > 0 && !(dp[i][j] == INT32_MAX)){
-                dp[i][j] = dp[i][j - 1] + distTo[j];
-                cout << "overridden " <<  dp[i][j] << endl;
-            }
-            for(int k = 1; k <= i; k ++){
-                if((j - k) < 0){
-                    continue;
-                }
-                cout << dp[i][j] << " << " << dp[i - k][j - k] << endl;
-                dp[i][j] = min(dp[i][j],dp[i - k][j - k]);
-            }
+    for(int i = 0; i <= K; i++) {
+      for(int j = 0; j < N; j++) {
+        for(int l = j + 1; l < N && i + l - j - 1 <= K; l ++) {
+          int upI = i + (l - j - 1);
+          int upJ = l;
+          // cout << "Overrided " << upI << "," << upJ << " from " << i << "," << j << " : " << dp[i][j] << " + " << dist(points[j], points[l]) << endl;
+          dp[upI][upJ] = min(dp[upI][upJ], dp[i][j] + dist(points[j], points[l]));
         }
+      }
     }
-    for(int i = 0; i <= N; i ++){
+    cout << dp[K][N - 1];
+    /*for(int i = 0; i <= N; i ++){
         for(int j = 0; j <= N; j ++){
-            cout << ((dp[i][j] == INT32_MAX)?99:dp[i][j]) << " ";
+            cout << ((dp[i][j] == INT32_MAX/2)?99:dp[i][j]) << " ";
         }
         cout << endl;
-    }
+    }*/
     // char a;
     //cin >> a;
     return 0;
