@@ -141,7 +141,7 @@ int main(int argc, const char **argv)
     bool debug = true; //false;
     if (argc != 2)
     {
-        setIO("cowjump");
+        setIO("cowjump.11");
     }
     else
     {
@@ -165,14 +165,14 @@ int main(int argc, const char **argv)
             points[i].first.second = secondy;
         }
     }
-    cout << "Verifying intersection function..."<<endl;
+    /*cout << "Verifying intersection function..."<<endl;
     for(int i = 0; i < N; i ++){
         for(int j = i + 1; j < N; j ++){
             if(checkIntersect(i,j)){
                 cout << i << " and " << j << " intersect" << endl;
             }
         }
-    }
+    }*/
     vector<Endpoint> endpoints;
     set<int, decltype(crosscmp) *> cur(crosscmp);
     for (int i = 0; i < N; i++)
@@ -191,11 +191,44 @@ int main(int argc, const char **argv)
         endpoints.push_back(end);
     }
     sort(endpoints.begin(), endpoints.end(), [](Endpoint &a, Endpoint &b) {
+        if (a.index == b.index)
+        {
+            if (a.isStart)
+            {
+                return true; // put a first
+            }
+            else
+            {
+                return false; // put b first
+            }
+        }
         if (a.x == b.x)
         {
+            if (a.index == b.index)
+            {
+                if (a.isStart)
+                {
+                    return true; // put a first
+                }
+                else
+                {
+                    return false; // put b first
+                }
+            }
             if (a.y == b.y)
             {
-                return a.isStart && !b.isStart;
+                if (a.index == b.index)
+                {
+                    if (a.isStart)
+                    {
+                        return true; // put a first
+                    }
+                    else
+                    {
+                        return false; // put b first
+                    }
+                }
+                return (a.index < b.index);
             }
             return a.y < b.y;
         }
@@ -212,15 +245,21 @@ int main(int argc, const char **argv)
     });*/
     for (int i = 0; i < 2 * N; i++)
     {
+        if (debug)
+            cout << "Processing " << i << endl;
         Endpoint e = endpoints[i];
         curX = e.x;
         if (e.isStart)
         {
+            if (debug)
+                cout << "INSERT: " << e.index << endl;
             cur.insert(e.index);
-            set<int>::iterator lowiter = cur.upper_bound(e.index - 1);
-            set<int>::iterator highiter = cur.lower_bound(e.index + 1);
-            if (lowiter != cur.end())
+            set<int>::iterator epIter = cur.find(e.index);
+            set<int>::iterator lowiter = epIter;  // cur.upper_bound(e.index - 1);
+            set<int>::iterator highiter = epIter; // cur.lower_bound(e.index + 1);
+            if (lowiter != cur.begin())
             {
+                lowiter--;
                 if (checkIntersect(e.index, *lowiter) && checkedIntersects.find(make_pair(*lowiter, e.index)) == checkedIntersects.end())
                 {
                     if (debug)
@@ -230,10 +269,12 @@ int main(int argc, const char **argv)
                     checkedIntersects.insert(make_pair(*lowiter, e.index));
                 }
             }
-            if (highiter != cur.end() && !(lowiter == highiter) && checkedIntersects.find(make_pair(min(e.index, *highiter), max(e.index, *highiter))) == checkedIntersects.end())
+            if (!(lowiter == highiter) && checkedIntersects.find(make_pair(min(e.index, *highiter), max(e.index, *highiter))) == checkedIntersects.end())
             {
+                highiter++;
                 if (checkIntersect(e.index, *highiter))
                 {
+
                     if (debug)
                         cout << "2: " << e.index << " intersects with " << *highiter << endl;
                     intersects[*highiter]++;
@@ -244,9 +285,33 @@ int main(int argc, const char **argv)
         }
         else
         {
+
+            bool isEdge = false;
+            set<int>::iterator highiter = cur.find(e.index);
+            if (highiter == cur.end())
+            {
+                cout << "!!! Impossible Condition" << endl;
+                continue; // ! idk why but this is a temporary band aid
+            }
+            set<int>::iterator lowiter = highiter;
+            if (highiter == prev(cur.end()) || highiter == cur.begin())
+            {
+                isEdge = true;
+            }
+            else
+            {
+                highiter = next(highiter);
+                lowiter = prev(lowiter);
+            }
+            if (debug)
+                cout << "ERASE: " << e.index << endl;
             cur.erase(e.index);
-            set<int>::iterator highiter = cur.lower_bound(e.index + 1);
-            set<int>::iterator lowiter = cur.upper_bound(e.index - 1);
+            if (isEdge)
+            {
+                continue;
+            }
+            // set<int>::iterator highiter = cur.lower_bound(e.index + 1);
+            //= cur.upper_bound(e.index - 1);
             if (highiter != cur.end() && lowiter != cur.end())
             {
                 if (checkIntersect(*lowiter, *highiter) && checkedIntersects.find(make_pair(*lowiter, *highiter)) == checkedIntersects.end())
@@ -279,7 +344,7 @@ int main(int argc, const char **argv)
             maxPos = i;
         }
     }
-    cout << maxPos + 1 << endl;
+    cout << (maxPos + 1) << endl;
     /*for(int i = 0; i < N; i ++){
         cout << points[i].first.first << " " << points[i].first.second << " " << points[i].second.first << " " << points[i].second.second << endl;
     }*/
