@@ -3,6 +3,7 @@
 #include <set>
 #include <iterator>
 #include <vector>
+#include <cmath>
 #define MAXN 100001
 using namespace std;
 int N;
@@ -26,11 +27,14 @@ double getYat(double x1, double y1, double x2, double y2, double X)
 {
     if (x1 == x2)
     {
-        return 0;
+        return y1; // maybe this will work
     }
     return y1 + (((X - x1) * (y2 - y1)) / (x2 - x1));
 }
-
+bool dbleq(double a, double b)
+{
+    return fabs(a - b) < std::numeric_limits<double>::epsilon();
+}
 bool crosscmp(int a,
               int b)
 {
@@ -38,7 +42,16 @@ bool crosscmp(int a,
     {
         return false;
     }
-    return getYat(points[a].first.first, points[a].first.second, points[a].second.first, points[a].second.second, curX) < getYat(points[b].first.first, points[b].first.second, points[b].second.first, points[b].second.second, curX);
+    double ay = getYat(points[a].first.first, points[a].first.second, points[a].second.first, points[a].second.second, curX);
+    double by = getYat(points[b].first.first, points[b].first.second, points[b].second.first, points[b].second.second, curX);
+    /*if(points[a].first.first == points[a].second.first || points[b].first.first == points[b].second.first){
+        return false; // two equal numbers return false when < and vertical lines always intersect whereever you want
+    }
+    // cout << ay << " and " << by << endl;
+    if(dbleq(ay,by)){
+        return a < b;
+    }*/
+    return ay < by;
     //return a.y < b.y;
 }
 int orientation(pair<int, int> p, pair<int, int> q, pair<int, int> r)
@@ -138,10 +151,10 @@ bool checkIntersectOld(int a, int b)
 
 int main(int argc, const char **argv)
 {
-    bool debug = true; //false;
-    if (argc != 2)
+    bool debug = false; //false;
+    if (argc != 1)
     {
-        setIO("cowjump.11");
+        setIO("cowjump");
     }
     else
     {
@@ -245,8 +258,17 @@ int main(int argc, const char **argv)
     });*/
     for (int i = 0; i < 2 * N; i++)
     {
+
         if (debug)
             cout << "Processing " << i << endl;
+        cout << "! Cur Set Status ";
+        for(auto iter = cur.begin(); iter != cur.end(); iter ++){
+            cout << *iter << " ";
+        }
+        cout << endl;
+        if(cur.size() == 3){
+            cout << "breakpoint time" << endl;
+        }
         Endpoint e = endpoints[i];
         curX = e.x;
         if (e.isStart)
@@ -269,9 +291,9 @@ int main(int argc, const char **argv)
                     checkedIntersects.insert(make_pair(*lowiter, e.index));
                 }
             }
-            if (!(lowiter == highiter) && checkedIntersects.find(make_pair(min(e.index, *highiter), max(e.index, *highiter))) == checkedIntersects.end())
+            if (!(highiter != prev(cur.end())) && checkedIntersects.find(make_pair(min(e.index, *highiter), max(e.index, *highiter))) == checkedIntersects.end())
             {
-                highiter++;
+                highiter = next(highiter);
                 if (checkIntersect(e.index, *highiter))
                 {
 
@@ -290,7 +312,12 @@ int main(int argc, const char **argv)
             set<int>::iterator highiter = cur.find(e.index);
             if (highiter == cur.end())
             {
-                cout << "!!! Impossible Condition" << endl;
+                cout << "!!! Impossible Condition trying to erase " << e.index << " got " << endl;
+                cout << "Cur Set Status ";
+                for(auto iter = cur.begin(); iter != cur.end(); iter ++){
+                    cout << *iter << " ";
+                }
+                cout << endl;
                 continue; // ! idk why but this is a temporary band aid
             }
             set<int>::iterator lowiter = highiter;
@@ -300,20 +327,21 @@ int main(int argc, const char **argv)
             }
             else
             {
+                // advance
                 highiter = next(highiter);
                 lowiter = prev(lowiter);
             }
             if (debug)
                 cout << "ERASE: " << e.index << endl;
-            cur.erase(e.index);
+            cur.erase(cur.find(e.index));
             if (isEdge)
             {
                 continue;
             }
             // set<int>::iterator highiter = cur.lower_bound(e.index + 1);
             //= cur.upper_bound(e.index - 1);
-            if (highiter != cur.end() && lowiter != cur.end())
-            {
+            //if (highiter != cur.end() && lowiter != cur.begin())
+            //{
                 if (checkIntersect(*lowiter, *highiter) && checkedIntersects.find(make_pair(*lowiter, *highiter)) == checkedIntersects.end())
                 {
                     if (debug)
@@ -322,7 +350,7 @@ int main(int argc, const char **argv)
                     intersects[*highiter]++;
                     checkedIntersects.insert(make_pair(*lowiter, *highiter));
                 }
-            }
+            //}
         }
     }
     if (debug)
