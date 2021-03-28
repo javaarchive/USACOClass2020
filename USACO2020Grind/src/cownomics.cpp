@@ -40,6 +40,8 @@ int main(int argc, const char** argv) {
                 for(int l = 0; l < N; l ++){
                     plainFingerprints.push_back(integerize(plain[l][i],plain[l][j],plain[l][k]));
                 }
+                sort(spottyFingerprints.begin(),spottyFingerprints.end());
+                sort(plainFingerprints.begin(), plainFingerprints.end());
                 set<int> intersect;
                 set_intersection(spottyFingerprints.begin(), spottyFingerprints.end(), plainFingerprints.begin(), plainFingerprints.end(),
                  std::inserter(intersect, intersect.begin()));
