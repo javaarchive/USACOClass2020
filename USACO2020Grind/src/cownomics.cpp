@@ -19,7 +19,9 @@ void setIO(string s) {
     freopen((s + ".out").c_str(), "w", stdout);
 }
 int main(int argc, const char** argv) {
-    setIO("cownomics");
+    if(argc != 2){
+        setIO("cownomics");
+    }
     cin >> N >> M;
     for(int i = 0; i < N; i ++){
         cin >> spotty[i];
@@ -35,16 +37,18 @@ int main(int argc, const char** argv) {
                 vector<int> spottyFingerprints(N);
                 vector<int> plainFingerprints(N);
                 for(int l = 0; l < N; l ++){
-                    spottyFingerprints.push_back(integerize(spotty[l][i],spotty[l][j],spotty[l][k]));
+                    spottyFingerprints[l] = (integerize(spotty[l][i],spotty[l][j],spotty[l][k]));
                 }
                 for(int l = 0; l < N; l ++){
-                    plainFingerprints.push_back(integerize(plain[l][i],plain[l][j],plain[l][k]));
+                    plainFingerprints[l] = (integerize(plain[l][i],plain[l][j],plain[l][k]));
                 }
                 sort(spottyFingerprints.begin(),spottyFingerprints.end());
                 sort(plainFingerprints.begin(), plainFingerprints.end());
                 set<int> intersect;
                 set_intersection(spottyFingerprints.begin(), spottyFingerprints.end(), plainFingerprints.begin(), plainFingerprints.end(),
-                 std::inserter(intersect, intersect.begin()));
+                std::inserter(intersect, intersect.begin()));
+                //cout << i << " " << j << " " << k << " : " << intersect.size() << endl;
+                //cout << *intersect.begin() << endl;
                 if(intersect.size() == 0){
                     // No confusing
                     ans ++;
