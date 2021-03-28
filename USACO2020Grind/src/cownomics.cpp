@@ -31,13 +31,13 @@ int main(int argc, const char** argv) {
         for(int j = i + 1; j < M; j ++){
             for(int k = j + 1; k < M; k ++){
                 // Check for common pattern 
-                set<int> spottyFingerprints;
-                set<int> plainFingerprints;
+                vector<int> spottyFingerprints(N);
+                vector<int> plainFingerprints(N);
                 for(int l = 0; l < N; l ++){
-                    spottyFingerprints.insert(integerize(spotty[l][i],spotty[l][j],spotty[l][k]));
+                    spottyFingerprints.push_back(integerize(spotty[l][i],spotty[l][j],spotty[l][k]));
                 }
                 for(int l = 0; l < N; l ++){
-                    plainFingerprints.insert(integerize(plain[l][i],plain[l][j],plain[l][k]));
+                    plainFingerprints.push_back(integerize(plain[l][i],plain[l][j],plain[l][k]));
                 }
                 set<int> intersect;
                 set_intersection(spottyFingerprints.begin(), spottyFingerprints.end(), plainFingerprints.begin(), plainFingerprints.end(),
