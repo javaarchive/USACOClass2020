@@ -1,6 +1,7 @@
 #include <iostream>
 #include <set>
 #include <algorithm>
+#include <vector>
 #define MAXN 501
 #define MAXM 51
 using namespace std;
