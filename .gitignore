@@ -110,3 +110,5 @@ a.exe
 *.in
 a.exe
 .metadata
+JSystem/*
+JSystem
