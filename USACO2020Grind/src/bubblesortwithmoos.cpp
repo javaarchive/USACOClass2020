@@ -13,8 +13,8 @@ void setIO(string s) {
 int N;
 int unsorted[MAXN];
 int sorted[MAXN];
-int ps[MAXN];
-unordered_map<int,int> toSortedIndex;
+int ps[MAXN] = {0};
+map<int,int> toSortedIndex;
 
 int main(int argc, const char** argv) {
     if(argc != 2){
@@ -27,22 +27,32 @@ int main(int argc, const char** argv) {
         cin >> unsorted[i];
         sorted[i] = unsorted[i];
     }
+    for(int i = 0; i < N; i ++){
+        if(unsorted[i + 1] < unsorted[i]){
+            ps[i + 1] = ps[i] + 1;
+        }else{
+            ps[i + 1] = ps[i];
+        }
+    }
     sort(sorted, sorted + N);
     int farthestDist = 0;
     for(int i = 0; i < N; i ++){
         toSortedIndex[sorted[i]] = i;
     }
     for(int i = 0; i < N; i ++){
-        farthestDist = max(farthestDist, abs(toSortedIndex[unsorted[i]] - i));
+        int oIndex = toSortedIndex[unsorted[i]];
+        int dist = ps[max(oIndex, i)] - ps[min(oIndex, i)];
+        cout << "Swapping from " << oIndex << " to " << i << " takes " << dist << endl;
+        farthestDist = max(farthestDist, dist);
     }
-    /*for(int i = 0; i < N; i ++){
-        cout << sorted[i] << " ";
+    /*for(int i = 0; i <= N; i ++){
+        cout << ps[i] << " ";
     }
     cout << endl;
      for(int i = 0; i < N; i ++){
         cout << unsorted[i] << " ";
-    }
-    cout << endl;*/
+    }*/
+    //cout << endl;
     cout << farthestDist+1 << endl;
 
     return 0;
