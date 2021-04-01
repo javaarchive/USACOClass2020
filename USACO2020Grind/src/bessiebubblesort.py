@@ -1,4 +1,8 @@
-A = input("List? ").split(" ")
+#A = input("List? ").split(" ")
+N = int(input())
+A = []
+for x in range(N):
+    A.append(int(input()))
 sorted_ = False
 moos = 0
 while not sorted_:
