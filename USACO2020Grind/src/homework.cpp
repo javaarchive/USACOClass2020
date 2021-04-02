@@ -6,16 +6,6 @@ using namespace std;
 int N;
 int scores[MAXN];
 int lowest[MAXN];
-vector<pair<double,int>> answers;
-void setIO(string s) {
-    ios_base::sync_with_stdio(0); cin.tie(0);
-    freopen((s + ".in").c_str(), "r", stdin);
-    freopen((s + ".out").c_str(), "w", stdout);
-}
-bool dbleq(double a, double b, double epsilon = 0.01)
-{
-    return std::abs(a - b) < epsilon;
-}
 struct fraction{
     int a;
     int b;
@@ -31,7 +21,21 @@ struct fraction{
         }
         return ((a/b) < (right.a/right.b));
     }
+    bool operator ==(const fraction &right){
+        return a == right.a && b == right.b;
+    }
 };
+vector<pair<fraction,int>> answers;
+void setIO(string s) {
+    ios_base::sync_with_stdio(0); cin.tie(0);
+    freopen((s + ".in").c_str(), "r", stdin);
+    freopen((s + ".out").c_str(), "w", stdout);
+}
+bool dbleq(double a, double b, double epsilon = 0.01)
+{
+    return std::abs(a - b) < epsilon;
+}
+
 int main(int argc, const char** argv) {
     if(argc != 2){
         setIO("homework");
@@ -52,19 +56,19 @@ int main(int argc, const char** argv) {
         sum -= scores[i - 1];
         // cout << "((" << sum << " - " << lowest[i] << ") / " << (N - i - 1) << endl;
         // 1000000
-        double avg = ((((double) (sum - lowest[i]) * 1000000.0L))/((double) (N - i - 1)));
+        fraction avg((((double) (sum - lowest[i]) * 1000000.0L)),((double) (N - i - 1)));
         // cout << "Average  " << avg << " at removal of " << i << endl;
         answers.push_back(make_pair(avg,i));
     }
-    sort(answers.begin(), answers.end(),[](pair<double,int> a, pair<double,int> b){
-        if(dbleq(a.first,b.first)){
+    sort(answers.begin(), answers.end(),[](pair<fraction,int> a, pair<fraction,int> b){
+        if(a.first == b.first){
             return a.second < b.second;
         }
-        return a.first > b.first;
+        return b.first < a.first;
     });
-    double bestVal = (*answers.begin()).first;
+    fraction bestVal = (*answers.begin()).first;
     for(auto iter = answers.begin(); iter != answers.end(); iter ++){
-        if(dbleq(iter->first,bestVal)){
+        if(iter->first == bestVal){
             // cout << iter->first << " " << 
             cout << iter->second << endl;
         }else{
