@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#define MAXN 100001
+#define MAXN 10001
 using namespace std;
 int N;
 int scores[MAXN];
@@ -12,13 +12,13 @@ void setIO(string s) {
     freopen((s + ".in").c_str(), "r", stdin);
     freopen((s + ".out").c_str(), "w", stdout);
 }
-bool compare(long long aNum, long long aDen, long long bNum, long long bDen){
+bool compare(int aNum, int aDen, int bNum, int bDen){
     return (aNum*bDen > bNum*aDen);
 }
-bool compareRev(long long aNum, long long aDen, long long bNum, long long bDen){
+bool compareRev(int aNum, int aDen, int bNum, int bDen){
     return (aNum*bDen < bNum*aDen);
 }
-bool compareEq(long long aNum, long long aDen, long long bNum, long long bDen){
+bool compareEq(int aNum, int aDen, int bNum, int bDen){
     return (aNum*bDen == bNum*aDen);
 }
 int main(int argc, const char** argv) {
