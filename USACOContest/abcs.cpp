@@ -5,10 +5,9 @@
 using namespace std;
 vector<int> nums;
 set<tuple<int,int,int>> answers;
-bool checkSol(int pSum, int b, int c){
-    int a = pSum - b - c;
+bool checkSol(int a, int b, int c){
     // all positive integers
-    //cout << "Testing " << a << " " << b << " " << c << endl;
+    cout << "Testing " << a << " " << b << " " << c << endl;
     if(a > 0 && b > 0 && c > 0){
         // If this is a valid combination all of the input values should be one of the 2^3 - 1 combination
         set<int> combinations;
@@ -23,13 +22,13 @@ bool checkSol(int pSum, int b, int c){
         
         for(int i = 0; i < nums.size(); i ++){
             if(combinations.find(nums[i]) == combinations.end()){
-                //cout << "Fail to B" << endl;
+                cout << "Fail to B" << endl;
                 return false; 
             }
         }
         return true;
     }
-    //cout << "Fail to A" << endl;
+    cout << "Fail to A" << endl;
     return false;
 }
 tuple<int,int,int> make_sorted_tuple(int x, int y, int z){
@@ -43,36 +42,31 @@ void solve(){
     
     answers.clear();
     nums.clear();
-    // nums.resize(0);
-    nums.push_back(0);
+   
+
     for(int i = 0; i < N; i ++){
         int temp;
         cin >> temp;
         nums.push_back(temp);
     }
-    
+    nums.push_back(0);
 
     for(int i = 0; i < nums.size(); i ++){
         for(int j = i + 1; j < nums.size(); j ++){
             bool breakout = false;
             // One of these will sum to the sum
             int pSum = nums[i] + nums[j]; // Possible sum
-            // cout << i << " " << j << " lookup: " << nums[i] << " " << nums[j] << endl;
             set<int> possiblities;
             for(int term: nums){
-                // cout << "Iter " << term << endl;
+                //cout << "Iter" << endl;
                 if(term > pSum){
-                    // cout << "Skipped " << term << " A" << endl;
                     breakout = true;
                     break;
                 }
                 if(term == 0 || term == pSum){
-                    // cout << "Skipped " << term << " B" << endl;
                     continue;
                 }
-                possiblities.insert(min(term, pSum - term));
-                //possiblities.insert(pSum);
-                //possiblities.insert(pSum - term);
+                possiblities.insert(min(pSum, pSum - term));
             }
             if(breakout){
                 continue;
@@ -82,34 +76,34 @@ void solve(){
             /*if(possiblities.size() < 2){
                 continue;
             }*/
-            // cout << "pset ";
-            /*for(auto iter = possiblities.begin(); iter != possiblities.end(); iter++){
+            /*cout << "pset ";
+            for(auto iter = possiblities.begin(); iter != possiblities.end(); iter++){
                 cout << *iter << " ";
-            }*/
-            // cout << endl;
+            }
+            cout << endl;*/
             int a = *possiblities.begin();
             int b = *next(possiblities.begin());
-            // cout << a << " and " << b << " psum " << pSum << endl;
-            if(checkSol(pSum,a,b)){
+            cout << a << " and " << b << " psum " << pSum << endl;
+            if(checkSol(pSum - a - b ,a,b)){
                 answers.insert(make_sorted_tuple(pSum - a - b,a,b));
             }
-            if(checkSol(pSum, a, pSum - b)){
+            if(checkSol(b - a, a, pSum - b)){
                 answers.insert(make_sorted_tuple(b - a, a, pSum - b));
             }
-            /*if(checkSol(a - b, b, pSum - a)){
+            if(checkSol(a - b, b, pSum - a)){
                 answers.insert(make_sorted_tuple(a - b, b, pSum - a));
-            }*/
+            }
             
 
         }
     }
-    /*if(checkSol(nums[0],nums[1],nums[2])){ 
+    if(checkSol(nums[0],nums[1],nums[2])){ 
         answers.insert(make_sorted_tuple(nums[0],nums[1],nums[2]));
     }
     if(checkSol(nums[1],nums[2],nums[3])){
         answers.insert(make_sorted_tuple(nums[1],nums[2],nums[3]));
-    }*/
-    cout << answers.size() << endl;
+    }
+    cout << "Ans: " << answers.size() << endl;
 }
 int main(int argc, const char** argv) {
     int cases;
