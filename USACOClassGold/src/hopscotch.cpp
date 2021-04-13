@@ -1,8 +1,8 @@
 #include <iostream>
 using namespace std;
 int R,C,K;
-int grid[101][101];
-long long dp[101][101];
+int grid[1001][1001];
+long long dp[1001][1001];
 int main(){
     cin >> R >> C >> K;
     for(int i = 0; i < R; i ++){
@@ -21,16 +21,16 @@ int main(){
                     if(grid[i][j] == grid[x1][y1]){
                         continue;
                     }
-                    dp[i][j] += dp[x1][y1];
+                    dp[i][j] = (dp[i][j] + dp[x1][y1]) % 1000000007;
                 }
             }
         }
     }
-    for(int i = 0; i < R; i ++){
+    /*for(int i = 0; i < R; i ++){
         for(int j = 0; j < C; j ++){
             cout << dp[i][j] << " ";
         }
         cout << endl;
-    }
+    }*/
     cout << dp[R - 1][C - 1];
 }
