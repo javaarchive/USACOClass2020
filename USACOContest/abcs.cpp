@@ -5,9 +5,14 @@
 using namespace std;
 vector<int> nums;
 set<tuple<int,int,int>> answers;
+void setIO(string s) {
+    ios_base::sync_with_stdio(0); cin.tie(0);
+    freopen((s + ".in").c_str(), "r", stdin);
+    freopen((s + ".out").c_str(), "w", stdout);
+}
 bool checkSol(int a, int b, int c){
     // all positive integers
-    cout << "Testing " << a << " " << b << " " << c << endl;
+    //cout << "Testing " << a << " " << b << " " << c << endl;
     if(a > 0 && b > 0 && c > 0){
         // If this is a valid combination all of the input values should be one of the 2^3 - 1 combination
         set<int> combinations;
@@ -22,13 +27,13 @@ bool checkSol(int a, int b, int c){
         
         for(int i = 0; i < nums.size(); i ++){
             if(combinations.find(nums[i]) == combinations.end()){
-                cout << "Fail to B" << endl;
+                //cout << "Fail to B" << endl;
                 return false; 
             }
         }
         return true;
     }
-    cout << "Fail to A" << endl;
+    //cout << "Fail to A" << endl;
     return false;
 }
 tuple<int,int,int> make_sorted_tuple(int x, int y, int z){
@@ -66,7 +71,7 @@ void solve(){
                 if(term == 0 || term == pSum){
                     continue;
                 }
-                possiblities.insert(min(pSum, pSum - term));
+                possiblities.insert(min(term, pSum - term));
             }
             if(breakout){
                 continue;
@@ -83,7 +88,7 @@ void solve(){
             cout << endl;*/
             int a = *possiblities.begin();
             int b = *next(possiblities.begin());
-            cout << a << " and " << b << " psum " << pSum << endl;
+            // cout << a << " and " << b << " psum " << pSum << endl;
             if(checkSol(pSum - a - b ,a,b)){
                 answers.insert(make_sorted_tuple(pSum - a - b,a,b));
             }
@@ -103,9 +108,10 @@ void solve(){
     if(checkSol(nums[1],nums[2],nums[3])){
         answers.insert(make_sorted_tuple(nums[1],nums[2],nums[3]));
     }
-    cout << "Ans: " << answers.size() << endl;
+    cout << answers.size() << endl;
 }
 int main(int argc, const char** argv) {
+    // setIO("")
     int cases;
     cin >> cases;
     for(int i = 0; i < cases; i ++){
