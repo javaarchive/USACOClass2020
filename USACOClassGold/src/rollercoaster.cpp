@@ -1,9 +1,9 @@
 #include <iostream>
 #include <tuple>
 #include <algorithm>
-#define MAXN 10001
-#define MAXB 1001
-#define MAXL 1001
+#define MAXN 10002
+#define MAXB 1002
+#define MAXL 1002
 using namespace std;
 // DP dimensions, position and cost
 int dp[MAXL][MAXB];
@@ -30,47 +30,35 @@ int main(int argc, const char** argv) {
         options[i].fun = fun;
     }
     sort(options, options + N, [](Component a, Component b){
-        if(a.fun == b.fun){
-            return a.cost < b.cost;
-        }
-        return a.fun > b.fun; // most fun first
+        //return a.minimumX < b.minimumX;
+        return (a.minimumX + a.length) < (b.minimumX + b.length); ;
     });
-    for(int i = 0; i <= L; i ++){
-        for(int j = 0; j <= MAXB; j ++){
-            dp[i][j] = -1; // best init value and nicest
+    for(int i = 0; i < N; i ++){
+        for(int j = 0; j <= B; j ++){
+            dp[i][j] = -1;
+        }
+    }
+    Component first = options[0];
+    for(int i = 0; i < N; i ++){
+        if(options[i].minimumX == (first.minimumX + first.length)){
+            dp[i][first.cost] = first.fun;
         }
     }
     dp[0][0] = 0;
-    for(int j = 0; j < B; j ++){
-        for(int i = 0; i < L; i ++){
-            if(dp[i][j] == -1){
-                continue;
-            }
-            for(int k = 0; k < N; k ++){
-                if(i < options[k].minimumX){
-                    continue;
+    for(int i = 0; i < N; i ++){
+        for(int j = 0; j < B; j ++){
+            if(dp[i][j] != -1){
+                if(){
+                    
                 }
-                int newCost = j + options[k].cost;
-                int newLength = i + options[k].length;
-                if(newCost > B || newLength > L){
-                    continue;
+                // Use this component
+                Component c = options[i];
+                int newCost = j + c.cost;
+                if(newCost <= B){
+                    dp[i + 1][newCost] = max(dp[i + 1][newCost], dp[i][j] + c.fun);
                 }
-                dp[newLength][newCost] = max(dp[newLength][newCost], dp[i][j] + options[k].fun);
             }
         }
     }
-    int best = -1;
-    for(int i = 0; i <= L; i ++){
-        for(int j = 0; j <= B; j ++){
-            best = max(dp[i][j],best);
-        }
-    }
-    for(int i = 0; i <= L; i ++){
-        for(int j = 0; j <= B; j ++){
-            cout << dp[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << best << endl;
     return 0;
 }
