@@ -1,1 +1,258 @@
-<mxfile host="app.diagrams.net" modified="2021-06-04T05:06:37.506Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36" version="14.7.4" etag="uNboPWMNwbx_ap8teI9e" type="github"><diagram id="Ynoxq1W2Wsek0Muvlr13">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2021-06-04T05:36:30.151Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36" etag="ZfCrHfESfbzo24MDStG5" version="14.7.4" type="github">
+  <diagram id="Ynoxq1W2Wsek0Muvlr13" name="Page-1">
+    <mxGraphModel dx="2746" dy="1007" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-2" target="Kvpef55A-tBzaGGSpbhi-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-2" value="Number Storage" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="160" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-4" target="Kvpef55A-tBzaGGSpbhi-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-8" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Kvpef55A-tBzaGGSpbhi-7">
+          <mxGeometry x="0.4909" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-4" target="Kvpef55A-tBzaGGSpbhi-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-11" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Kvpef55A-tBzaGGSpbhi-10">
+          <mxGeometry x="0.2129" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-4" value="Should the variable be a constant value" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="340" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-6" target="Kvpef55A-tBzaGGSpbhi-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-14" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Kvpef55A-tBzaGGSpbhi-13">
+          <mxGeometry x="0.6" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-6" target="Kvpef55A-tBzaGGSpbhi-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-6" value="Do you mind if the preprocesser just finds and replaces every occurence of the constant" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="210" y="480" width="190" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-9" target="Kvpef55A-tBzaGGSpbhi-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-21" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Kvpef55A-tBzaGGSpbhi-20">
+          <mxGeometry x="0.1053" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-22" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Kvpef55A-tBzaGGSpbhi-20">
+          <mxGeometry x="0.1053" y="5" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.667;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-9" target="Kvpef55A-tBzaGGSpbhi-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-9" value="Datatype Finding&lt;br&gt;Will this hold only integer values?" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="750" width="170" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-12" value="Use #define CONSTANTNAME VALUE" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="640" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-15" target="Kvpef55A-tBzaGGSpbhi-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-15" value="Use const &amp;lt;datatype&amp;gt; &amp;lt;varname&amp;gt; = &amp;lt;value&amp;gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="640" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-18" target="Kvpef55A-tBzaGGSpbhi-36">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-40" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Kvpef55A-tBzaGGSpbhi-38">
+          <mxGeometry x="0.5385" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-18" target="Kvpef55A-tBzaGGSpbhi-37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-41" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Kvpef55A-tBzaGGSpbhi-39">
+          <mxGeometry x="0.5487" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-18" value="High Percision Needed? (answer yes if you don&#39;t care about memory and don&#39;t know else)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="190" y="900" width="170" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-19" target="Kvpef55A-tBzaGGSpbhi-26">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-5" y="1040" />
+              <mxPoint x="205" y="1040" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-28" value="Just a bit over but under double that&lt;br&gt;I don&#39;t care about negatives" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Kvpef55A-tBzaGGSpbhi-27">
+          <mxGeometry x="0.0957" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-19" target="Kvpef55A-tBzaGGSpbhi-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-31" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Kvpef55A-tBzaGGSpbhi-30">
+          <mxGeometry x="-0.3882" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-19" target="Kvpef55A-tBzaGGSpbhi-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-35" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Kvpef55A-tBzaGGSpbhi-33">
+          <mxGeometry x="0.1" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-19" value="Greater than&amp;nbsp;2,147,483,647 in some cases?" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-80" y="940" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-24" value="Yes" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="130" y="940" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-26" value="&amp;nbsp;Use unsigned int." style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="1180" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-29" value="Use long long" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-75" y="1190" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-32" target="Kvpef55A-tBzaGGSpbhi-42">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-32" value="Use plain int" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-230" y="1190" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-36" value="Use double" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="850" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-37" value="Use float" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="980" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-42" value="Use short" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-230" y="1390" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-44" value="Want to save memory&lt;br&gt;because my integers are small&lt;br&gt;within&amp;nbsp;&lt;span&gt;	&lt;/span&gt;-32768 to 32767" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-260" y="1295" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-45" target="Kvpef55A-tBzaGGSpbhi-46">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-45" value="Long Blocks of Data" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="130" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-46" target="Kvpef55A-tBzaGGSpbhi-48">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-50" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Kvpef55A-tBzaGGSpbhi-49">
+          <mxGeometry x="-0.26" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-46" target="Kvpef55A-tBzaGGSpbhi-52">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-54" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Kvpef55A-tBzaGGSpbhi-53">
+          <mxGeometry x="0.1765" y="-3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-46" value="Want it to be resizable?&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="300" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-62" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-48" target="Kvpef55A-tBzaGGSpbhi-61">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="540" y="625" />
+              <mxPoint x="640" y="625" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-63" value="Too much resizing overhead" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Kvpef55A-tBzaGGSpbhi-62">
+          <mxGeometry x="0.3548" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-48" value="Use vector, it auto resizes when you add items and you can force it to resize using a member function." style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="405" y="420" width="190" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-58" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-52" target="Kvpef55A-tBzaGGSpbhi-56">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-59" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Kvpef55A-tBzaGGSpbhi-58">
+          <mxGeometry x="0.3571" y="-3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.558;entryY=-0.05;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-52" target="Kvpef55A-tBzaGGSpbhi-57">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-74" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Kvpef55A-tBzaGGSpbhi-60">
+          <mxGeometry x="0.1778" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-52" value="Going to be passing to functions frequently?" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="420" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-56" value="std::array" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="540" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-57" value="Use a standard c++ array&lt;br&gt;datatype variablename[size].&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="730" y="540" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-61" value="Put the initial size or expected size as the first value of the constructor.&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="730" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-67" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-65" target="Kvpef55A-tBzaGGSpbhi-66">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-65" value="Text storage and other blocks of characters" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-270" y="230" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-69" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-66" target="Kvpef55A-tBzaGGSpbhi-68">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-73" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Kvpef55A-tBzaGGSpbhi-69">
+          <mxGeometry x="0.1842" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-72" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Kvpef55A-tBzaGGSpbhi-66" target="Kvpef55A-tBzaGGSpbhi-71">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-75" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Kvpef55A-tBzaGGSpbhi-72">
+          <mxGeometry x="0.2687" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-66" value="I want to easily be able to change a character at an index" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-265" y="410" width="150" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-68" value="array of chars will be nice for that&lt;br&gt;see &quot;long blocks of data&quot;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-350" y="580" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-71" value="uh std::string I guess" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-160" y="580" width="150" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Kvpef55A-tBzaGGSpbhi-76" value="How little I mean much c++ I learned" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="50" y="30" width="300" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
