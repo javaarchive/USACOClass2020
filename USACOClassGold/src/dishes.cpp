@@ -6,7 +6,7 @@ using namespace std;
 int N;
 int incoming[MAXN];
 vector<vector<int>> stacks;
-bool viable(int position, int value){
+int viable(int position, int value){
     if(stacks[position].back() < value){
         // would be in wrong order
         // example:
@@ -15,14 +15,14 @@ bool viable(int position, int value){
         2
         3
         */
-        return false;
+        return 1; // Might wanna move up
     }
     if(position > 0){
         if(value < stacks[position - 1].front()){
-            return false;
+            return -1; // Move lower
         }
     }
-    return true;
+    return 0;
 }
 
 
@@ -42,7 +42,7 @@ int main(int argc, char const *argv[])
             cout << i << endl;
             break;
         }
-        cout << "SUMMARY for " << i << endl;
+        /*cout << "SUMMARY for " << i << endl;
         for (int i = 0; i < stacks.size(); i++)
         {
             cout << i << " : ";
@@ -51,7 +51,7 @@ int main(int argc, char const *argv[])
                 cout << stacks[i][j] << " ";
             }
             cout << endl;
-        }
+        }*/
         if (stacks.empty())
         {
             stacks.push_back(vector<int>());
@@ -61,23 +61,29 @@ int main(int argc, char const *argv[])
         else
         {
             int L = 0, R = stacks.size() - 1;
-            //cout << "INIT BS " << L << " and " << R << endl;
+            // cout << "INIT BS " << L << " and " << R << endl;
             while (L < R)
             {
                 int middle = (L + R) / 2;
-                //cout << L << " " << middle << " " << R << endl;
-                if (viable(middle, incoming[i]))
+                // cout << L << " " << middle << " " << R << " V: " << viable(middle,incoming[i]) << endl;
+                int outSignal = viable(middle, incoming[i]);
+                if (outSignal == 1)
                 {
                     // get a larger number
-                    R = middle;
-                }
-                else
-                {
                     L = middle + 1;
+                }
+                else if(outSignal == -1)
+                {
+                    R = middle;
+                }else{
+                    // perfect insertion
+                    R = middle; 
+                    break;
                 }
             }
             int targetStack = R;
-            if(!viable(R,incoming[i])){
+            if(viable(R,incoming[i]) != 0){
+                // cout << "Can't put on " << incoming[i] << " on to " << R << " resorting to new stack or dish dry" << endl;
                 // See what happens if we create a new stack
                 // is it possible
                 int curLargest = stacks.back().front();
@@ -91,6 +97,7 @@ int main(int argc, char const *argv[])
                         int topElem = stacks.front().back(); // get top
                         if(topElem < incoming[i]){
                             // Take away this element as we need to pop more off the stack to find a place to insert
+                            // cout << "Popped " << topElem << endl;
                             maxPopped = max(maxPopped, topElem);
                             stacks.front().erase(prev(stacks.front().end()));
                         }else{
