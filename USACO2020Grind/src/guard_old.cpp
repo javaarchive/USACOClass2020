@@ -7,9 +7,8 @@
 #define MAXN 21
 using namespace std;
 
-long long states[1048577] = {-1LL};
-long long preweight[1048577] = {0LL};
-long long preheight[1048577] = {0LL};
+long long states[1048577] = {-1L};
+long long preweight[1048577] = {0L};
 
 /*struct tuple_hash : public std::unary_function<tuple<long long,long long,long long,int>, std::size_t>
 {
@@ -39,26 +38,26 @@ struct FrisCow{
 
 FrisCow cows[MAXN];
 
-/*long long weightSum(unordered_multiset<int>* t){
+long long weightSum(unordered_multiset<int>* t){
     long long out = 0;
     for(auto it = (*t).begin(); it != (*t).end(); it ++){
         out += cows[*it].weight;
     }
     return out;
-}*/
+}
 
-/*long long heightSum(unordered_multiset<int>* t){
+long long heightSum(unordered_multiset<int>* t){
     long long out = 0;
     for(auto it = (*t).begin(); it != (*t).end(); it ++){
         out += cows[*it].height;
     }
     return out;
-}*/
+}
 
 long long best = 0;
 
-long long recurSolve(int state){
-    if(state == 0){
+long long recurSolve(unordered_multiset<int> C, int state){
+    if(C.empty()){
         return 536870912LL * 536870912LL; //* 16LL; // 2^29 * 2^29 * 2^4
     }
     if(states[state] > -1LL){
@@ -66,15 +65,12 @@ long long recurSolve(int state){
         return states[state];
     }
     long long ans = 0L;
-    for(int i = N - 1; i >= 0; i --){
-        if(!(state & (1 << i))){
-            // cout << (i & (1 << i)) << endl;
-            // cout << "NO 1 at " << state << " oring " << (1 << i) << endl;
-            continue;
-        }
-        long long exprA = recurSolve(state - (1 << i));
-        long long exprB = cows[i].strength - preweight[state - (1 << i)];//preweight[state - (1 << get<3>(*iter))];
-        cout << "min(" << exprA << "," << exprB << ") " << " inh " << i << endl;
+    for(auto iter = C.begin(); iter != C.end(); iter ++){
+        unordered_multiset<int> Cclone(C);
+        Cclone.erase(*iter);
+        long long exprA = recurSolve(Cclone, state - (1 << *iter));
+        long long exprB = cows[*iter].strength - weightSum(&Cclone);//preweight[state - (1 << get<3>(*iter))];
+        // cout << "min(" << exprA << "," << exprB << ")" << endl;
         ans = max(min(
             exprA, 
             exprB
@@ -82,36 +78,20 @@ long long recurSolve(int state){
         // cout << "Pending ans " << ans << endl;
     }
     states[state] = ans;
-    if(preheight[state] >= H){
-        cout << state << " works " << ans << " because it's height is " << preheight[state] << endl;
-        for(int i = 0; i <= (1 << (N)); i ++){
-            cout << preheight[i] << " ";
-        }
-        cout << endl;
+    if(heightSum(&C) >= H){
         best = max(best, ans);
     }
     cout << "recur(" << state << ") = " << ans << endl;
     return ans;
 }
 
-void sumGen(int pos, int state, long long curSum){
+void sumGen(int pos, int state, int curSum){
     if(pos == N){
         preweight[state] = curSum;
     }else{
-        long long elem = cows[pos].weight;
+        int elem = cows[pos].weight;
         sumGen(pos + 1, (state << 1) + 1,curSum + elem);
         sumGen(pos + 1, state << 1      ,curSum);
-    }
-}
-
-void sumGenH(int pos, int state, long long curSum){
-    if(pos == N){
-        cout << state << " sum: " << curSum << endl;
-        preheight[state] = curSum;
-    }else{
-        long long elem = cows[pos].height;
-        sumGenH(pos + 1, (state << 1) + 1,curSum + elem);
-        sumGenH(pos + 1, state << 1      ,curSum);
     }
 }
 
@@ -119,17 +99,16 @@ int main(int argc, char const *argv[])
 {
     // setIO("guard");
     cin >> N >> H;
-    int total = (1 << N) - 1;
-    // unordered_multiset<int> everything;
+    int total = 1 << N;
+    unordered_multiset<int> everything;
     for(int i = 0; i < N; i ++){
         cin >> cows[i].height >> cows[i].weight >> cows[i].strength;
         //cows[i].id = i;
-        // everything.insert(i);
+        everything.insert(i);
         //everything.insert(cows[i].as_tuple());
     }
     for(int i = 0; i <= (1 << (N)); i ++){
         states[i] = -1LL;
-        preheight[i] = 0LL;
     }
     // cout << everything.size() << endl;
 
@@ -148,16 +127,12 @@ int main(int argc, char const *argv[])
         return a.strength > b.strength;
     });*/
     // cout << everything.empty() << endl;
-    sumGen(0,0,0LL);
-    sumGenH(0,0,0LL);
-
-    for(int i = 0; i <= (1 << (N)); i ++){
-        cout << i << " : " << preweight[i] << endl;
-    }
-    recurSolve(total);
+    sumGen(0,0,0);
+    recurSolve(everything, total);
     // cout <<  << endl;
-    
     cout << best << endl;
-    
+    /*for(int i = 0; i <= (1 << (N)); i ++){
+        cout << i << " : " << preweight[i] << endl;
+    }*/
     return 0;
 }
