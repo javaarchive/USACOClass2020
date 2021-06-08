@@ -38,25 +38,25 @@ struct FrisCow{
 
 FrisCow cows[MAXN];
 
-long long weightSum(unordered_multiset<tuple<long long,long long,long long,int>, tuple_hash>* t){
+long long weightSum(unordered_multiset<int>* t){
     long long out = 0;
     for(auto it = (*t).begin(); it != (*t).end(); it ++){
-        out += get<1>(*it);
+        out += cows[*it].weight;
     }
     return out;
 }
 
-long long heightSum(unordered_multiset<tuple<long long,long long,long long,int>, tuple_hash>* t){
+long long heightSum(unordered_multiset<int>* t){
     long long out = 0;
     for(auto it = (*t).begin(); it != (*t).end(); it ++){
-        out += get<0>(*it);
+        out += cows[*it].height;
     }
     return out;
 }
 
 long long best = 0;
 
-long long recurSolve(unordered_multiset<tuple<long long,long long,long long,int>, tuple_hash> C, int state){
+long long recurSolve(unordered_multiset<int> C, int state){
     if(C.empty()){
         return 536870912LL * 536870912LL; //* 16LL; // 2^29 * 2^29 * 2^4
     }
@@ -66,10 +66,10 @@ long long recurSolve(unordered_multiset<tuple<long long,long long,long long,int>
     }
     long long ans = 0L;
     for(auto iter = C.begin(); iter != C.end(); iter ++){
-        unordered_multiset<tuple<long long,long long,long long,int>, tuple_hash> Cclone(C);
+        unordered_multiset<int> Cclone(C);
         Cclone.erase(*iter);
-        long long exprA = recurSolve(Cclone, state - (1 << get<3>(*iter)));
-        long long exprB = get<2>(*iter) - weightSum(&Cclone);//preweight[state - (1 << get<3>(*iter))];
+        long long exprA = recurSolve(Cclone, state - (1 << *iter));
+        long long exprB = cows[*iter].strength - weightSum(&Cclone);//preweight[state - (1 << get<3>(*iter))];
         // cout << "min(" << exprA << "," << exprB << ")" << endl;
         ans = max(min(
             exprA, 
@@ -100,11 +100,12 @@ int main(int argc, char const *argv[])
     setIO("guard");
     cin >> N >> H;
     int total = 1 << N;
-    unordered_multiset<tuple<long long,long long,long long,int>, tuple_hash> everything;
+    unordered_multiset<int> everything;
     for(int i = 0; i < N; i ++){
         cin >> cows[i].height >> cows[i].weight >> cows[i].strength;
-        cows[i].id = i;
-        everything.insert(cows[i].as_tuple());
+        //cows[i].id = i;
+        everything.insert(i);
+        //everything.insert(cows[i].as_tuple());
     }
     for(int i = 0; i <= (1 << (N)); i ++){
         states[i] = -1LL;
