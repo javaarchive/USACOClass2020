@@ -74,7 +74,7 @@ long long recurSolve(int state){
         }
         long long exprA = recurSolve(state - (1 << i));
         long long exprB = cows[i].strength - preweight[state - (1 << i)];//preweight[state - (1 << get<3>(*iter))];
-        cout << "min(" << exprA << "," << exprB << ") " << " inh " << i << endl;
+        // cout << "min(" << exprA << "," << exprB << ") " << " inh " << i << endl;
         ans = max(min(
             exprA, 
             exprB
@@ -83,14 +83,14 @@ long long recurSolve(int state){
     }
     states[state] = ans;
     if(preheight[state] >= H){
-        cout << state << " works " << ans << " because it's height is " << preheight[state] << endl;
-        for(int i = 0; i <= (1 << (N)); i ++){
+        // cout << state << " works " << ans << " because it's height is " << preheight[state] << endl;
+        /*for(int i = 0; i <= (1 << (N)); i ++){
             cout << preheight[i] << " ";
         }
-        cout << endl;
+        cout << endl;*/
         best = max(best, ans);
     }
-    cout << "recur(" << state << ") = " << ans << endl;
+    // cout << "recur(" << state << ") = " << ans << endl;
     return ans;
 }
 
@@ -98,7 +98,7 @@ void sumGen(int pos, int state, long long curSum){
     if(pos == N){
         preweight[state] = curSum;
     }else{
-        long long elem = cows[pos].weight;
+        long long elem = cows[N - pos - 1].weight;
         sumGen(pos + 1, (state << 1) + 1,curSum + elem);
         sumGen(pos + 1, state << 1      ,curSum);
     }
@@ -106,10 +106,10 @@ void sumGen(int pos, int state, long long curSum){
 
 void sumGenH(int pos, int state, long long curSum){
     if(pos == N){
-        cout << state << " sum: " << curSum << endl;
+        // cout << state << " sum: " << curSum << endl;
         preheight[state] = curSum;
     }else{
-        long long elem = cows[pos].height;
+        long long elem = cows[N - pos - 1].height;
         sumGenH(pos + 1, (state << 1) + 1,curSum + elem);
         sumGenH(pos + 1, state << 1      ,curSum);
     }
@@ -117,7 +117,7 @@ void sumGenH(int pos, int state, long long curSum){
 
 int main(int argc, char const *argv[])
 {
-    // setIO("guard");
+    setIO("guard");
     cin >> N >> H;
     int total = (1 << N) - 1;
     // unordered_multiset<int> everything;
@@ -151,12 +151,15 @@ int main(int argc, char const *argv[])
     sumGen(0,0,0LL);
     sumGenH(0,0,0LL);
 
-    for(int i = 0; i <= (1 << (N)); i ++){
+    /*for(int i = 0; i <= (1 << (N)); i ++){
         cout << i << " : " << preweight[i] << endl;
-    }
+    }*/
     recurSolve(total);
     // cout <<  << endl;
-    
+    if(best == 0){
+        cout << "Mark is too tall" << endl;
+        return 0;
+    }
     cout << best << endl;
     
     return 0;
