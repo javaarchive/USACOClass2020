@@ -1,5 +1,6 @@
 #include <iostream>
 #include <map>
+#include <set>
 
 #define answerMOD 1000000007LL
 #define MAXLEN 5001
@@ -11,9 +12,13 @@ int N, M, K;
 
 map<char, int> counts;
 //      class,length
-map<pair<int, int>, int> rhymeCountsStrict;
+// map<pair<int, int>, int> rhymeCountsStrict;
 map<int,int> rhymeCounts;
 pair<int, int> words[MAXN];
+map<int,long long> rhymeWays;
+set<int> rhymeIDs;
+int maxWrite = 0; // Cool optimization I made
+
 long long dp[MAXLEN] = {0LL};
 
 long long powerMod(long long base, int power)
@@ -21,9 +26,9 @@ long long powerMod(long long base, int power)
     long long out = 1;
     for (int i = 0; i < power; i++)
     {
-        out = (out * base) % answerMOD;
+        out = (out * base ) % answerMOD;
     }
-    cout << base << ", " << power << " = " << out << endl;
+    // cout << base << ", " << power << " = " << out << endl;
     return out;
 }
 
@@ -52,22 +57,23 @@ void genDP()
                 mult = powerMod(rhymeCounts[make_pair(words[j].second, words[j].first)],power);
             }*/
             dp[(i + words[j].first)] += dp[i]; // * mult; // pick any word of the same rhyme class, to the power of how many extra lines
+            dp[(i + words[j].first)] = (dp[(i + words[j].first)] ) % answerMOD;
         }
     }
     for (int i = 0; i <= K; i++)
     {
-        dp[i] = dp[i] % answerMOD;
+        dp[i] = (dp[i] ) % answerMOD;
     }
 
-    for (int i = 0; i <= K; i++)
+    /*for (int i = 0; i <= K; i++)
     {
         cout << dp[i] << " ";
     }
-    cout << endl;
+    cout << endl;*/
 }
 long long calcRhymes(int count)
 {
-    cout << "CALCULATING " << count << endl;
+    // cout << "CALCULATING " << count << endl;
     long long out = 0;
     // genDP();
     /*for(int i = 0; i < count; i ++){
@@ -75,19 +81,21 @@ long long calcRhymes(int count)
     }*/
     // cout << "PASSING OUT " << out << endl;
     //bool seenRhymeType[MAXN] = {false};
-    for (int i = 0; i < N; i++)
+    // for (int i = 1; i <= min(K,maxWrite); i++)
+    for(auto rhymeIDIter = rhymeIDs.begin(); rhymeIDIter != rhymeIDs.end(); rhymeIDIter ++)
     {
-        int backLen = words[i].first;
-        int rhymeClass = words[i].second;
+        // int backLen = words[i].first;
+        // int rhymeClass = words[i].second;
         /*if(seenRhymeType[rhymeClass]){
             continue;
         }else{
             seenRhymeType[rhymeClass] = true;
         }*/
         // * rhymeCounts[rhymeClass]
-        int plus = powerMod(dp[K - backLen] * rhymeCountsStrict[make_pair(rhymeClass, backLen)], count);
-        cout << "+ " << plus << endl;
-        out = (out + plus) % answerMOD;
+        // rhymeWays[i]
+        long long plus = powerMod(rhymeWays[*rhymeIDIter], count);
+        // cout << "+ " << plus << endl;
+        out = (out + plus ) % answerMOD;
     }
     return out;
 }
@@ -101,7 +109,9 @@ void setIO(string s) {
 int main(int argc, char const *argv[])
 {
 
-    // setIO("poetry");
+    if(argc != 2){
+        setIO("poetry");
+    }
 
     // Self test
 
@@ -121,7 +131,8 @@ int main(int argc, char const *argv[])
     {
         cin >> words[i].first >> words[i].second;
         rhymeCounts[words[i].second] ++;
-        rhymeCountsStrict[make_pair(words[i].second, words[i].first)]++;
+        rhymeIDs.insert(words[i].second);
+        // rhymeCountsStrict[make_pair(words[i].second, words[i].first)] ++;
     }
 
     // dp[0] = 1;
@@ -129,21 +140,30 @@ int main(int argc, char const *argv[])
     {
         char c;
         cin >> c;
-        counts[c]++;
+        counts[c] ++;
         if (counts[c] == 1)
         {
-            rhymeTypes++;
+            rhymeTypes ++;
         }
     }
 
     genDP();
 
+    for(int i = 0; i < N; i ++){
+        rhymeWays[words[i].second] += dp[K - words[i].first];
+        rhymeWays[words[i].second] = rhymeWays[words[i].second] % answerMOD;
+        // maxWrite = max(maxWrite,words[i].second);
+    }
+
     long long output = 1;
-    for (int i = 0; i < rhymeTypes; i++)
+    for (int i = 0; i <= 26; i++)
     {
+        if(counts[(int)(i + 65)] == 0){
+            continue;
+        }
         long long mult = calcRhymes(counts[(int)(i + 65)]);
         // cout << "Multiplying " << mult << endl;
-        output = (output * mult) % answerMOD;
+        output = (output * mult ) % answerMOD;
     }
     cout << output << endl;
 
