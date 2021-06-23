@@ -1,21 +1,22 @@
 #include <iostream>
 #include <map>
+#include <unordered_map>
 #include <set>
 
 #define answerMOD 1000000007LL
 #define MAXLEN 5001
-#define MAXN 5002
+#define MAXN 5003
 
 using namespace std;
 
 int N, M, K;
 
-map<char, int> counts;
+unordered_map<char, int> counts;
 //      class,length
 // map<pair<int, int>, int> rhymeCountsStrict;
-map<int,int> rhymeCounts;
+int rhymeCounts[MAXN] = {0};
 pair<int, int> words[MAXN];
-map<int,long long> rhymeWays;
+long long rhymeWays[MAXN] = {0LL};
 set<int> rhymeIDs;
 int maxWrite = 0; // Cool optimization I made
 
@@ -23,13 +24,24 @@ long long dp[MAXLEN] = {0LL};
 
 long long powerMod(long long base, int power)
 {
-    long long out = 1;
+    if(power == 0LL){
+        return 1LL;
+    }else if(power == 1){
+        return base % answerMOD;
+    }else if(power % 2 == 1){
+        long long sqrt = powerMod(base,power/2);
+        return ((sqrt * sqrt) % answerMOD) * base % answerMOD;
+    }else{
+        long long sqrt = powerMod(base,power/2);
+        return ((sqrt * sqrt) % answerMOD);
+    }
+    /*long long out = 1;
     for (int i = 0; i < power; i++)
     {
         out = (out * base ) % answerMOD;
-    }
+    }*/
     // cout << base << ", " << power << " = " << out << endl;
-    return out;
+    return -1LL;
 }
 
 // power = extra lines with same rhyme scheme
