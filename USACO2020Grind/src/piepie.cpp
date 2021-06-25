@@ -17,8 +17,8 @@ struct Pie{
 };
 map<long long,vector<Pie>> bPies;
 map<long long,vector<Pie>> ePies;
-set<long long> bTasteVals;
-set<long long> eTasteVals;
+multiset<long long> bTasteVals;
+multiset<long long> eTasteVals;
 int shortestPathB[MAXN] = {INT32_MAX};
 int shortestPathE[MAXN] = {INT32_MAX};
 vector<Pie> bessieDeadEnds; // where e=0
@@ -40,14 +40,21 @@ struct StateCMP {
         return p1.depth > p2.depth; // lower depth in front
     }
 };
-priority_queue<State, vector<State>, StateCMP> pq;
+queue<State> pq;
+multiset<long long>::iterator bs(const multiset<long long>& st,long long target){
+    auto exactIT = st.find(target);
+    if(exactIT != st.end()){
+        return exactIT;
+    }
+    return st.upper_bound(target);
+}
 
 void dij(){
     bool visitedB[MAXN] = {false};
     bool visitedE[MAXN] = {false};
     // cout << "Starting new search..." << endl;
     while(!pq.empty()){
-        State st = pq.top();
+        State st = pq.front();
         if(st.isBessiePie){
             visitedB[st.p.index] = true;
         }else{
@@ -74,43 +81,54 @@ void dij(){
         if(!st.isBessiePie){
             // Find a reason for bessie to gift elsie this
             bool signalEnd = false;
-            for(auto iter = eTasteVals.find(st.p.elsieTaste); !signalEnd; iter --){ // Going backwards !!
-                if(iter == eTasteVals.begin()){
-                    signalEnd = true; // about to end
-                }
-                long long taste = *iter;
-                // cout << "Checking taste value " << taste << endl;
-                if((st.p.elsieTaste - taste) > D){
-                    // out of range
+            for(auto iter = bs(eTasteVals,st.p.elsieTaste); !signalEnd; iter --){ // Going backwards !!
+            //auto iter = bs(eTasteVals,st.p.elsieTaste);
+                if(iter == eTasteVals.end()){
                     break;
+                }else if(iter == eTasteVals.begin()){
+                    signalEnd = true;
                 }
+                    long long taste = *iter;
+                    // cout << "Checking taste value " << taste << endl;
+                    if((st.p.elsieTaste - taste) > D){
+                        // out of range
+                        break;
+                    }
 
-                // Loop the list
-                for(Pie newp: bPies[taste]){
-                    // Check if we've visited this already
-                    if(visitedB[newp.index]){
-                        continue;
+                    // Loop the list
+                    // cout << "All like " << taste << endl;
+                    for(Pie newp: bPies[taste]){
+                        // Check if we've visited this already
+                        if(visitedB[newp.index]){
+                            continue;
+                        }
+                        if((st.depth + 1) >= shortestPathB[newp.index]){
+                            continue; // skip
+                        }
+                        // Otherwise, add it to explore
+                        State newSt;
+                        newSt.depth = st.depth + 1;
+                        newSt.p = newp;
+                        newSt.isBessiePie = !st.isBessiePie; // Alternate! Used for easy copy paste
+                        shortestPathB[newp.index] = newSt.depth;
+                        visitedB[newp.index] = true;
+                        // cout << "++ " << newp.bessieTaste << "," << newp.elsieTaste << endl;
+                        pq.push(newSt);
+                        signalEnd = true;
+                        eTasteVals.erase(taste);
+                        break;
                     }
-                    if((st.depth + 1) >= shortestPathB[newp.index]){
-                        continue; // skip
-                    }
-                    // Otherwise, add it to explore
-                    State newSt;
-                    newSt.depth = st.depth + 1;
-                    newSt.p = newp;
-                    newSt.isBessiePie = !st.isBessiePie; // Alternate! Used for easy copy paste
-                    shortestPathB[newp.index] = newSt.depth;
-                    visitedB[newp.index] = true;
-                    // cout << "++ " << newp.bessieTaste << "," << newp.elsieTaste << endl;
-                    pq.push(newSt);
-                }
+                    
             }
         }else{
             // Find a reason for elsie to gift bessie this
             bool signalEnd = false;
-            for(auto iter = bTasteVals.find(st.p.bessieTaste); !signalEnd; iter --){ // Going backwards !!
-                if(iter == bTasteVals.begin()){
-                    signalEnd = true; // about to end
+            for(auto iter = bs(bTasteVals, st.p.bessieTaste); !signalEnd; iter --){ // Going backwards !!
+                if(iter == bTasteVals.end()){
+                    break;
+                    //signalEnd = true; // about to end
+                }else if(iter == bTasteVals.begin()){
+                    signalEnd = true;
                 }
                 long long taste = *iter;
                 // cout << "Checking taste value " << taste << endl;
@@ -137,6 +155,9 @@ void dij(){
                     visitedE[newp.index] = true;
                     // cout << "++ " << newp.bessieTaste << "," << newp.elsieTaste << endl;
                     pq.push(newSt);
+                    signalEnd = true;
+                    bTasteVals.erase(taste);
+                    break;
                 }
             }
         }
