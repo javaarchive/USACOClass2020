@@ -36,6 +36,12 @@ struct cmpB
 {
 	bool operator()(const Pie a,const Pie b) const
 	{
+         if(a.bessieTaste == b.bessieTaste){
+            if(a.elsieTaste == b.elsieTaste){
+                return a.index < b.index;
+            }
+            return a.elsieTaste < b.elsieTaste;
+        }
 		return a.bessieTaste < b.bessieTaste;
 	}
 };
@@ -43,6 +49,12 @@ struct cmpE
 {
 	bool operator()(const Pie a,const Pie b) const
 	{
+        if(a.elsieTaste == b.elsieTaste){
+            if(a.bessieTaste == b.bessieTaste){
+                return a.index < b.index;
+            }
+            return a.bessieTaste < b.bessieTaste;
+        }
 		return a.elsieTaste < b.elsieTaste;
 	}
 };
@@ -50,8 +62,8 @@ struct cmpE
 // map<long long,vector<Pie>> ePies;
 // multiset<long long> bTasteVals;
 // multiset<long long> eTasteVals;
-multiset<int> bTasteINDEXES; // best elsie taste of bessies
-multiset<int> eTasteINDEXES; // best bessie taste of elsies
+// multiset<int> bTasteINDEXES; // best elsie taste of bessies
+// multiset<int> eTasteINDEXES; // best bessie taste of elsies
 int shortestPathB[MAXN] = {INT32_MAX};
 int shortestPathE[MAXN] = {INT32_MAX};
 vector<Pie> bessieDeadEnds; // where e=0
@@ -136,7 +148,7 @@ multiset<Pie,cmpE>::iterator bs4(const multiset<Pie,cmpE>& st,Pie target){
     if(lb == st.begin()){
         return st.end();
     }else{
-        return --lb;
+        return -- lb;
     }
     //cout << "bs(" << target << ") -> " << " lb: " << (((--st.lower_bound(target)) == st.end())?-1:*st.upper_bound(target)) << endl;
     //return st.upper_bound(target);
@@ -187,7 +199,7 @@ void dij(){
                 //else if(iter == eTasteVals.begin()){
                 //    signalEnd = true;
                 // }
-                    long long taste = (*iter).bessieTaste;
+                    long long taste = (*iter).elsieTaste;
                     //cout << "Checking taste value " << taste << endl;
                     if((st.p.elsieTaste - taste) > D){
                         // out of range
@@ -254,7 +266,7 @@ void dij(){
                     }
                     
                     Pie newp = *iter;
-                    long long taste = newp.elsieTaste;
+                    long long taste = newp.bessieTaste;
 
                     if(visitedE[newp.index]){
                         iter --;
@@ -264,7 +276,7 @@ void dij(){
                         iter --;
                         continue; // skip
                     }
-                    if((st.p.elsieTaste - taste) > D){
+                    if((st.p.bessieTaste - taste) > D){
                         // out of range
                         break;
                     }
@@ -296,7 +308,7 @@ void setIO(string s) {
 int main(int argc, char const *argv[])
 {
     if(argc != 2){
-        setIO("piepie");
+        setIO("piepie.2");
     }
     cin >> N >> D;
     for(int i = 0; i < N; i ++){
@@ -353,6 +365,7 @@ int main(int argc, char const *argv[])
         cout << shortestPathE[i] << " ";
     }
     cout << endl;*/
+    //  cout << "ans column" << endl;
     for(int i = 0; i < N; i ++){
         cout << ((shortestPathB[i]!=INT32_MAX)?shortestPathB[i]:-1) << endl;
     }

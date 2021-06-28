@@ -18,7 +18,7 @@ int rhymeCounts[MAXN] = {0};
 pair<int, int> words[MAXN];
 long long rhymeWays[MAXN] = {0LL};
 set<int> rhymeIDs;
-int maxWrite = 0; // Cool optimization I made
+int maxWrite = 0; // part of an old optimization I made
 
 long long dp[MAXLEN] = {0LL};
 
