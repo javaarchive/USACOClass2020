@@ -8,7 +8,7 @@ bool condition(int param){
 int bs(){
     // TODO: Ensure the below two lines are right and remove this comment
     int left = 0; // minimum of search
-    int right = N; // maximum of search
+    int right = 1; // maximum of search
     while(left < right){
         int mid = left + (right - left)/2;
         if(condition(mid)){

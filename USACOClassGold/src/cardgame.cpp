@@ -7,7 +7,17 @@ int cards[50001];
 int bcards[50001];
 int sortedCards[50001];
 
+
+void setIO(string s) {
+    ios_base::sync_with_stdio(0); cin.tie(0);
+    freopen((s + ".in").c_str(), "r", stdin);
+    freopen((s + ".out").c_str(), "w", stdout);
+}
+
 int main(int argc, const char** argv) {
+
+    setIO("cardgame");
+    
     cin >> N;
     int wins = 0;
     for(int i = 0; i < N; i ++){
@@ -30,7 +40,7 @@ int main(int argc, const char** argv) {
     reverse(bcards, bcards + N);
     reverse(bcards, bcards + N/2);
     sort(cards, cards + N/2);
-    sort(cards + N/2, cards + N);
+    sort(cards + N/2, cards + N); 
     reverse(cards + N/2, cards + N);
     /*for(int i = 0; i < N; i ++){
         cout << bcards[i] << " ";
