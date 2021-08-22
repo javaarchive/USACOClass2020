@@ -37,8 +37,8 @@ void solve(){
     vector<pair<int,int>> choices;
     choices.push_back(make_pair(0, h - NORTHERN_DIST));
     choices.push_back(make_pair(1, h - SOUTHERN_DIST));
-    choices.push_back(make_pair(2,  w - EASTERN_DIST));
-    choices.push_back(make_pair(3,  w - WESTERN_DIST));
+    choices.push_back(make_pair(2, w - EASTERN_DIST));
+    choices.push_back(make_pair(3, w - WESTERN_DIST));
     // works anyway
     if(NORTHERN_DIST >= h || SOUTHERN_DIST >= h){
         cout << 0 << endl;
@@ -57,10 +57,10 @@ void solve(){
             predictA = h - a.second;
         }
         return predictA < predictB;*/
-        return a.second > b.second;
+        return a.second < b.second;
         // return a.second > b.second;
     });
-    cout << "PRE: ";
+    // cout << "PRE: ";
     // cout << endl << "SORT: " << choices[0].second << " , " << choices[1].second << choices[2].second << choices[3].second << endl;
     
     for(int i = 0; i < 4; i ++){
