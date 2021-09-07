@@ -1,5 +1,6 @@
 #include <iostream>
 #include <set>
+#include <unordered_set>
 #include <algorithm>
 #include <queue>
 #include <stack>
@@ -8,6 +9,17 @@
 #define MAXN 100002
 
 using namespace std;
+
+struct hash_pair {
+    template <class T1, class T2>
+    size_t operator()(const pair<T1, T2>& p) const
+    {
+        auto hash1 = hash<T1>{}(p.first);
+        auto hash2 = hash<T2>{}(p.second);
+        return hash1 ^ hash2;
+    }
+};
+
 
 pair<int,int> normalize(int a,int b){
     return make_pair(min(a,b),max(a,b));
@@ -18,8 +30,14 @@ void solve(){
     cin >> n >> m1 >> m2;
     map<int,vector<int>> mocha;
     map<int,vector<int>> diana;
+    int mappingsM[MAXN];
+    int mappingsD[MAXN];
+    for(int i = 0; i <= n; i ++){
+        mappingsM[i] = i;
+        mappingsD[i] = i;
+    }
     // bool existing[MAXN][MAXN];
-    set<pair<int,int>> existing;
+    unordered_set<pair<int,int>, hash_pair> existing;
     for(int i = 0; i < m1; i ++){
         int a,b;
         cin >> a >> b;
@@ -82,46 +100,19 @@ void solve(){
     int ans = 0;
     for(int i = 1; i <= n; i ++){
         for(int j = i + 1; j <= n; j ++){
-            if(srcm[i] == srcm[j] || srcd[i] == srcd[j] || existing.find(normalize(i,j)) != existing.end()){
+            if(mappingsM[srcm[i]] == mappingsM[srcm[j]] || mappingsD[srcd[i]] == mappingsD[srcd[j]] || existing.find(normalize(i,j)) != existing.end()){
                 continue;
             }
             out.push_back(make_pair(i,j));
             existing.insert(normalize(i,j));
             int srcA = srcm[i];
-            stack<int> next;
-            next.push(j);
-            srcm[j] = srcA;
-            // cout << "dfsing" << endl;
-            while(!next.empty()){
-                int cur = next.top();
-                next.pop();
-                for(int k = 0; k < mocha[cur].size(); k ++){
-                    int nextNode = mocha[cur][k];
-                    if(srcm[nextNode] != srcA){
-                        srcm[nextNode] = srcA;
-                        next.push(nextNode);
-                    }
-                }
-            }
+            mappingsM[srcm[j]] = mappingsM[srcA];
             int srcB = srcd[i];
-            next.push(j);
-            srcd[j] = srcB;
-            while(!next.empty()){
-                int cur = next.top();
-                next.pop();
-                for(int k = 0; k < diana[cur].size(); k ++){
-                    int nextNode = diana[cur][k];
-                    if(srcd[nextNode] != srcB){
-                        srcd[nextNode] = srcB;
-                        next.push(nextNode);
-                    }
-                }
-            }
+            mappingsD[srcd[j]] = mappingsD[srcB];
             mocha[i].push_back(j);
             mocha[j].push_back(i);
             diana[i].push_back(j);
             diana[j].push_back(i);
-
             ans ++;
         }
     }
