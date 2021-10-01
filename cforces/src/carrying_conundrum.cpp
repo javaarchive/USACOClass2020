@@ -8,22 +8,23 @@ int precalcCarrySumPossibltiesTable[10] = {9,8 ,7 ,6 ,5 , 4,3 ,2 ,1, 0 };
 
 void solve(){
     int N;
-    int dp[4][MAXDIGITS]; // dp 1,2,3 queue for carry
+    // int dp[4][MAXDIGITS]; // dp 1,2,3 queue for carry
     cin >> N;
     string Nstr = to_string(N);
     int curLen = Nstr.length();
-    for(int i = 0; i < curLen; i++){
-        for(int j = 0; j < 4; j ++){
-            dp[j][i] = 0;
+    string a = "0",b = "0";
+    for(int i = 0; i < curLen; i ++){
+        if(i % 2 == 0){
+            a = a + Nstr[i];
+        }else{
+            b = b + Nstr[i];
         }
     }
-    int cur = 0;
-    int lastDigit = Nstr[curLen - 1] - '0';
-    if(lastDigit != '9'){
-        dp[2][curLen - 1] = precalcCarrySumPossibltiesTable[lastDigit];   
-    }
-    dp[0][curLen - 1] = lastDigit + 1; // simplest formula
+    // cout << a << " and " << b << endl;
 
+    int aint = stoi(a);
+    int bint = stoi(b);
+    cout << ((aint + 1)*(bint + 1) - 2) << endl;
 }
 
 int main(int argc, char const *argv[])

@@ -48,19 +48,20 @@ void solve(){
             // end section
             int windowEnd = i;
             int eyeLevel = v[startWindow].first;
-            cout << "Acquire Window " << startWindow << " to " << windowEnd << endl;
+            cout << "Acquire Window " << startWindow << " to " << windowEnd << " intial etcher position " << writingY << "," << writingX << endl;
             int writesLeft = windowEnd - startWindow + 1; // inclusive
             cout << "Performing " << writesLeft << " writes" << endl;
             int copyPointer = startWindow;
             while(writesLeft > 0){
-                cout << "Writes left " << writesLeft << " etcher pos " << writingY << " and " << writingX << endl;
-                int spaceLeft = M - 1 - writingX;
+                cout << "Writes left " << writesLeft << " etcher pos " << writingY << " and " << writingX << " pointer " << copyPointer << endl;
+                int spaceLeft = M - writingX;
                 if(writesLeft >= spaceLeft && writingX == 0){
                     // Overflowing Writes
                     writingX = M - 1;
-                    writesLeft -= M; // consume
-                    for(int idk = 0; idk < M; idk ++){
-                        cout << "Bulk Writing to " << writingY << "," << writingX << " content: " << v[copyPointer].second << endl;
+                    writesLeft -= spaceLeft; // consume
+                    for(int idk = 0; idk < spaceLeft; idk ++){
+                        cout << "Bulk Writing to " << writingY << "," << writingX <<  " pos: " << copyPointer << " ";
+                        cout << " content: " << v[copyPointer].second << endl;
                         final[writingY][writingX] = v[copyPointer].second;
                         copyPointer ++;
                         writingX --;
@@ -70,11 +71,11 @@ void solve(){
                 }else{
                     // Perform some writes on some positions but not all
                     // writes left or 
-                    int range =  min(writesLeft, writingX + 1);
-                    writingX += range;
+                    int range = min(writesLeft,M - 1 - writingX);
+                    writingX += range - 1;
                     bool skippedToNextLine = false;
                     for(int writesToPerform = range; writingX >= 0 && writesToPerform > 0; writesToPerform --){
-                        cout << "Tiny Writing to " << writingY << "," << writingX << " content: " << v[copyPointer].second << endl;
+                        cout << "Tiny Writing to " << writingY << "," << writingX << " content: " << v[copyPointer].second << " from " << copyPointer << endl;
                         final[writingY][writingX] = v[copyPointer].second; // write index
                         copyPointer ++;
                         writingX --;
