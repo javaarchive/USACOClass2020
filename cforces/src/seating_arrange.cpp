@@ -71,7 +71,7 @@ void solve(){
                 }else{
                     // Perform some writes on some positions but not all
                     // writes left or 
-                    int range = min(writesLeft,M - 1 - writingX);
+                    int range = min(writesLeft,M - writingX);
                     writingX += range - 1;
                     bool skippedToNextLine = false;
                     for(int writesToPerform = range; writingX >= 0 && writesToPerform > 0; writesToPerform --){
@@ -79,18 +79,22 @@ void solve(){
                         final[writingY][writingX] = v[copyPointer].second; // write index
                         copyPointer ++;
                         writingX --;
-                        if(writingX < 0){
+                        /*if(writingX < 0){
                             writingY ++;
                             writingX = 0;
                             cout << "NEXT LINE SKIP ??? " << endl;
                             skippedToNextLine = true;
-                        }
+                        }*/
                         writesLeft --;
                     }
+                    
                     // if(!skippedToNextLine){
-                        writingX += range;
+                        writingX += range + 1; // bounce back
                     // }
-
+                    if(writingX >= M){
+                        writingY ++;
+                        writingX = 0;
+                    }
                     
 
                 }
