@@ -44,24 +44,24 @@ void solve(){
 
     
     for(int i = startWindow; startWindow < R && i < R; i ++){
-        if(i == R - 1 || (i > 0 && v[i].first != v[i + 1].first)){
+        if(i == R - 1 || (v[i].first != v[i + 1].first)){
             // end section
             int windowEnd = i;
             int eyeLevel = v[startWindow].first;
-            cout << "Acquire Window " << startWindow << " to " << windowEnd << " intial etcher position " << writingY << "," << writingX << endl;
+            // cout << "Acquire Window " << startWindow << " to " << windowEnd << " intial etcher position " << writingY << "," << writingX << endl;
             int writesLeft = windowEnd - startWindow + 1; // inclusive
-            cout << "Performing " << writesLeft << " writes" << endl;
+            //cout << "Performing " << writesLeft << " writes" << endl;
             int copyPointer = startWindow;
             while(writesLeft > 0){
-                cout << "Writes left " << writesLeft << " etcher pos " << writingY << " and " << writingX << " pointer " << copyPointer << endl;
+                //cout << "Writes left " << writesLeft << " etcher pos " << writingY << " and " << writingX << " pointer " << copyPointer << endl;
                 int spaceLeft = M - writingX;
                 if(writesLeft >= spaceLeft && writingX == 0){
                     // Overflowing Writes
                     writingX = M - 1;
                     writesLeft -= spaceLeft; // consume
                     for(int idk = 0; idk < spaceLeft; idk ++){
-                        cout << "Bulk Writing to " << writingY << "," << writingX <<  " pos: " << copyPointer << " ";
-                        cout << " content: " << v[copyPointer].second << endl;
+                        // cout << "Bulk Writing to " << writingY << "," << writingX <<  " pos: " << copyPointer << " ";
+                        //cout << " content: " << v[copyPointer].second << endl;
                         final[writingY][writingX] = v[copyPointer].second;
                         copyPointer ++;
                         writingX --;
@@ -75,7 +75,7 @@ void solve(){
                     writingX += range - 1;
                     bool skippedToNextLine = false;
                     for(int writesToPerform = range; writingX >= 0 && writesToPerform > 0; writesToPerform --){
-                        cout << "Tiny Writing to " << writingY << "," << writingX << " content: " << v[copyPointer].second << " from " << copyPointer << endl;
+                        // cout << "Tiny Writing to " << writingY << "," << writingX << " content: " << v[copyPointer].second << " from " << copyPointer << endl;
                         final[writingY][writingX] = v[copyPointer].second; // write index
                         copyPointer ++;
                         writingX --;
@@ -99,21 +99,32 @@ void solve(){
 
                 }
             }
-            cout << "New start window at " << (i + 1) << endl;
+            // cout << "New start window at " << (i + 1) << endl;
             startWindow = i + 1;
         }
 
 
     }
+    /*cout << "FINAL: " << endl;
     for(int i = 0; i < N; i ++){
         for(int j = 0; j < M; j ++){
             cout << final[i][j] << " ";
         }
         cout << endl;
+    }*/
+
+    for(int i = 0; i < N; i ++){
+        for(int j = 0; j < M; j ++){
+            int order = final[i][j];
+            for(int k = j + 1; k < M; k ++){
+                if(order < final[i][k]){
+                    ans ++;
+                }
+            }
+        }
     }
 
-
-    cout << "Ans: " << ans << endl;
+    cout << "" << ans << endl;
 }
 
 int main(int argc, char const *argv[])

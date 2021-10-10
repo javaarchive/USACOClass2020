@@ -121,3 +121,6 @@ Snippets/aopspyramid.cpp
 # Nice try but you can't decompile my code
 Snippets/a.out
 Snippets/a.exe
+# secret file
+cforces/src/router.cpp
+cforces/src/a.exe
