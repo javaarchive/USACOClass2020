@@ -108,6 +108,7 @@ a.exe
 .sqlite
 .in
 *.in
+*.out
 a.exe
 .metadata
 JSystem/*
@@ -123,4 +124,7 @@ Snippets/a.out
 Snippets/a.exe
 # secret file
 cforces/src/router.cpp
+cforces/src/router_small.cpp
+cforces/src/router_*.cpp
 cforces/src/a.exe
+cforces/src/trol.cpp
