@@ -13,11 +13,7 @@ int integerize(char a, char b, char c){
     // Turn 3 characters into an integer for use in sets
     return a*65536 + b*256 + c;
 }
-void setIO(string s) {
-    ios_base::sync_with_stdio(0); cin.tie(0);
-    freopen((s + ".in").c_str(), "r", stdin);
-    freopen((s + ".out").c_str(), "w", stdout);
-}
+
 int main(int argc, const char** argv) {
     if(argc != 2){
         setIO("cownomics");

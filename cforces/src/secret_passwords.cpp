@@ -14,77 +14,62 @@ void solve(){
     cin >> N;
 
     bool visited[MAXN] = {false};
-    vector<int> compressedPasswords;
-    set<int> existenceSet;
-    map<int,int> existenceMapping;
-    map<int,int> freqMapping;
-    vector<string> originals;
+    vector<int> sharedLetters[28];
+    bool used[28] = {false};
+    // string history[MAXN] = {""};
+    string compressed[MAXN] = {""};
 
     for(int i = 0; i < N; i ++){
         string s;
         cin >> s;
-        int num = 0;
+        bool seen[28] = {false};
+        //history[i] = s;
         for(int j = 0; j < s.length(); j ++){
-            int slot = s[j] - 'a';
-            if(num % (1 << (slot + 1)) < (1 << slot)){
-                num += (1 << slot);
+            char c = s[j];
+            int val = c - 'a';
+            if(!seen[val]){
+                seen[val] = true;
+                compressed[i] += c;
+                sharedLetters[val].push_back(i);
             }
-            // num += slot;
         }
-        // cout << "translated " << s << " to " << num << endl;
-        existenceSet.insert(num);
-        compressedPasswords.push_back(num);
-        existenceMapping[num] = i;
-        originals.push_back(s);
     }
 
     int answer = 0;
 
+    queue<int> nextUp;
     for(int i = 0; i < N; i ++){
         if(visited[i]){
             continue;
         }
-        // cout << "Branching from " << i << endl;
         answer ++;
-        int startPoint = compressedPasswords[i];
-        freqMapping[startPoint] ++;
-        if(freqMapping[startPoint] > 1){
-            answer --; // undo
-        }
-        queue<int> nextUp;
-        nextUp.push(startPoint);
+        nextUp.push(i);
+        visited[i] = true;
+        // cout << "BFSing from " << compressed[i] << endl;
         while(!nextUp.empty()){
             int current = nextUp.front();
             nextUp.pop();
-            visited[existenceMapping[current]] = true; // ensure
-            cout << "Marked " << existenceMapping[current] << endl;
-            for(int i = 0; i < 26; i ++){
-                if(current % (1 << (i + 1)) < (1 << i)){
-                    // add letter
-                    int next = current + (1 << i);
-                    if(existenceSet.find(next) != existenceSet.end() && !visited[existenceMapping[next]]){
-                        // explore!
-                        cout << "Marked + " << existenceMapping[next] << endl;
-                        visited[existenceMapping[next]] = true;
-                        nextUp.push(next);
-                    }else{
-                        cout << originals[existenceMapping[current]] << " + " << (char) ('a' + i) << " failed " << next << endl;
-                    }
+            for(char c: compressed[current]){
+               
+                // cout << "branching out with " << c << endl;
+                int num = c - 'a';
+                if(used[num]){
+                    continue;
+                }else{
+                    used[num] = true;
                 }
-                if(current % (1 << (i + 1)) >= (1 << i)){
-                    // remove letter
-                    int next = current - (1 << i);
-                    if(existenceSet.find(next) != existenceSet.end() && !visited[existenceMapping[next]]){
-                        // explore!
-                        cout << "Marked - " << existenceMapping[next] << endl;
-                        visited[existenceMapping[next]] = true;
-                        nextUp.push(next);
-                    }else{
-                        cout << originals[existenceMapping[current]] << " - " << (char) ('a' + i) << " failed " << next << endl;
+                for(int j = 0; j < sharedLetters[num].size(); j ++){
+                    int next = sharedLetters[num][j];
+                    if(visited[next]){
+                        continue;
                     }
+                    // cout << compressed[next] << " reached " << endl;
+                    visited[next] = true;
+                    nextUp.push(next);
                 }
             }
         }
+
     }
     cout << answer << endl;
 
