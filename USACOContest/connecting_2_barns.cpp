@@ -127,7 +127,7 @@ void solve(){
     int endComp = nodeToComp[N - 1];
     int startEnd = compMax[startComp];
     int endStart = compMin[endComp];
-    int best = INT32_MAX;
+    long long best = __LONG_LONG_MAX__;
     if(startComp == endComp){
         cout << 0 << endl;
         return;
@@ -138,10 +138,10 @@ void solve(){
     }
     for(int i = 1; i < endComp; i ++){
         // intermediary
-        int diffA = getSmallestDiff(startComp, i);
-        int costA = diffA * diffA;
-        int diffB = getSmallestDiff(i, endComp);
-        int costB = diffB * diffB;
+        long long diffA = getSmallestDiff(startComp, i);
+        long long costA = diffA * diffA;
+        long long diffB = getSmallestDiff(i, endComp);
+        long long costB = diffB * diffB;
         // cout << " through " << i << " with  cost = " <<  costA << " + " << costB << endl;
         best = min(best, costA + costB);
     }
@@ -163,7 +163,7 @@ void solve(){
     }
     cout << endl;*/
     // if(best == INT32_MAX){ // direct connection
-    int direct = (endStart - startEnd); // getSmallestDiff(startComp,endComp);
+    long long direct = (endStart - startEnd); // getSmallestDiff(startComp,endComp);
     best = min(best,direct * direct);//(endStart - startEnd) * (endStart - startEnd));
     // }
     
