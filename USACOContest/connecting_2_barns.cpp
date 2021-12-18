@@ -12,7 +12,7 @@ int compMin[MAXN];
 int compMax[MAXN];
 vector<int> compNodes[MAXN];
 int nodeToComp[MAXN];
-int compCounter = 0;
+int compCounter;
 
 /*set<int> startNodes;
 set<int> endNodes;
@@ -45,7 +45,7 @@ int closestEndNode(int pos){
     return (pos - low < high - pos) ? low : high;
 }*/
 
-int getSmallestDiff(int a, int b){
+int getSmallestDiff2(int a, int b){
     int smallest = INT32_MAX;
     int i = 0, j = 0;
     while(i < compNodes[a].size() && j < compNodes[b].size()){
@@ -60,6 +60,23 @@ int getSmallestDiff(int a, int b){
         }
     }
     return smallest;
+}
+
+int getSmallestDiff(int a, int b){
+    int smallest = INT32_MAX;
+    int i = 0, j = 0;
+    while(i < compNodes[a].size() && j < compNodes[b].size()){
+        int diff = abs(compNodes[a][i] - compNodes[b][j]);
+        if(diff < smallest){
+            smallest = diff;
+        }
+        if(compNodes[a][i] < compNodes[b][j]){
+            i ++;
+        }else{
+            j ++;
+        }
+    }
+    return min(smallest,getSmallestDiff2(b,a));
 }
 
 void dfs(int node, int comp){
@@ -93,6 +110,7 @@ void solve(){
     for(int i = 0; i < M; i++){
         int a,b;
         cin >> a >> b;
+        // offsetting
         a --;
         b --;
         edges[a].push_back(b);
@@ -110,15 +128,19 @@ void solve(){
     int startEnd = compMax[startComp];
     int endStart = compMin[endComp];
     int best = INT32_MAX;
+    if(startComp == endComp){
+        cout << 0 << endl;
+        return;
+    }
     // cout << "start ends at " << startEnd << " and end starts at " << endStart << endl;
-    for(int i = 0; i < endComp; i ++){
+    for(int i = 0; i <= endComp; i ++){
         sort(compNodes[i].begin(), compNodes[i].end());
     }
     for(int i = 1; i < endComp; i ++){
         // intermediary
-        int diffA = min(getSmallestDiff(startComp, i),getSmallestDiff(i,startComp));
+        int diffA = getSmallestDiff(startComp, i);
         int costA = diffA * diffA;
-        int diffB = min(getSmallestDiff(i, endComp),getSmallestDiff(endComp,i));
+        int diffB = getSmallestDiff(i, endComp);
         int costB = diffB * diffB;
         // cout << " through " << i << " with  cost = " <<  costA << " + " << costB << endl;
         best = min(best, costA + costB);
@@ -141,8 +163,8 @@ void solve(){
     }
     cout << endl;*/
     // if(best == INT32_MAX){ // direct connection
-    int direct = getSmallestDiff(startComp,endComp);
-    best = min(best,direct*direct);//(endStart - startEnd) * (endStart - startEnd));
+    int direct = (endStart - startEnd); // getSmallestDiff(startComp,endComp);
+    best = min(best,direct * direct);//(endStart - startEnd) * (endStart - startEnd));
     // }
     
     
