@@ -25,36 +25,31 @@ void solve(){
         int basketsFilled = 0;
         int total = 0;
         for(int j = 0; j < N; j ++){
-            if(treeAmounts[j] >= i && basketsFilled < K){
-                int amount = min((int) floor(treeAmounts[j] / i),K - basketsFilled);
-                basketsFilled += amount;
-                // cout << "+ " << amount << " basket(s)" << endl;
-                // cout << "a++ " << i*amount << " tree has " << treeAmounts[j] << " which is greater than " << i << endl;
-                total += i*amount;
-                
-            }else if(basketsFilled >= K/2 && basketsFilled < K){
-                basketsFilled ++;
-                cout << "++ 1 basket" << endl;
-                cout << "au+ " << treeAmounts[j] << endl;
-                total += treeAmounts[j];
-            }else{
-                break;
-            }
+            basketsFilled += floor(treeAmounts[j]/i);
         }
         if(basketsFilled < (K/2)){
-            cout << "Failed to fill " << K/2 << " baskets could only fill " << basketsFilled << " with " << i << " t " << total <<  endl;
+            // cout << "Failed to fill " << K/2 << " baskets could only fill " << basketsFilled << " with " << i << " t " << total <<  endl;
             break;
-        }else{
-            cout << "Result: " << total << "-" << i*(K/2) << " = " << total - i * (K/2) << endl;
-            ans = max(ans, total - i * (K/2));
+        }else if(basketsFilled >= K){
+            // cout << "Result: " << total << "-" << i*(K/2) << " = " << total - i * (K/2) << endl;
+            ans = max(ans, i * (K/2));
+            continue;
         }
+        sort(treeAmounts, treeAmounts + N, [i](int a, int b){
+            return a % i > b % i;
+        });
+        int other = i * (basketsFilled - K/2);
+        for(int j = 0; j < N && j + basketsFilled < K; j ++){
+            other += treeAmounts[j] % i;
+        }
+        ans = max(ans, other);
     }
     cout << ans << endl;
 }
 
 int main(int argc, char const *argv[])
 {
-    setIO("berries.2");
+    setIO("berries");
     solve();
     return 0;
 }
