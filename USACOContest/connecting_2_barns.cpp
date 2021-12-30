@@ -164,7 +164,7 @@ void solve(){
     }
     cout << endl;*/
     // if(best == INT32_MAX){ // direct connection
-    long long direct = (endStart - startEnd); // getSmallestDiff(startComp,endComp);
+    long long direct = getSmallestDiff(startComp,endComp);
     best = min(best,direct * direct);//(endStart - startEnd) * (endStart - startEnd));
     // }
     

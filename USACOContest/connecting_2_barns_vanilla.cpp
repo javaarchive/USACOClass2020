@@ -4,7 +4,12 @@
 
 using namespace std;
 
+bool visited[MAXN] = {false};
+int comp[MAXN] = {-1};
+map<int,vector<int>> graph;
+
 int getSmallestDiff(vector<int>& a, vector<int>& b){
+    
     int smallest = INT32_MAX;
     int i = 0, j = 0;
     /*cout << "A vs B" << endl;
@@ -31,12 +36,11 @@ int getSmallestDiff(vector<int>& a, vector<int>& b){
 void solve(){
     // cout << "INIT" << endl;
     int N, M;
-    map<int,vector<int>> graph;
-    
-    bool visited[MAXN] = {false};
-    int comp[MAXN] = {-1};
+    graph.clear();
     // cout << "READ LENS ";
     cin >> N >> M;
+    fill(comp, comp + MAXN, -1);
+    fill(visited, visited + N, false);
     vector<vector<int>> compNodes(N + 2);
     /*for(int i = 0; i < N; i ++){
         compNodes.push_back(vector<int>());
