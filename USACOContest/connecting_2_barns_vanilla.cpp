@@ -1,23 +1,25 @@
 #include <iostream>
 #include <bits/stdc++.h>
+// #include <chrono>
 #define MAXN 500001
 
 using namespace std;
 
 bool visited[MAXN] = {false};
 int comp[MAXN] = {-1};
-map<int,vector<int>> graph;
+unordered_map<int,vector<int>> graph;
 vector<vector<int>> compNodes = vector<vector<int>>(MAXN);
 stack<int> nextNode;
+int compID;
 
 int getSmallestDiff(int a, int b){
     
     int smallest = INT32_MAX;
     int i = 0, j = 0;
     /*cout << "A vs B" << endl;
-    for(auto elem: a){cout << elem << " ";}
+    for( auto elem: a){cout << elem << " ";}
     cout << endl;
-    for(auto elem: b){cout << elem << " ";}
+    for( auto elem: b){cout << elem << " ";}
     cout << endl;*/
     
     while(i < compNodes[a].size() && j < compNodes[b].size()){
@@ -34,6 +36,26 @@ int getSmallestDiff(int a, int b){
     return smallest;
 }
 
+int smallestDiff4(int a, int b, int c, int d){
+    int ab = abs(a - b);
+    int cd = abs(c - d);
+    int ac = abs(a - c);
+    int bd = abs(b - d);
+    int smallest = min(ab, min(cd, min(ac, bd)));
+    return smallest;
+}
+
+void dfs(int node){
+    visited[node] = true;
+    comp[node] = compID;
+    compNodes[compID].push_back(node);
+    for(auto elem: graph[node]){
+        if(!visited[elem]){
+            dfs(elem);
+        }
+    }
+}
+
 
 void solve(){
     // cout << "INIT" << endl;
@@ -41,7 +63,7 @@ void solve(){
     graph.clear();
     // cout << "READ LENS ";
     cin >> N >> M;
-    fill(comp, comp + MAXN, -1);
+    fill(comp, comp + N, -1);
     fill(visited, visited + N, false);
     for(int i = 0; i <= N; i ++){
         compNodes[i].clear();
@@ -60,44 +82,24 @@ void solve(){
     }
     // cout << " READED EDGES" << endl;
     // cout << endl;
-    int compID = 1;
+    compID = 1;
     // cout << "DFSing" << endl;
-
     for(int i = 0; i < N; i ++){
-        if(visited[i]){
-            continue; // skip already visited
+        if(!visited[i]){
+            dfs(i);
+            compID ++;
         }
-        // dfs
-        visited[i] = true;
-        comp[i] = compID;
-        // cout << "DFSing from " << i << " for comp " << compID << endl;
-        nextNode.push(i);
-        compNodes[compID].push_back(i);
-        while(!nextNode.empty()){
-            int node = nextNode.top();
-            nextNode.pop();
-            for(int otherNode: graph[node]){
-                if(visited[otherNode]){
-                    continue; // already visited
-                }
-                // mark as same component
-                comp[otherNode] = compID;
-                // mark visited and add to stack
-                visited[otherNode] = true;
-                // cout << "Marked " << otherNode << " as " << compID << endl;
-                compNodes[compID].push_back(otherNode);
-                nextNode.push(otherNode);
-            }
-        }
-        compID ++;
     }
-
-    for(auto vec: compNodes){
+    
+    // auto sort_start = chrono::high_resolution_clock::now();
+    /*for(auto vec: compNodes){
         if(vec.size() < 2){
             continue;
         }
-        sort(vec.begin(), vec.end());
-    }
+        // sort(vec.begin(), vec.end());
+    }*/
+    // auto sort_stop = chrono::high_resolution_clock::now();
+    // cout << "SORT TIME " << (sort_stop - sort_start).count() << " microsecs " << endl;
 
     // 1 is starting
     // compID - 1 is ending
@@ -118,16 +120,34 @@ void solve(){
         cout << 0 << endl;
     }else{
          // single connection required
+        // auto smalldiff_start = chrono::high_resolution_clock::now();
         long long sq_root = getSmallestDiff(comp[0],comp[N - 1]);
+        // auto smalldiff_stop = chrono::high_resolution_clock::now();
+        // cout << "SMALLDIFF TIME " << (smalldiff_stop - smalldiff_start).count() << " microsecs " << endl;
+
         // cout << (sqrt*sqrt) << endl;
+        // auto loopdiff_start = chrono::high_resolution_clock::now();
         long long best = sq_root * sq_root;
         for(int i = 2; i < (compID - 1); i ++){
+            // peek
+            if(compNodes[comp[0]].size() > 1 && compNodes[comp[N - 1]].size() > 1 && compNodes[comp[i]].size() > 1){
+                 long long peekA = smallestDiff4(compNodes[comp[0]][0], compNodes[comp[0]].back() - 1, compNodes[comp[i]][0], compNodes[comp[i]].back() - 1);
+                long long peekB = smallestDiff4(compNodes[comp[0]][0], compNodes[comp[0]].back() - 1, compNodes[comp[i]][0], compNodes[comp[i]].back() - 1);
+                if((peekA * peekA + peekB * peekB) > best){
+                    // PRUNE!
+                    continue;
+                }
+            }
+           
+
             long long distA = getSmallestDiff(1,i);
             long long distB = getSmallestDiff(i,comp[N - 1]);
             long long cost = distA * distA + distB * distB;
             // cout << "1 -> " << i << " -> " << " : " << distA * distA << " + " << distB * distB << " = " << cost << endl;
             best = min(best, cost);
         }
+        // auto loopdiff_stop = chrono::high_resolution_clock::now();
+        // cout << "LOOPDIFF TIME " << (loopdiff_stop - loopdiff_start).count() << " microsecs " << endl;
         cout << best << endl;
     }
     return;

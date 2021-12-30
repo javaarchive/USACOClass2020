@@ -134,6 +134,7 @@ void solve(){
         return;
     }
     // cout << "start ends at " << startEnd << " and end starts at " << endStart << endl;
+    
     for(int i = 0; i <= endComp; i ++){
         sort(compNodes[i].begin(), compNodes[i].end());
     }
