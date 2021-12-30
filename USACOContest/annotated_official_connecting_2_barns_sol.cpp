@@ -6,6 +6,8 @@
 using namespace std;
  
 void dfs(const vector<vector<int>>& edges, vector<int>& component, const int currv, const int id) {
+    // fill every node that is not already the same id
+    // components doubles as visited
   for(int child: edges[currv]) {
     if(component[child] != id) {
       component[child] = id;
@@ -26,7 +28,7 @@ void solve() {
     edges[b].push_back(a);
   }
   vector<int> component(n);
-  iota(component.begin(), component.end(), 0);
+  iota(component.begin(), component.end(), 0); // increasing for defaults
   for(int i = 0; i < n; i++) {
     if(component[i] == i) {
       dfs(edges, component, i, i);

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <bits/stdc++.h>
-#define MAXN 100001
+#define MAXN 500001
 
 using namespace std;
 
@@ -65,6 +65,7 @@ int getSmallestDiff2(int a, int b){
 int getSmallestDiff(int a, int b){
     int smallest = INT32_MAX;
     int i = 0, j = 0;
+    
     while(i < compNodes[a].size() && j < compNodes[b].size()){
         int diff = abs(compNodes[a][i] - compNodes[b][j]);
         if(diff < smallest){
