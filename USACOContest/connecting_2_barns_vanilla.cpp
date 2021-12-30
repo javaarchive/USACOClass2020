@@ -10,6 +10,7 @@ int comp[MAXN] = {-1};
 unordered_map<int,vector<int>> graph;
 unordered_map<int,vector<int>> compNodes;
 stack<int> nextNode;
+
 int compID;
 
 int getSmallestDiff(int a, int b){
@@ -33,6 +34,14 @@ int getSmallestDiff(int a, int b){
             j ++;
         }
     }
+    /*for(int i = 0; i < compNodes[a].size(); i ++){
+        for(int j = 0; j < compNodes[b].size(); j ++){
+            int diff = abs(compNodes[a][i] - compNodes[b][j]);
+            if(diff < smallest){
+                smallest = diff;
+            }
+        }
+    }*/
     return smallest;
 }
 
@@ -95,12 +104,12 @@ void solve(){
     }
     
     // auto sort_start = chrono::high_resolution_clock::now();
-    /*for(auto vec: compNodes){
-        if(vec.size() < 2){
+    for(int i = 1; i < compID; i ++){
+        /*if(vec.size() < 2){
             continue;
-        }
-        // sort(vec.begin(), vec.end());
-    }*/
+        }*/
+        sort(compNodes[comp[i]].begin(), compNodes[comp[i]].end());
+    }
     // auto sort_stop = chrono::high_resolution_clock::now();
     // cout << "SORT TIME " << (sort_stop - sort_start).count() << " microsecs " << endl;
 
@@ -131,7 +140,26 @@ void solve(){
         // cout << (sqrt*sqrt) << endl;
         // auto loopdiff_start = chrono::high_resolution_clock::now();
         long long best = sq_root * sq_root;
-        for(int i = 2; i < (compID - 1); i ++){
+        int lastComp = comp[N - 1];
+        for(int i = 2; i < lastComp; i ++){
+            // peek
+            /*if(compNodes[comp[0]].size() > 1 && compNodes[comp[N - 1]].size() > 1 && compNodes[comp[i]].size() > 1){
+                 long long peekA = smallestDiff4(compNodes[comp[0]][0], compNodes[comp[0]].back() - 1, compNodes[comp[i]][0], compNodes[comp[i]].back() - 1);
+                long long peekB = smallestDiff4(compNodes[comp[0]][0], compNodes[comp[0]].back() - 1, compNodes[comp[i]][0], compNodes[comp[i]].back() - 1);
+                if((peekA * peekA + peekB * peekB) > best){
+                    // PRUNE!
+                    continue;
+                }
+            }*/
+           
+
+            long long distA = getSmallestDiff(1,i);
+            long long distB = getSmallestDiff(i,comp[N - 1]);
+            long long cost = distA * distA + distB * distB;
+            // cout << "1 -> " << i << " -> " << " : " << distA * distA << " + " << distB * distB << " = " << cost << endl;
+            best = min(best, cost);
+        }
+        for(int i = lastComp + 1; i < compID; i ++){
             // peek
             /*if(compNodes[comp[0]].size() > 1 && compNodes[comp[N - 1]].size() > 1 && compNodes[comp[i]].size() > 1){
                  long long peekA = smallestDiff4(compNodes[comp[0]][0], compNodes[comp[0]].back() - 1, compNodes[comp[i]][0], compNodes[comp[i]].back() - 1);
