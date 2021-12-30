@@ -13,16 +13,11 @@ stack<int> nextNode;
 
 int compID;
 
-int getSmallestDiff(int a, int b){
-    
+int srcIDx, dstIDx;
+
+int smallestDiffOrig(int a, int b){
     int smallest = INT32_MAX;
     int i = 0, j = 0;
-    /*cout << "A vs B" << endl;
-    for( auto elem: a){cout << elem << " ";}
-    cout << endl;
-    for( auto elem: b){cout << elem << " ";}
-    cout << endl;*/
-    
     while(i < compNodes[a].size() && j < compNodes[b].size()){
         int diff = abs(compNodes[a][i] - compNodes[b][j]);
         if(diff < smallest){
@@ -34,6 +29,41 @@ int getSmallestDiff(int a, int b){
             j ++;
         }
     }
+    return smallest;
+}
+
+int getSmallestDiff(int a, int b, bool flag){
+    
+    int smallest = INT32_MAX;
+    int i = 0, j = 0;
+    if(flag){
+        i = srcIDx;
+    }else{
+        i = dstIDx;
+    }
+    /*cout << "A vs B" << endl;
+    for( auto elem: a){cout << elem << " ";}
+    cout << endl;
+    for( auto elem: b){cout << elem << " ";}
+    cout << endl;*/
+    
+    while(i < compNodes[a].size() && j < compNodes[b].size()){
+        int diff = abs(compNodes[a][i] - compNodes[b][j]);
+        if(diff < smallest){
+           
+    smallest = diff;
+        }
+        if(compNodes[a][i] < compNodes[b][j]){
+            i ++;
+        }else{
+            j ++;
+        }
+    }
+     if(flag){
+                srcIDx = i;
+            }else{
+                dstIDx = i;
+            }
     /*for(int i = 0; i < compNodes[a].size(); i ++){
         for(int j = 0; j < compNodes[b].size(); j ++){
             int diff = abs(compNodes[a][i] - compNodes[b][j]);
@@ -104,12 +134,12 @@ void solve(){
     }
     
     // auto sort_start = chrono::high_resolution_clock::now();
-    for(int i = 1; i < compID; i ++){
-        /*if(vec.size() < 2){
-            continue;
-        }*/
+    /*for(int i = 1; i < compID; i ++){
+        //if(vec.size() < 2){
+        //    continue;
+        //}
         sort(compNodes[comp[i]].begin(), compNodes[comp[i]].end());
-    }
+    }*/
     // auto sort_stop = chrono::high_resolution_clock::now();
     // cout << "SORT TIME " << (sort_stop - sort_start).count() << " microsecs " << endl;
 
@@ -133,7 +163,7 @@ void solve(){
     }else{
          // single connection required
         // auto smalldiff_start = chrono::high_resolution_clock::now();
-        long long sq_root = getSmallestDiff(comp[0],comp[N - 1]);
+        long long sq_root = smallestDiffOrig(comp[0],comp[N - 1]);
         // auto smalldiff_stop = chrono::high_resolution_clock::now();
         // cout << "SMALLDIFF TIME " << (smalldiff_stop - smalldiff_start).count() << " microsecs " << endl;
 
@@ -141,6 +171,8 @@ void solve(){
         // auto loopdiff_start = chrono::high_resolution_clock::now();
         long long best = sq_root * sq_root;
         int lastComp = comp[N - 1];
+        srcIDx = 0;
+        dstIDx = 0;
         for(int i = 2; i < lastComp; i ++){
             // peek
             /*if(compNodes[comp[0]].size() > 1 && compNodes[comp[N - 1]].size() > 1 && compNodes[comp[i]].size() > 1){
@@ -153,8 +185,14 @@ void solve(){
             }*/
            
 
-            long long distA = getSmallestDiff(1,i);
-            long long distB = getSmallestDiff(i,comp[N - 1]);
+            long long distA = getSmallestDiff(i,1, true);
+            if(srcIDx > 0){
+                srcIDx --;
+            }
+            long long distB = getSmallestDiff(i,comp[N - 1], false);
+            if(dstIDx > 0){
+                dstIDx --;
+            }
             long long cost = distA * distA + distB * distB;
             // cout << "1 -> " << i << " -> " << " : " << distA * distA << " + " << distB * distB << " = " << cost << endl;
             best = min(best, cost);
@@ -171,8 +209,14 @@ void solve(){
             }*/
            
 
-            long long distA = getSmallestDiff(1,i);
-            long long distB = getSmallestDiff(i,comp[N - 1]);
+            long long distA = getSmallestDiff(i,1,true);
+             if(srcIDx > 0){
+                srcIDx --;
+            }
+            long long distB = getSmallestDiff(i,comp[N - 1],false);
+             if(dstIDx > 0){
+                dstIDx --;
+            }
             long long cost = distA * distA + distB * distB;
             // cout << "1 -> " << i << " -> " << " : " << distA * distA << " + " << distB * distB << " = " << cost << endl;
             best = min(best, cost);
