@@ -23,7 +23,7 @@ void solve() {
   for(int i = 0; i < m; i++) {
     int a, b;
     cin >> a >> b;
-    a--; b--;
+    a --; b --;
     edges[a].push_back(b);
     edges[b].push_back(a);
   }

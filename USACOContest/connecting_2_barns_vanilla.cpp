@@ -1,14 +1,14 @@
 #include <iostream>
 #include <bits/stdc++.h>
 // #include <chrono>
-#define MAXN 500001
+#define MAXN 100001
 
 using namespace std;
 
 bool visited[MAXN] = {false};
 int comp[MAXN] = {-1};
 unordered_map<int,vector<int>> graph;
-vector<vector<int>> compNodes = vector<vector<int>>(MAXN);
+unordered_map<int,vector<int>> compNodes;
 stack<int> nextNode;
 int compID;
 
@@ -65,14 +65,16 @@ void solve(){
     cin >> N >> M;
     fill(comp, comp + N, -1);
     fill(visited, visited + N, false);
-    for(int i = 0; i <= N; i ++){
+    compNodes.clear();
+    /*for(int i = 0; i <= N; i ++){
         compNodes[i].clear();
-    }
+    }*/
     /*for(int i = 0; i < N; i ++){
         compNodes.push_back(vector<int>());
     }*/
     // compNodes.push_back(vector<int>()); // initial empty
     // cout << "READ EDGES";
+
     for(int i = 0; i < M; i ++){
         int a,b;
         cin >> a >> b;
@@ -80,6 +82,7 @@ void solve(){
         graph[a].push_back(b);
         graph[b].push_back(a);     
     }
+
     // cout << " READED EDGES" << endl;
     // cout << endl;
     compID = 1;
@@ -130,14 +133,14 @@ void solve(){
         long long best = sq_root * sq_root;
         for(int i = 2; i < (compID - 1); i ++){
             // peek
-            if(compNodes[comp[0]].size() > 1 && compNodes[comp[N - 1]].size() > 1 && compNodes[comp[i]].size() > 1){
+            /*if(compNodes[comp[0]].size() > 1 && compNodes[comp[N - 1]].size() > 1 && compNodes[comp[i]].size() > 1){
                  long long peekA = smallestDiff4(compNodes[comp[0]][0], compNodes[comp[0]].back() - 1, compNodes[comp[i]][0], compNodes[comp[i]].back() - 1);
                 long long peekB = smallestDiff4(compNodes[comp[0]][0], compNodes[comp[0]].back() - 1, compNodes[comp[i]][0], compNodes[comp[i]].back() - 1);
                 if((peekA * peekA + peekB * peekB) > best){
                     // PRUNE!
                     continue;
                 }
-            }
+            }*/
            
 
             long long distA = getSmallestDiff(1,i);
