@@ -37,8 +37,8 @@ void solve(){
     int lowest = min(patches[0].first, nhojCows[0]);
     int uppest = max(patches[K - 1].first, nhojCows[M - 1]);
     // Padding
-    lowest -= 10;
-    uppest += 10;
+    lowest -= 100;
+    uppest += 100;
     intervalEndings.push_back(lowest);
     for(int i = 0; i < K - 1; i ++){
         intervalEndings.push_back((patches[i].first + patches[i + 1].first) / 2);
@@ -49,22 +49,29 @@ void solve(){
     for(int i = 0; i < intervalEndings.size() - 1; i ++){
         int startPoint = intervalEndings[i];
         int endPoint = intervalEndings[i + 1];
+        cout << "RANGE: " << startPoint << " | ---- | " << endPoint << endl;
         pair<int,int> testingPatch = patches[positionInPatches];
-        while(testingPatch.first <= startPoint){
+        while(positionInPatches < K && testingPatch.first <= startPoint ){
             positionInPatches ++;
+            if(positionInPatches < K) testingPatch = patches[positionInPatches];
+        }
+        // positionInPatches --; // overshot
+        if(positionInPatches >= K){
+            cout << "Aborted due to out of range " << endl; 
+            continue;
         }
         if(testingPatch.first > endPoint){
             continue; // agh we overshot the interval
         }
         // Sliding window
         int patchBestTastinessSingleCow = 0;
-        int windowEndPos = positionInPatches + 1;
+        int windowEndPos = positionInPatches;
         int windowSize = (endPoint - startPoint) / 2;
         int oldTastiness = patches[positionInPatches].second;
         int curTasteSum = patches[positionInPatches].second;
-        for(;positionInPatches < K && patches[positionInPatches].first <= endPoint; positionInPatches ++){
+        cout << "Initial pos " << positionInPatches << endl;
+        for(;positionInPatches < K && patches[positionInPatches].first < endPoint; positionInPatches ++){
             // positonInPatches is start
-
             windowEndPos = max(positionInPatches + 1, windowEndPos);
             for(;windowEndPos < K && (patches[windowEndPos].first - patches[positionInPatches].first) <= windowSize && patches[windowEndPos].first < endPoint; windowEndPos ++){
                 // windowEndPos is end
@@ -78,6 +85,7 @@ void solve(){
         
         cout << "Final Range " << (positionInPatches - 1) << " < -- inclusive -- > " << (windowEndPos - 1) << endl;
         cout << "Section best taste sum: " << patchBestTastinessSingleCow << endl;
+        // insert choice???
     }
 }
 
