@@ -8,11 +8,11 @@ vector<int> Gs;
 vector<int> Hs;
 int N = 0;
 
-int calc(vector<int>& letterPoses){
-    int out = 0;
+long long calc(vector<int>& letterPoses){
+    long long out = 0;
     for(int i = 0; i < letterPoses.size(); i ++){
-        int bottom = -1;
-        int top = N;
+        long long bottom = -1;
+        long long top = N;
         // out of bounds
         if(i > 0){
             bottom = letterPoses[i - 1];
@@ -50,12 +50,12 @@ void solve(){
             Hs.push_back(i);
         }
     }
-    int ans = 0;
+    long long ans = 0LL;
     // cout << "Gs" << endl;
-    int gRes = calc(Gs);;
+    long long gRes = calc(Gs);;
     ans += gRes;
     // cout << "Hs" << endl;
-    int hRes = calc(Hs);
+    long long hRes = calc(Hs);
     ans += hRes;
     // cout << "G: " << gRes << " H: " << hRes << endl;
     cout << ans << endl;
