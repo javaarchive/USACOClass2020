@@ -6,12 +6,13 @@ using namespace std;
 
 vector<int> Gs;
 vector<int> Hs;
+int N = 0;
 
 int calc(vector<int>& letterPoses){
     int out = 0;
     for(int i = 0; i < letterPoses.size(); i ++){
-        int bottom = letterPoses[i] - 1;
-        int top = letterPoses[i] + 1; 
+        int bottom = -1;
+        int top = N;
         // out of bounds
         if(i > 0){
             bottom = letterPoses[i - 1];
@@ -22,10 +23,10 @@ int calc(vector<int>& letterPoses){
         bool bottomEnabled = (letterPoses[i] - bottom) > 1;
         bool topEnabled = (top - letterPoses[i]) > 1;
 
-        cout << bottom << " < " << letterPoses[i] << " < " << top << endl;
+        // cout << bottom << " < " << letterPoses[i] << " < " << top << endl;
 
         out += (letterPoses[i] - bottom) * (top - letterPoses[i]);
-        cout << "+= " << (letterPoses[i] - bottom) << " * " << (top - letterPoses[i]) << endl;
+        // cout << "+= " << (letterPoses[i] - bottom) << " * " << (top - letterPoses[i]) << endl;
         out -= 1; // single
         if(bottomEnabled){
             out -= 1;
@@ -38,7 +39,6 @@ int calc(vector<int>& letterPoses){
 }
 
 void solve(){
-    int N;
     cin >> N;
     string line = "";
     cin >> line;
@@ -51,13 +51,14 @@ void solve(){
         }
     }
     int ans = 0;
-    cout << "Gs" << endl;
+    // cout << "Gs" << endl;
     int gRes = calc(Gs);;
     ans += gRes;
-    cout << "Hs" << endl;
+    // cout << "Hs" << endl;
     int hRes = calc(Hs);
     ans += hRes;
-    cout << "G: " << gRes << " H: " << hRes << endl;
+    // cout << "G: " << gRes << " H: " << hRes << endl;
+    cout << ans << endl;
 }
 
 int main(int argc, char const *argv[])
