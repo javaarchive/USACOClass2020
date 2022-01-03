@@ -9,6 +9,7 @@ vector<int> Hs;
 int N = 0;
 
 long long calc(vector<int>& letterPoses){
+    // @timer start A
     long long out = 0;
     for(int i = 0; i < letterPoses.size(); i ++){
         long long bottom = -1;
@@ -35,6 +36,7 @@ long long calc(vector<int>& letterPoses){
             out -= 1;
         }
     }
+    // @timer end A
     return out;
 }
 
