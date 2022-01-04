@@ -4,19 +4,21 @@ using namespace std;
 
 vector<int> nhojCows;
 vector<pair<int,int>> patches; // pos, tastiness
-vector<int> intervalEndings;
+vector<float> intervalEndings;
+unordered_set<int> usedIntervals;
 
 struct Option{
     bool isTwoCow = false;
-    int oneCow = 0;
-    int twoCow = 0;
-    int getSortValue(){
+    long long oneCow = 0;
+    long long twoCow = 0;
+    long long getSortValue(){
         if(isTwoCow){
             return twoCow - oneCow; // ??? change?
         }else{
             return oneCow;
         }
     }
+    int iStart;
 };
 
 void solve(){
@@ -41,15 +43,15 @@ void solve(){
     uppest += 10000;
     intervalEndings.push_back(lowest);
     for(int i = 0; i < K - 1; i ++){
-        intervalEndings.push_back((patches[i].first + patches[i + 1].first) / 2);
+        intervalEndings.push_back(((float) patches[i].first + (float) patches[i + 1].first) / 2);
     }
     intervalEndings.push_back(uppest);
     sort(intervalEndings.begin(), intervalEndings.end());
     int positionInPatches = 0;
     vector<Option> choices;
     for(int i = 0; i < intervalEndings.size() - 1; i ++){
-        int startPoint = intervalEndings[i];
-        int endPoint = intervalEndings[i + 1];
+        float startPoint = intervalEndings[i];
+        float endPoint = intervalEndings[i + 1];
         // cout << "RANGE: " << startPoint << " | ---- | " << endPoint << endl;
         pair<int,int> testingPatch = patches[positionInPatches];
         while(positionInPatches < K && testingPatch.first < startPoint ){
@@ -65,13 +67,13 @@ void solve(){
             continue; // agh we overshot the interval or an opposing cow is on top of the patch
         }
         // Sliding window
-        int patchBestTastinessSingleCow = 0;
+        long long patchBestTastinessSingleCow = 0;
         int windowEndPos = positionInPatches;
         int windowSize = (endPoint - startPoint) / 2;
-        int oldTastiness = patches[positionInPatches].second;
-        int curTasteSum = patches[positionInPatches].second;
+        long long oldTastiness = patches[positionInPatches].second;
+        long long curTasteSum = patches[positionInPatches].second;
         // cout << "Initial pos " << positionInPatches << endl;
-        int twoCowtaste = patches[positionInPatches].second;
+        long long twoCowtaste = patches[positionInPatches].second;
         // cout << "Initial 2 cow taste " << twoCowtaste << endl;
         for(;positionInPatches < K && patches[positionInPatches].first < endPoint; positionInPatches ++){
             // positonInPatches is start
@@ -95,43 +97,65 @@ void solve(){
         oneCow.oneCow = patchBestTastinessSingleCow;
         oneCow.twoCow = twoCowtaste;
         oneCow.isTwoCow = false;
+        oneCow.iStart = i;
         Option twoCow;
         twoCow.oneCow = patchBestTastinessSingleCow;
         twoCow.twoCow = twoCowtaste;
         twoCow.isTwoCow = true;
+        twoCow.iStart = i;
         choices.push_back(oneCow);
         choices.push_back(twoCow);
     }
     sort(choices.begin(), choices.end(), [](Option a, Option b) {
-        bool equal = a.getSortValue() == b.getSortValue();
-        if(!equal){
+        // bool equal = a.getSortValue() == b.getSortValue();
+        // if(!equal){
             return a.getSortValue() > b.getSortValue();
-        }else{
+        /*}else{
             if(a.isTwoCow && b.isTwoCow){
                 return false; // abritrary
             }else if(a.isTwoCow){
-                return false; // prefer b
+                return true;//false; // prefer b
             }else if(b.isTwoCow){
-                return true; // prefer a
+                return false;//true; // prefer a
             }else{
                 return false; // abritrary
             }
-        }
+        }*/
     });
-    /*cout << "Choices: " << endl;
+    cout << "Choices: " << endl;
     cout << "First up we have a 1 cow tastiness of " << choices[0].oneCow << " then a 2 cow tastiness of " << choices[0].twoCow << endl;
     cout << "Second up we have a 1 cow tastiness of " << choices[1].oneCow << " then a 2 cow tastiness of " << choices[1].twoCow << endl;
     cout << "Third up we have a 1 cow tastiness of " << choices[2].oneCow << " then a 2 cow tastiness of " << choices[2].twoCow << endl;
     cout << "Fourth up we have a 1 cow tastiness of " << choices[3].oneCow << " then a 2 cow tastiness of " << choices[3].twoCow << endl;
-    cout << "Fifth up we have a 1 cow tastiness of " << choices[4].oneCow << " then a 2 cow tastiness of " << choices[4].twoCow << endl;*/
-    int ans = 0;
+    cout << "Fifth up we have a 1 cow tastiness of " << choices[4].oneCow << " then a 2 cow tastiness of " << choices[4].twoCow << endl;
+    cout << "Sixth up we have a 1 cow tastiness of " << choices[5].oneCow << " then a 2 cow tastiness of " << choices[5].twoCow << endl;
+    cout << "Seventh up we have a 1 cow tastiness of " << choices[6].oneCow << " then a 2 cow tastiness of " << choices[6].twoCow << endl;
+    cout << "Eighth up we have a 1 cow tastiness of " << choices[7].oneCow << " then a 2 cow tastiness of " << choices[7].twoCow << endl;
+    cout << "Ninth up we have a 1 cow tastiness of " << choices[8].oneCow << " then a 2 cow tastiness of " << choices[8].twoCow << endl;
+    cout << "Tenth up we have a 1 cow tastiness of " << choices[9].oneCow << " then a 2 cow tastiness of " << choices[9].twoCow << endl;
+    long long ans = 0;
+    int count = 0;
     for(int i = 0; i < N; i ++){
-        Option opt = choices[i];
-        if(opt.isTwoCow){
+        Option opt = choices[count];
+        /*while(count < choices.size()){
+            opt = choices[count];    
+            if(usedIntervals.find(opt.iStart) == usedIntervals.end()){
+                break; // allow
+            }
+            count ++;
+        }*/
+        count ++;
+        
+        /*if(count == choices.size()){
+            break; // all we can do
+        }*/
+        // usedIntervals.insert(opt.iStart);
+        /*if(opt.isTwoCow){
             ans += opt.twoCow;
         }else{
             ans += opt.oneCow;
-        }
+        }*/
+        ans += opt.getSortValue();
     }
     cout << ans << endl;
 }
