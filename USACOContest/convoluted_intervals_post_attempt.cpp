@@ -1,6 +1,7 @@
 #include <iostream>
 #include <bits/stdc++.h>
 #define PADDED_2MAXM 10010
+#define PADDED_MAXM 5010
 
 using namespace std;
 
@@ -9,10 +10,13 @@ int N, M;
 long long output[PADDED_2MAXM] = {0};
 long long padd[PADDED_2MAXM] = {0};
 long long pminus[PADDED_2MAXM] = {0};
-unordered_set<int> starts_set;
-unordered_set<int> ends_set;
-unordered_map<int,long long> starts_freq;
-unordered_map<int,long long> ends_freq;
+// unordered_set<int> starts_set;
+// unordered_set<int> ends_set;
+// unordered_map<int,long long> starts_freq;
+// unordered_map<int,long long> ends_freq;
+
+long long starts_freq[PADDED_MAXM];
+long long ends_freq[PADDED_MAXM];
 
 
 void solve(){
@@ -22,8 +26,8 @@ void solve(){
         cin >> start >> end;
         starts_freq[start] ++;
         ends_freq[end] ++;
-        starts_set.insert(start);
-        ends_set.insert(end);
+        // starts_set.insert(start);
+        // ends_set.insert(end);
     }
     /*vector<int> startsAsVec;
     vector<int> endsAsVec;
@@ -35,27 +39,21 @@ void solve(){
     }
     int N1 = startsAsVec.size();
     int N2 = endsAsVec.size();*/
-    for(auto it = starts_set.begin(); it != starts_set.end(); it ++){
-        for(auto it2 = starts_set.begin(); it2 != starts_set.end(); it2 ++){
-            int final_start = *it + *it2;
-            if(final_start > (2 * M + 1)){
-                continue;
-            }
-            padd[final_start] += starts_freq[*it] * starts_freq[*it2];
+    for(int i = 0; i <= M; i ++){
+        for(int j = 0; j <= M; j ++){
+            int final_start = i + j;
+            padd[final_start] += starts_freq[i] * starts_freq[j];
         }
     }
 
-   for(auto it = ends_set.begin(); it != ends_set.end(); it ++){
-        for(auto it2 = ends_set.begin(); it2 != ends_set.end(); it2 ++){
-            int final_end = *it + *it2;
-            if(final_end > (2 * M + 1)){
-                continue;
-            }
-            pminus[final_end] += ends_freq[*it] * ends_freq[*it2];
+   for(int i = 0; i <= M; i ++){
+        for(int j = 0; j <= M; j ++){
+            int final_end = i + j;
+            pminus[final_end] += ends_freq[i] * ends_freq[j];
         }
     }
 
-    int cur = 0;
+    long long cur = 0;
     for(int i = 0; i <= (2 * M); i ++){
         cur += padd[i];
         cout << cur << endl;
