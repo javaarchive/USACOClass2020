@@ -6,12 +6,13 @@ using namespace std;
 
 int N, M;
 
-int output[PADDED_2MAXM] = {0};
-int ps[PADDED_2MAXM] = {0};
-set<int> starts_set;
-set<int> ends_set;
-map<int,int> starts_freq;
-map<int,int> ends_freq;
+long long output[PADDED_2MAXM] = {0};
+long long padd[PADDED_2MAXM] = {0};
+long long pminus[PADDED_2MAXM] = {0};
+unordered_set<int> starts_set;
+unordered_set<int> ends_set;
+unordered_map<int,long long> starts_freq;
+unordered_map<int,long long> ends_freq;
 
 
 void solve(){
@@ -34,31 +35,31 @@ void solve(){
     }
     int N1 = startsAsVec.size();
     int N2 = endsAsVec.size();*/
-    for(int i = 0; i < N1; i ++){
-        for(int j = 0; j < N1; j ++){
-            int final_start = startsAsVec[i] + startsAsVec[j];
+    for(auto it = starts_set.begin(); it != starts_set.end(); it ++){
+        for(auto it2 = starts_set.begin(); it2 != starts_set.end(); it2 ++){
+            int final_start = *it + *it2;
             if(final_start > (2 * M + 1)){
                 continue;
             }
-            ps[final_start] += starts_freq[startsAsVec[i]] * starts_freq[startsAsVec[j]];
+            padd[final_start] += starts_freq[*it] * starts_freq[*it2];
         }
     }
 
-    for(int i = 0; i < N2; i ++){
-        for(int j = 0; j < N2; j ++){
-            int final_end = endsAsVec[i] + endsAsVec[j];
+   for(auto it = ends_set.begin(); it != ends_set.end(); it ++){
+        for(auto it2 = ends_set.begin(); it2 != ends_set.end(); it2 ++){
+            int final_end = *it + *it2;
             if(final_end > (2 * M + 1)){
                 continue;
             }
-            ps[final_end + 1] -= ends_freq[endsAsVec[i]] * ends_freq[endsAsVec[j]];
+            pminus[final_end] += ends_freq[*it] * ends_freq[*it2];
         }
     }
 
-    cout << ps[0] << endl;
-
-    for(int i = 1; i <= (2 * M); i ++){
-        output[i] = output[i - 1] + ps[i];
-        cout << output[i] << endl;
+    int cur = 0;
+    for(int i = 0; i <= (2 * M); i ++){
+        cur += padd[i];
+        cout << cur << endl;
+        cur -= pminus[i];
     }
 }
 
