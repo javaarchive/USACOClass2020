@@ -9,7 +9,10 @@ void solve(){
     int N;
     cin >> N;
     auto cmp = [](pair<int,int> a, pair<int,int> b) { 
-       return a.first * a.second < b.first * b.second;
+        if(a.first == b.first){
+            return a.second < b.second;
+        }
+        return a.first < b.first;
     };
     //    height pos
     set<pair<int,int>, decltype(cmp)> leftSet(cmp);
