@@ -24,6 +24,7 @@ int pow2above(long long l){
 void solve(){
     int movesBase = 0;
     // Lower enough
+    
     long long a,b;
     cin >> a >> b;
     long long operand = a;
@@ -40,31 +41,35 @@ void solve(){
     // BFS time
     //                  depth  val
     priority_queue<pair<int  ,long long>, vector<pair<int  ,long long>>, greater<pair<int  ,long long>> > bfsQueue;
-    unordered_set<long long> seen;
-    seen.insert(baseVal);
-    bfsQueue.push(make_pair(0, baseVal));
+    //                 val  depthat
+    unordered_map<long long,int    > seen;
+    seen[baseVal] = 1; // 0 means not found
+    bfsQueue.push(make_pair(1, baseVal));
     while(!bfsQueue.empty()){
         pair<int,long long> cur = bfsQueue.top();
+        cout << cur.second << " depth: " << (cur.first - 1) << endl;
         bfsQueue.pop();
         if(cur.second == b){
-            cout << (movesBase + cur.first) << endl;
+            cout << (movesBase + cur.first - 1) << endl;
             return;
         }
-        if(cur.second * 2 <= b && seen.find(cur.second * 2) == seen.end() ){
+        if(cur.second * 2 <= b && (seen[cur.second * 2] == 0 || seen[cur.second * 2] > (cur.first + 1)) ){
             bfsQueue.push(make_pair(cur.first + 1, cur.second * 2));
-            seen.insert(cur.second * 2);
+            seen[cur.second * 2] = cur.first + 1;
         }
-
         
-        if(cur.second % 2 == 0 && seen.find(cur.second/2) == seen.end() && cur.second >= 2){
+        if(cur.second % 2 == 0 && (seen[cur.second/2] > (cur.first + 1) || seen[cur.second/2] == 0) && cur.second >= 2){
             bfsQueue.push(make_pair(cur.first + 1, cur.second/2));
-            seen.insert(cur.second/2);
+            seen[cur.second/2] = cur.first + 1;
         }
-        long long diff = cur.second - pow2above(cur.second);
+        long long diff = pow2above(cur.second) - cur.second;
+        if(diff == 0){
+            continue;
+        }
         bfsQueue.push(make_pair(cur.first + diff, cur.second + diff));
-        seen.insert(cur.second + diff);       
+        seen[cur.second + diff] = cur.first + diff;       
     }
-
+    cout << "ERROR: NO ANS" << endl;
 }
 
 int main(int argc, char const *argv[])
