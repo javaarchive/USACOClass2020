@@ -33,14 +33,26 @@ void solve(){
         auto leftIter = leftSet.upper_bound(me);
         auto rightIter = rightSet.upper_bound(me);
 
-        cout << "Processing " << i << " height " << heights[i] << endl;
+       //  cout << "Processing " << i << " height " << heights[i] << endl;
          if(leftIter != leftSet.end()){
             pair<int,int> val = *leftIter;
+            while(leftIter != leftSet.end()){
+                if((*leftIter).second > val.second){
+                    val = *leftIter;
+                }
+                leftIter ++;
+            }
             // cout << "To the left of " << i << " is " << val.second << " with height " << val.first << endl;
             ans += abs(i - val.second) + 1;
         }
         if(rightIter != rightSet.end()){
             pair<int,int> val = *rightIter;
+            while(rightIter != rightSet.end()){
+                if((*rightIter).second < val.second){
+                    val = *rightIter;
+                }
+                rightIter ++;
+            }
             // cout << "To the right of " << i << " is " << val.second << " with height " << val.first << endl;
             ans += abs(i - val.second) + 1;
         }
